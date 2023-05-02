@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StaffMapper">
+
+    <select id="select" parameterType="Long" resultType="Staff">
+        SELECT * FROM staff WHERE id=#{id}
+    </select>
+    <select id="getPage" resultType="Staff">
+        SELECT * FROM staff ORDER BY id DESC
+    </select>
+    <select id="selectall" resultType="Staff">
+        SELECT * FROM staff
+    </select>
+    <insert id="insert" parameterType="Staff">
+        INSERT INTO staff VALUES (null,#{name},#{login_id},#{pwd},#{store_id})
+    </insert>
+    <update id="update" parameterType="Staff">
+        UPDATE staff SET pwd=#{pwd} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="Long">
+        DELETE FROM staff WHERE id=#{id}
+    </delete>
+
+
+</mapper>
