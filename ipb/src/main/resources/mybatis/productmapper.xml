@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.ProductMapper">
+
+
+    <select id="select" parameterType="Long" resultType="Product">
+        SELECT * FROM product WHERE id=#{id}
+    </select>
+
+    <select id="selectall" resultType="Product">
+        SELECT * FROM product
+    </select>
+    <insert id="insert" parameterType="Product">
+        INSERT INTO product VALUES (NULL,#{name},#{qnt},#{price},#{cost},#{category_id},#{box_qnt},#{exp},#{product_code},#{brand},#{detail},#{imgname})
+        <!--        null -> 우리가 입력안해도 순서가 올라감 -->
+    </insert>
+    <update id="update" parameterType="Product">
+        UPDATE product SET name=#{name},price=#{price},imgname=#{imgname} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="Product">
+        DELETE FROM product WHERE id=#{id}
+    </delete>
+
+</mapper>

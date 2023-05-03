@@ -1,16 +1,19 @@
 package com.ipb.service;
 
 import com.ipb.domain.Staff;
-import com.ipb.dto.StaffDTO;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
 
+@Transactional
 @Service
 public class StaffService implements MyService<Long, Staff> {
+
     @Autowired
     StaffMapper staffMapper;
 
@@ -39,5 +42,5 @@ public class StaffService implements MyService<Long, Staff> {
     public List<Staff> get() throws Exception {
         return staffMapper.selectall();
     }
-
 }
+

@@ -18,7 +18,7 @@ class StoreServiceTest {
   @Test
   void register() {
     try {
-      Store store = new Store(null, "센텀점", "부산시 해운대구 센텀로 12345", "051-0000-1111", "부산센텀점");
+      Store store = new Store(null, "센텀텀", "부산시 해운대구 센텀로 12345", "051-0000-1111", "부산센텀점");
       storeService.register(store);
       System.out.println(store);
     } catch (Exception e) {
