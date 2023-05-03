@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.Board;
 import com.ipb.domain.EventType;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.EventTypeMapper;
@@ -15,13 +16,15 @@ public class EventTypeService implements MyService<Long, EventType> {
   EventTypeMapper eventTypeMapper;
 
   @Override
-  public void register(EventType eventType) throws Exception {
+  public Board register(EventType eventType) throws Exception {
     eventTypeMapper.insert(eventType);
+    return null;
   }
 
   @Override
-  public void modify(EventType eventType) throws Exception {
+  public Board modify(EventType eventType) throws Exception {
     eventTypeMapper.update(eventType);
+    return null;
   }
 
   @Override
