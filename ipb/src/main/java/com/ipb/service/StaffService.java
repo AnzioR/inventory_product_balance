@@ -42,5 +42,19 @@ public class StaffService implements MyService<Long, Staff> {
     public List<Staff> get() throws Exception {
         return staffMapper.selectall();
     }
+
+    public Staff login(String login_id, String pwd) {
+        try {
+            Staff staff = staffMapper.selectid(login_id);
+            if(staff != null && staff.getPwd().equals(pwd)){
+                return staff;
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+
+    }
 }
 

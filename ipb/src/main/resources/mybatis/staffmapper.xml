@@ -7,6 +7,9 @@
     <select id="select" parameterType="Long" resultType="Staff">
         SELECT * FROM staff WHERE id=#{id}
     </select>
+    <select id="selectid" parameterType="String" resultType="Staff">
+        SELECT * FROM staff WHERE login_id=#{login_id}
+    </select>
     <select id="getPage" resultType="Staff">
         SELECT * FROM staff ORDER BY id DESC
     </select>
@@ -22,6 +25,4 @@
     <delete id="delete" parameterType="Long">
         DELETE FROM staff WHERE id=#{id}
     </delete>
-
-
 </mapper>
