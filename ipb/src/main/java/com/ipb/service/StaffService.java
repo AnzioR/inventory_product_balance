@@ -25,6 +25,7 @@ public class StaffService implements MyService<Long, Staff> {
 
     @Override
     public void modify(Staff staff) throws Exception {
+        staffMapper.update(staff);
     }
 
     @Override
@@ -53,6 +54,10 @@ public class StaffService implements MyService<Long, Staff> {
             e.printStackTrace();
         }
         return null;
+
+    }
+    public List<Staff> selectallname()throws Exception {
+        return staffMapper.selectallname();
 
     }
 }
