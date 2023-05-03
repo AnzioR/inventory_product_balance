@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StoreMapper">
+
+    <!-- 점포 등록 -->
+    <insert id="insert" parameterType="Store">
+        INSERT INTO store VALUES (NULL, #{name}, #{location}, #{number}, #{img})
+    </insert>
+
+    <!-- 점포 수정 : 요구사항에는 없는데 있으면 편리하다고 생각되어서 점포이름, 전화번호, 사진을 변경할 수 있도록 작성함  -->
+    <update id="update" parameterType="Store">
+        UPDATE store SET name=#{name}, number=#{number}, img=#{img} WHERE id = #{id}
+    </update>
+
+    <!-- 점포 삭제 : 점포가 폐점되는 경우를 생각해서 만들어둠 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM store WHERE id = #{id}
+    </delete>
+
+    <!-- 점포 조회 : 점포 아이디로 점포를 조회 (점포 정보 전체가 출력되는데, 일부분만 보여주게 될 경우 변경 필요) -->
+    <select id="select" parameterType="Long" resultType="Store">
+        SELECT id, name, location, number, img
+        FROM store
+        WHERE id = #{id}
+    </select>
+
+    <!-- 점포 전체 조회 : 점포 전체의 정보를 띄워줌 (점포 상세 조회) -->
+    <select id="selectall" resultType="Store">
+        SELECT id, name, location, number, img FROM store
+    </select>
+
+
+</mapper>
