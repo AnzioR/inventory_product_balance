@@ -25,12 +25,11 @@ public class StaffService implements MyService<Long, Staff> {
 
     @Override
     public void modify(Staff staff) throws Exception {
-
     }
 
     @Override
     public void remove(Long id) throws Exception {
-
+        staffMapper.delete(id);
     }
 
     @Override

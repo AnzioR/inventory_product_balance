@@ -4,6 +4,7 @@ import com.ipb.domain.Staff;
 import com.ipb.service.StaffService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -16,7 +17,7 @@ public class StaffController {
     @Autowired
     StaffService staffService;
 
-    @PostMapping("/register")
+    @PostMapping("/add")
     public Staff register(Staff staff){
         try {
             staffService.register(staff);
@@ -34,6 +35,7 @@ public class StaffController {
         }
         return staff1;
     }
+
     @GetMapping("/stafflist")
     public List<Staff> staffList(){
         try {
@@ -51,6 +53,14 @@ public class StaffController {
         } catch (Exception e) {
             e.printStackTrace();
             return null;
+        }
+    }
+    @DeleteMapping("/delete")
+    public void delete(Long id){
+        try {
+            staffService.remove(id);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
     }
 }
