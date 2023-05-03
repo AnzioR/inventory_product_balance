@@ -18,7 +18,7 @@ class StaffServiceTest {
     void register() {
 
         try {
-            Staff staff = new Staff(null,"채란","sks1234","1111", 1L);
+            Staff staff = new Staff(null,"민지","sks1234","1111", 1L);
             staffService.register(staff);
             System.out.println(staff);
         } catch (Exception e) {
