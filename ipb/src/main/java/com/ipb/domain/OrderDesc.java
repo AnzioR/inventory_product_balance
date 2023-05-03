@@ -8,11 +8,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-public class Staff {
+public class OrderDesc {
     private Long id;
     private String name;
-    private String login_id;
-    private String pwd;
-    private Long store_id;
-
 }
