@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.Board;
 import com.ipb.domain.Product;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.ProductMapper;
@@ -16,12 +17,14 @@ public class ProductService implements MyService <Long, Product> {
   ProductMapper productMapper;
 
   @Override
-  public void register(Product product) throws Exception {
+  public Board register(Product product) throws Exception {
     productMapper.insert(product);
+    return null;
   }
   @Override
-  public void modify(Product product) throws Exception {
+  public Board modify(Product product) throws Exception {
     productMapper.update(product);
+    return null;
   }
 
   @Override
