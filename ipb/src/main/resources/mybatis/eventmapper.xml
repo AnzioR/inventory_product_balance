@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.EventMappper">
+
+    <!-- 이벤트 등록 -->
+    <insert id="insert" parameterType="Event">
+        INSERT INTO event VALUES (NULL, #{name}, #{event_type_id}, #{imgname}, #{start_date}, #{end_date})
+    </insert>
+
+    <!-- 이벤트 수정 : 요구사항에는 없는데 이벤트명, 이벤트타입, 사진, 시작일, 종료일을 변경할 수 있도록 작성함  -->
+    <update id="update" parameterType="Event">
+        UPDATE event SET name=#{name}, event_type_id=#{event_type_id}, imgname=#{imgname}, start_date=#{start_date}, end_date=#{end_date} WHERE id = #{id}
+    </update>
+
+    <!-- 이벤트 삭제 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM event WHERE id = #{id}
+    </delete>
+
+    <!-- 이벤트 상세조회 : 이벤트 관련 정보 전부를 출력해준다. -->
+    <select id="select" parameterType="Long" resultType="Event">
+        SELECT ev.id, ev.name, ev.event_type_id, ev.imgname, ev.start_date, ev.end_date
+        FROM event ev
+        INNER JOIN event_type et ON ev.event_type_id = et.id
+        WHERE ev.id = #{id}
+    </select>
+
+    <!-- 이벤트 전체 조회 : 현재 존재하는 목록 전체를 보여주는데, 가독성을 위해 이벤트명, 시작일, 종료일만 표시한다.
+        만일 추가로 보여주는 목록을 늘린다면 이쪽 수정이 필요하다. -->
+    <select id="selectall" resultType="Event">
+        SELECT e.name, e.start_date, e.end_date FROM event e
+    </select>
+
+
+</mapper>

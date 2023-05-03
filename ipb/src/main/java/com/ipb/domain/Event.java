@@ -3,16 +3,16 @@ package com.ipb.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.web.multipart.MultipartFile;
 
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Store {
+public class Event {
   private Long id;
   private String name;
-  private String location;
-  private String number;
+  private Long event_type_id;
   private String imgname;
+  private String start_date;
+  private String end_date;
 
 }
