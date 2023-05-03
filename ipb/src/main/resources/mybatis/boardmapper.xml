@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.BoardMapper">
+
+    <select id="select" parameterType="Long" resultType="Board">
+        SELECT * FROM board WHERE id=#{id}
+    </select>
+    <select id="getPage" resultType="Board">
+        SELECT * FROM board ORDER BY write_date DESC
+    </select>
+    <select id="selectall" resultType="Board">
+        SELECT board.id, board.title, board.body_text, staff.name, board.imgname,board.write_date FROM board INNER JOIN staff ON board.staff_id = staff.id;
+    </select>
+    <insert id="insert" parameterType="Board">
+        INSERT INTO board VALUES (null,#{title},#{body_text},#{staff_id},#{imgname}, NOW())
+    </insert>
+    <update id="update" parameterType="Board">
+        UPDATE board SET title=#{title}, body_text=#{body_text} WHERE id=#{id}
+    </update>
+    <delete id="delete" parameterType="Long">
+        DELETE FROM board WHERE id=#{id}
+    </delete>
+
+
+</mapper>
