@@ -18,7 +18,7 @@ public class Product {
     private int cost;
     private Long category_id;
     private int box_qnt;
-    private Date exp;
+    private String exp;
     private Long product_code;
     private String brand;
     private String detail;
