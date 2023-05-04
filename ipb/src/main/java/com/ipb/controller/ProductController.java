@@ -54,6 +54,7 @@ public class ProductController {
       throw new RuntimeException(e);
     }
   }
+
   @PutMapping("/update")
   public Product update(Product product) {
     try {
@@ -63,5 +64,51 @@ public class ProductController {
       e.printStackTrace();
       return null;
     }
+
+  }
+  @GetMapping("/categoryname")
+  public List<Product> get(String categoryname) {
+    try {
+      List<Product> selectcategoryname = productService.selectcategoryname(categoryname);
+      return selectcategoryname;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }
-}
+//  @GetMapping("/categoryname")
+//  public List<Product> selectcategoryname(String categoryname) {
+//    try {
+//      return productService.selectcategoryname(categoryname);
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
