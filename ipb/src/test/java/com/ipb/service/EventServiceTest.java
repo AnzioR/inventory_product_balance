@@ -47,6 +47,18 @@ class EventServiceTest {
   }
 
   @Test
+  void searcheventname() {
+    Event event = null;
+    try {
+      event = eventService.searcheventname("심야이벤트");
+      System.out.println(event);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("검색오류가 발생했습니다.");
+    }
+  }
+
+  @Test
   void get() {
     Event event = null;
     try {
@@ -63,6 +75,20 @@ class EventServiceTest {
     List<Event> list = null;
     try {
       list = eventService.get();
+      for(Event event : list) {
+        System.out.println(event);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("전체검색 오류가 발생했습니다.");
+    }
+  }
+
+  @Test
+  void selectbytype(Long id) {
+    List<Event> list = null;
+    try {
+      list = eventService.selectbytype(id);
       for(Event event : list) {
         System.out.println(event);
       }

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.EventProductMapper">
+
+    <!-- 이벤트 상품조회 : 이벤트 아이디에 해당되는 이벤트 상품 목록을 조회한다. -->
+    <select id="searcheventproduct" resultType="EventProduct">
+        SELECT p.name as product_name, p.qnt, p.price, p.imgname as product_imgname,
+               e.name, e.imgname as event_imgname, e.start_date, e.end_date
+        FROM event_product ep
+                 INNER JOIN product p on p.id = ep.product_id
+                 INNER JOIN event e on e.id = ep.event_id
+        WHERE event_id = #{event_id};
+    </select>
+
+</mapper>
