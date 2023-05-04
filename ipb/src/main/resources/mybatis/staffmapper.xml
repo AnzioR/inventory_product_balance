@@ -25,4 +25,9 @@
     <delete id="delete" parameterType="Long">
         DELETE FROM staff WHERE id=#{id}
     </delete>
+    <select id="selectallname" resultType="Staff">
+        SELECT s.id, s.name, s.login_id, s.pwd, st.name as store_name
+        FROM staff s
+                 inner join store st ON s.store_id = st.id
+    </select>
 </mapper>

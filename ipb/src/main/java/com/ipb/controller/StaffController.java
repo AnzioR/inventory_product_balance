@@ -44,10 +44,30 @@ public class StaffController {
         }
 
     }
+    @GetMapping("/listname")
+    public List<Staff> staffListName(){
+        try {
+            return staffService.selectallname();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+
+    }
     @GetMapping("/detail")
     public Staff staffDetail(Long id){
         try {
             return staffService.get(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
+    }
+    @PutMapping("/update")
+    public Staff staffUpdate(Staff staff){
+        try {
+            staffService.modify(staff);
+            return staff;
         } catch (Exception e) {
             e.printStackTrace();
             return null;
