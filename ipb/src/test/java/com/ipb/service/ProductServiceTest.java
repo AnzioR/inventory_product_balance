@@ -49,7 +49,7 @@ class ProductServiceTest {
   void get() {
     Product product = null;
     try {
-      product = productService.get(3L);
+      product = productService.get(6L);
       System.out.println(product);
     } catch(Exception e) {
       e.printStackTrace();
@@ -57,6 +57,33 @@ class ProductServiceTest {
     }
   }
 
+//  @Test
+//  void selectcategoryname() {
+//    List<Product> categoryname = null;
+//    try {
+//      categoryname = productService.get();
+//      for(Product product : categoryname) {
+//        System.out.println(product);
+//      }
+//    } catch(Exception e) {
+//      e.printStackTrace();
+//      System.out.println("카테고리 검색 오류 발생!!");
+//    }
+//  }
+@Test
+void testSelectCategoryName() {
+  String categoryName = "과자";
+  List<Product> list = null;
+  try {
+    list = productService.selectcategoryname(categoryName);
+    for(Product product : list) {
+      System.out.println(product);
+    }
+  } catch(Exception e) {
+    e.printStackTrace();
+    System.out.println("카테고리 검색 오류 발생!!");
+  }
+}
   @Test
   void testGet() {
     List<Product> list = null;
@@ -70,6 +97,7 @@ class ProductServiceTest {
       System.out.println("전체검색 오류 발생!!");
     }
   }
+
 }
 
 

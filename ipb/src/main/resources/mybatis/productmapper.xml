@@ -15,21 +15,21 @@
         SELECT * FROM product
     </select>
     <select id="selectcategoryname" parameterType="String" resultType="Product">
-        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,
+        SELECT p.id, p.name , p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,
         p.exp, p.product_code, p.brand, p.detail,
         p.imgname
         FROM product p
         INNER JOIN category c ON p.category_id = c.id
-        WHERE c.name =#{categoryname};
+        WHERE c.name = #{category_name};
     </select>
-    <select id="selectcategorynameall" parameterType="String" resultType="Product">
-        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,
-        p.exp, p.product_code, p.brand ,p.detail,
-        p.imgname
-        FROM product p
-        INNER JOIN category c ON p.category_id = c.id
-        WHERE c.name =#{categoryname};
-    </select>
+<!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
+<!--        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,-->
+<!--        p.exp, p.product_code, p.brand ,p.detail,-->
+<!--        p.imgname-->
+<!--        FROM product p-->
+<!--        INNER JOIN category c ON p.category_id = c.id-->
+<!--        WHERE c.name =#{categoryname};-->
+<!--    </select>-->
     <insert id="insert" parameterType="Product">
         INSERT INTO product VALUES (NULL,#{name},#{qnt},#{price},#{cost},#{category_id},#{box_qnt},#{exp},#{product_code},#{brand},#{detail},#{imgname})
     </insert>
