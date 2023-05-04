@@ -11,7 +11,6 @@
     <select id="selectname" parameterType="String" resultType="Product">
         SELECT * FROM product WHERE name=#{name}
     </select>
-
     <select id="selectall" resultType="Product">
         SELECT * FROM product
     </select>
@@ -41,5 +40,4 @@
     <delete id="delete" parameterType="Product">
         DELETE FROM product WHERE id=#{id}
     </delete>
-
 </mapper>

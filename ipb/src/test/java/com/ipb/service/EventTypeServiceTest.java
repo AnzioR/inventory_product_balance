@@ -1,6 +1,6 @@
 package com.ipb.service;
 
-import com.ipb.domain.Store;
+import com.ipb.domain.EventType;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -10,17 +10,17 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class StoreServiceTest {
+class EventTypeServiceTest {
 
   @Autowired
-  StoreService storeService;
+  EventTypeService eventTypeService;
 
   @Test
   void register() {
     try {
-      Store store = new Store(null, "센텀텀", "부산시 해운대구 센텀로 12345", "051-0000-1111", "부산센텀점");
-      storeService.register(store);
-      System.out.println(store);
+      EventType type = new EventType(null, "과자 1개 증정 이벤트");
+      eventTypeService.register(type);
+      System.out.println(type);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -28,9 +28,9 @@ class StoreServiceTest {
 
   @Test
   void modify() {
-    Store store = new Store(10L, "부산센텀시티점", "부산시 해운대구 센텀로 123", "051-1111-2222", "부산센템시티점");
+    EventType type = new EventType(1L, "2+2 이벤트");
     try {
-      storeService.modify(store);
+      eventTypeService.modify(type);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("수정 오류가 발생했습니다.");
@@ -40,7 +40,7 @@ class StoreServiceTest {
   @Test
   void remove() {
     try {
-      storeService.remove(4L);
+      eventTypeService.remove(4L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류가 발생했습니다.");
@@ -49,10 +49,10 @@ class StoreServiceTest {
 
   @Test
   void get() {
-    Store store = null;
+    EventType type = null;
     try {
-      store = storeService.get(7L);
-      System.out.println(store);
+      type = eventTypeService.get(1L);
+      System.out.println(type);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("검색오류가 발생했습니다.");
@@ -61,11 +61,11 @@ class StoreServiceTest {
 
   @Test
   void testGet() {
-    List<Store> list = null;
+    List<EventType> list = null;
     try {
-      list = storeService.get();
-      for(Store st : list) {
-        System.out.println(st);
+      list = eventTypeService.get();
+      for(EventType type : list) {
+        System.out.println(type);
       }
     } catch(Exception e) {
       e.printStackTrace();

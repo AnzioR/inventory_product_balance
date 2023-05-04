@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.EventTypeMapper">
+
+    <!-- 이벤트 타입 등록 -->
+    <insert id="insert" parameterType="EventType">
+        INSERT INTO event_type VALUES (NULL, #{name})
+    </insert>
+
+    <!-- 이벤트 타입 수정  -->
+    <update id="update" parameterType="EventType">
+        UPDATE event_type SET name=#{name} WHERE id = #{id}
+    </update>
+
+    <!-- 이벤트 타입 삭제 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM event_type WHERE id = #{id}
+    </delete>
+
+    <!-- 이벤트 타입 상세조회 : 이벤트 타입은 아이디비번호와 이벤트타입이름만 있기 때문에 상세보기 화면이 필요한지 조금 의문이 있었으나 생성함 -->
+    <select id="select" parameterType="Long" resultType="EventType">
+        SELECT id, name
+        FROM event_type
+        WHERE id = #{id}
+    </select>
+
+    <!-- 이벤트 타입 전체 조회 : 현재 존재하는 이벤트 타입 전체의 정보를 가져옴 -->
+    <select id="selectall" resultType="EventType">
+        SELECT name FROM event_type
+    </select>
+
+
+</mapper>

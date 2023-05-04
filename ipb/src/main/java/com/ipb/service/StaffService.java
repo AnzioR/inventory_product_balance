@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.Board;
 import com.ipb.domain.Staff;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
@@ -8,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 
 @Transactional
 @Service
@@ -25,6 +25,7 @@ public class StaffService implements MyService<Long, Staff> {
 
     @Override
     public void modify(Staff staff) throws Exception {
+        staffMapper.update(staff);
     }
 
     @Override
@@ -53,6 +54,10 @@ public class StaffService implements MyService<Long, Staff> {
             e.printStackTrace();
         }
         return null;
+
+    }
+    public List<Staff> selectallname()throws Exception {
+        return staffMapper.selectallname();
 
     }
 }
