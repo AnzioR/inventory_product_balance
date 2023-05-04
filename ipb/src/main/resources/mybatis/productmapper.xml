@@ -33,7 +33,6 @@
     </select>
     <insert id="insert" parameterType="Product">
         INSERT INTO product VALUES (NULL,#{name},#{qnt},#{price},#{cost},#{category_id},#{box_qnt},#{exp},#{product_code},#{brand},#{detail},#{imgname})
-        <!--        null -> 우리가 입력안해도 순서가 올라감 -->
     </insert>
     <update id="update" parameterType="Product">
         UPDATE product SET qnt=#{qnt},price=#{price},cost=#{cost} WHERE id=#{id}
