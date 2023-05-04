@@ -30,4 +30,10 @@
         FROM staff s
                  inner join store st ON s.store_id = st.id
     </select>
+    <select id="checkID" resultType="int">
+        SELECT COUNT(*)
+        FROM   staff
+        WHERE  login_id = #{login_id}
+    </select>
+
 </mapper>
