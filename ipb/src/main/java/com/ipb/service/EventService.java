@@ -38,4 +38,12 @@ public class EventService implements MyService<Long, Event> {
   public List<Event> get() throws Exception {
     return eventMappper.selectall();
   }
+
+  public Event searcheventname(String name) throws Exception {
+    return eventMappper.searcheventname(name);
+  }
+
+  public List<Event> selectbytype(Long id) throws Exception {
+    return eventMappper.selectbytype(id);
+  }
 }
