@@ -19,14 +19,13 @@ public class StaffService implements MyService<Long, Staff> {
 
 
     @Override
-    public Board register(Staff staff) throws Exception {
+    public void register(Staff staff) throws Exception {
         staffMapper.insert(staff);
-        return null;
     }
 
     @Override
-    public Board modify(Staff staff) throws Exception {
-        return null;
+    public void modify(Staff staff) throws Exception {
+
     }
 
     @Override

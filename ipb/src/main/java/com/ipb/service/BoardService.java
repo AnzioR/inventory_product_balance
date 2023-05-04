@@ -15,15 +15,13 @@ public class BoardService implements MyService<Long, Board> {
   @Autowired
   BoardMapper boardMapper;
   @Override
-  public Board register(Board board) throws Exception {
+  public void register(Board board) throws Exception {
     boardMapper.insert(board);
-    return board;
   }
 
   @Override
-  public Board modify(Board board) throws Exception {
+  public void modify(Board board) throws Exception {
     boardMapper.update(board);
-    return board;
   }
 
   @Override

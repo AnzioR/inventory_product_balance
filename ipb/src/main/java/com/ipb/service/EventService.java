@@ -16,15 +16,13 @@ public class EventService implements MyService<Long, Event> {
   EventMappper eventMappper;
 
   @Override
-  public Board register(Event event) throws Exception {
+  public void register(Event event) throws Exception {
     eventMappper.insert(event);
-    return null;
   }
 
   @Override
-  public Board modify(Event event) throws Exception {
+  public void modify(Event event) throws Exception {
     eventMappper.update(event);
-    return null;
   }
 
   @Override

@@ -17,14 +17,12 @@ public class ProductService implements MyService <Long, Product> {
   ProductMapper productMapper;
 
   @Override
-  public Board register(Product product) throws Exception {
+  public void register(Product product) throws Exception {
     productMapper.insert(product);
-    return null;
   }
   @Override
-  public Board modify(Product product) throws Exception {
+  public void modify(Product product) throws Exception {
     productMapper.update(product);
-    return null;
   }
 
   @Override

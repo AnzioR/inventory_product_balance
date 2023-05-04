@@ -17,15 +17,13 @@ public class StoreService implements MyService<Long, Store> {
 
 
   @Override
-  public Board register(Store store) throws Exception {
+  public void register(Store store) throws Exception {
     storeMapper.insert(store);
-    return null;
   }
 
   @Override
-  public Board modify(Store store) throws Exception {
+  public void modify(Store store) throws Exception {
     storeMapper.update(store);
-    return null;
   }
 
   @Override
