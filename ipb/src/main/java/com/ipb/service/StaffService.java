@@ -1,6 +1,5 @@
 package com.ipb.service;
 
-import com.ipb.domain.Board;
 import com.ipb.domain.Staff;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
@@ -59,6 +58,10 @@ public class StaffService implements MyService<Long, Staff> {
     public List<Staff> selectallname()throws Exception {
         return staffMapper.selectallname();
 
+    }
+    public Integer checkId(String id) throws Exception {
+        Integer result = staffMapper.checkID(id);
+        return result;
     }
 }
 

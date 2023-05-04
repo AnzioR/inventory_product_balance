@@ -12,4 +12,5 @@ import java.util.List;
 public interface StaffMapper extends MyMapper<Long, Staff> {
     public Staff selectid(String login_id) throws Exception;
     public List<Staff> selectallname() throws Exception;
+    public Integer checkID(String login_id) throws Exception;
 }

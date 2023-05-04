@@ -16,14 +16,19 @@ public class StaffController {
     StaffService staffService;
 
     @PostMapping("/add")
-    public Staff register(Staff staff){
+    public Staff register(Staff staff) throws Exception {
+        Integer result = staffService.checkId(staff.getLogin_id());
         try {
-            staffService.register(staff);
-            return staff;
+            if (result >= 1) {
+                return null;
+            } else if (result == 0) {
+                staffService.register(staff);
+            }
         } catch (Exception e) {
             e.printStackTrace();
-        return null;
+
         }
+        return staff;
     }
     @PostMapping("/login")
     public Staff login(Staff staff){
