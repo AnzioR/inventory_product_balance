@@ -20,6 +20,7 @@ public class ProductService implements MyService <Long, Product> {
   public void register(Product product) throws Exception {
     productMapper.insert(product);
   }
+
   @Override
   public void modify(Product product) throws Exception {
     productMapper.update(product);
@@ -35,7 +36,12 @@ public class ProductService implements MyService <Long, Product> {
     return productMapper.select(id);
   }
 
+  @Override
+  public List<Product> get() throws Exception {
+    return productMapper.selectall();
+  }
   public List<Product> selectcategoryname(String categoryname) throws Exception {
     return productMapper.selectcategoryname(categoryname);
   }
 }
+
