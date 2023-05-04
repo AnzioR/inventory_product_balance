@@ -17,16 +17,15 @@ public class StaffController {
 
     @PostMapping("/add")
     public Staff register(Staff staff) throws Exception {
-        Integer result = staffService.checkId(staff.getLogin_id());
         try {
-            if (result >= 1) {
-                return null;
-            } else if (result == 0) {
+            if (staffService.checkId(staff.getLogin_id())) {
                 staffService.register(staff);
+            } else {
+                throw new Exception("있는 아이디");
             }
         } catch (Exception e) {
             e.printStackTrace();
-
+            return null;
         }
         return staff;
     }
