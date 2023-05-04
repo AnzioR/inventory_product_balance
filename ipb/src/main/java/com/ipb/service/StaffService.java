@@ -59,8 +59,11 @@ public class StaffService implements MyService<Long, Staff> {
         return staffMapper.selectallname();
 
     }
-    public Integer checkId(String id) throws Exception {
-        Integer result = staffMapper.checkID(id);
+    public Boolean checkId(String id) throws Exception {
+        Boolean result = true;
+        if(staffMapper.checkID(id) >= 1) {
+            result = false;
+        }
         return result;
     }
 }
