@@ -36,7 +36,7 @@ public class WeatherTest {
   }
   @Test
   public void weateher() throws Exception {
-    String busan = OpenWeatherUtill.getWeather("busan");
+    String busan = OpenWeatherUtill.getWeather("seoul");
     JSONParser jsonparser = new JSONParser();
     JSONObject weather = (JSONObject)jsonparser.parse(busan);
     JSONArray weatherA = (JSONArray) weather.get("weather");
