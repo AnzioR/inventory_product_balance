@@ -67,4 +67,17 @@ class BoardServiceTest {
       e.printStackTrace();
     }
   }
+
+  @Test
+  void testSearchBoard(){
+    List<Board> result = null;
+    try {
+      result = boardService.searchBoard("입니다");
+      for(Board board : result) {
+        System.out.println(board);
+      }
+    } catch (Exception e) {
+      throw new RuntimeException(e);
+    }
+  }
 }
