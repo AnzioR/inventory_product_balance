@@ -1,6 +1,11 @@
 package com.ipb.utill;
 
-import org.apache.tomcat.util.json.ParseException;
+
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -31,6 +36,20 @@ public class OpenWeatherUtill {
     }
     rd.close();
     conn.disconnect();
+    JSONParser jsonParser = new JSONParser();
+    JSONObject weather = (JSONObject)jsonParser.parse(sb.toString());
+    JSONArray weatherA = (JSONArray) weather.get("weather");
+    JSONObject WeatherB = (JSONObject) weatherA.get(0);
+    String EWeather = (String)WeatherB.get("main");
+
+    JSONObject weatherC = (JSONObject) weather.get("main");
+    Double temps = (Double) weatherC.get("temp");
+
+
+    System.out.println("(영어)날씨 = " + EWeather);
+
+    System.out.println("기온 = " + temps);
+
     return sb.toString();
     // 이쪽 파싱 불러 오기 안댐
   }
