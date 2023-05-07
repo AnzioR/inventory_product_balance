@@ -12,4 +12,5 @@ public class Weather {
     private Long id;
     private Long store_id;
     private String status;
+    private Double temp;
 }

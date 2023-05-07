@@ -1,11 +1,13 @@
 package com.ipb.utill;
 
+import org.apache.tomcat.util.json.ParseException;
+
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import java.text.ParseException;
+
 
 public class OpenWeatherUtill {
   public static String getWeather(String local) throws IOException, ParseException {
@@ -29,7 +31,7 @@ public class OpenWeatherUtill {
     }
     rd.close();
     conn.disconnect();
-
     return sb.toString();
+    // 이쪽 파싱 불러 오기 안댐
   }
 }
