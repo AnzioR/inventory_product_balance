@@ -42,16 +42,13 @@ public class WeatherTest {
     JSONArray weatherA = (JSONArray) weather.get("weather");
     JSONObject WeatherB = (JSONObject) weatherA.get(0);
     String EWeather = (String)WeatherB.get("main");
-    String KWeather = (String)WeatherB.get("description");
-
-
 
     JSONObject weatherC = (JSONObject) weather.get("main");
     Double temps = (Double) weatherC.get("temp");
 
 
     System.out.println("(영어)날씨 = " + EWeather);
-    System.out.println("(한국)날씨 = " + KWeather);
+
     System.out.println("기온 = " + temps);
 
 
