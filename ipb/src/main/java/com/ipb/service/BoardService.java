@@ -9,7 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-@Transactional
+
 @Service
 public class BoardService implements MyService<Long, Board> {
   @Autowired
