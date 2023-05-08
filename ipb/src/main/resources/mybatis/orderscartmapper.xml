@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.OrdersCartMapper">
+
+    <!-- 발주카트에 담기 -->
+    <insert id="insert" parameterType="OrdersCart">
+        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id})
+    </insert>
+
+    <!-- 발주카트에 담긴 상품 수량 수정  -->
+    <update id="update" parameterType="OrdersCart">
+        UPDATE orders_cart SET qnt=#{qnt} WHERE id = #{id}
+    </update>
+
+    <!-- 발주카트 삭제 : 발주카트에 담긴 상품 자체를 삭제함 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM orders_cart WHERE id = #{id}
+    </delete>
+
+    <!-- 발주 카트 조회 : 점포에서 발주카트에 담은 상품 중 아이디번호에 해당되는 내역을 조회 -->
+    <select id="select" parameterType="Long" resultType="OrdersCart">
+        SELECT id, qnt, product_id, store_id
+        FROM orders_cart
+        WHERE id = #{id}
+    </select>
+
+    <!-- 발주 카트 전체 조회 : 해당 점포에서 발주카트에 담은 내역 전체를 조회할 수 있음 -->
+    <select id="selectall" resultType="OrdersCart">
+        SELECT id, qnt, product_id, store_id FROM orders_cart
+    </select>
+
+
+</mapper>

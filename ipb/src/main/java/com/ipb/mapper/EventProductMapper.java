@@ -10,6 +10,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EventProductMapper extends MyMapper<Long, EventProduct> {
-  public List<EventProduct> searcheventproduct(Long id) throws Exception;
+  public List<EventProduct> searcheventproduct(String name) throws Exception;
 }
 
