@@ -92,7 +92,7 @@ public class EventController {
 
   //이벤트 타입별로 조회하기 ok
   @GetMapping("/selectbytype/{id}")
-  public List<Event> selectbytype(@PathVariable Long id) {
+  public Event selectbytype(@PathVariable Long id) {
     try {
       return eventService.selectbytype(id);
     } catch (Exception e) {
