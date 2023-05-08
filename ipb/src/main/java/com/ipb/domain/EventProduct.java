@@ -3,6 +3,7 @@ package com.ipb.domain;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 @Data
 @NoArgsConstructor
@@ -15,6 +16,10 @@ public class EventProduct {
   private String product_name;
   private String product_imgname;
   private String event_imgname;
+  private int qnt;
+  private int price;
+  private String start_date;
+  private String end_date;
 
   public EventProduct(Long id, Long product_id, Long event_id) {
     this.id = id;

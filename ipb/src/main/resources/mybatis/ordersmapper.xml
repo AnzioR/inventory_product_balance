@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.OrdersMapper">
+
+    <!-- 발주 : 점포에서 주문 넣기 -->
+    <insert id="insert" parameterType="Orders">
+        INSERT INTO orders VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{delivery_id}, now())
+    </insert>
+
+    <!-- 발주 수정 : 점포에서 주문한 발주 수량을 수정  -->
+    <update id="update" parameterType="Orders">
+        UPDATE orders SET qnt=#{qnt} WHERE id = #{id}
+    </update>
+
+    <!-- 발주 취소 : 점포에서 주문한 발주 내역을 취소하면 내역이 삭제됨 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM orders WHERE id = #{id}
+    </delete>
+
+    <!-- 발주 조회 : 점포에서 주문한 발주내역 중 발주번호에 해당되는 내역을 조회 -->
+    <select id="select" parameterType="Long" resultType="Orders">
+        SELECT id, qnt, product_id, store_id, delivery_id, orders_date
+        FROM orders
+        WHERE id = #{id}
+    </select>
+
+    <!-- 발주 전체 조회 : 해당 점포에서 발주한 내역 전체를 조회할 수 있음 -->
+    <select id="selectall" resultType="Orders">
+        SELECT id, qnt, product_id, store_id, delivery_id, orders_date FROM orders
+    </select>
+
+    <!-- 본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 : 발주번호, 발주상품명, 발주수량*입수, 발주점포명, 배송상태, 배송일 보여줌  -->
+    <select id="searchdate" parameterType="Date" resultType="Orders">
+        SELECT o.id, pi.name, o.qnt, pi.box_qnt, s.name, d.status, o.orders_date
+        FROM orders o
+                 INNER JOIN delivery d on d.id = o.delivery_id
+                 INNER JOIN product p on p.id = o.product_id
+                 INNER JOIN product_info pi on p.product_info_id = pi.product_code
+                 INNER JOIN store s on s.id = o.store_id
+        WHERE o.orders_date = #{orders_date}
+    </select>
+
+    <!-- 발주한 상품의 배송 상태를 조회한다 : 일단 발주 id로 조회할 수 있도록 만들었음 -->
+    <select id="searchdeliverystatus">
+        SELECT o.id, pi.name, d.status
+        FROM orders o
+                INNER JOIN delivery d on d.id = o.delivery_id
+                INNER JOIN product p on p.id = o.product_id
+                INNER JOIN product_info pi on p.product_info_id = pi.product_code
+        WHERE o.id = #{id}
+    </select>
+
+</mapper>

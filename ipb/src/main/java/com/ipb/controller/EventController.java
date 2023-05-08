@@ -101,10 +101,10 @@ public class EventController {
   }
 
   //이벤트가 진행중인 상품 조회 ok
-  @GetMapping("/eventproductlist/{id}")
-  public List<EventProduct> searcheventproduct(@PathVariable Long id) {
+  @GetMapping("/eventproductlist/{name}")
+  public List<EventProduct> searcheventproduct(@PathVariable String name) {
     try {
-      return eventProductService.searcheventproduct(id);
+      return eventProductService.searcheventproduct(name);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
