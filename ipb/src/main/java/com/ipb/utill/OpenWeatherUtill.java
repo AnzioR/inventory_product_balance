@@ -7,7 +7,6 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-import org.springframework.stereotype.Service;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,6 +16,7 @@ import java.net.URL;
 
 
 public class OpenWeatherUtill {
+  //parse 디펜던시
   public static String getWeather(String local) throws IOException, ParseException {
 
     StringBuilder urlBuilder = new StringBuilder("https://api.openweathermap.org/data/2.5/weather?q=" + local + ",kr&appid=bb12b4c410743f76108847dd974e4a61&units=metric&lang=kr"); /*URL*/

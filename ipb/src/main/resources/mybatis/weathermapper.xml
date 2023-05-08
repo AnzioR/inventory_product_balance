@@ -8,5 +8,10 @@
     <insert id="insert" parameterType="Weather">
         INSERT INTO weather VALUES (NULL, #{store_id}, #{status}, #{temp}, now())
     </insert>
+    <select id="select" parameterType="Long" resultType="Weather">
+        SELECT * FROM weather where store_id = #{store_id}
+        order by weather_date desc limit 1
+    </select>
+
 
 </mapper>

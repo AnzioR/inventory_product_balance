@@ -2,6 +2,7 @@ package com.ipb.domain;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -15,7 +16,7 @@ public class Weather {
     private Long store_id;
     private String status;
     private Double temp;
-    private Date weather_date;
+    private LocalDate weather_date;
 
 
 }

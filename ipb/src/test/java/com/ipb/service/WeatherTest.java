@@ -39,7 +39,16 @@ public class WeatherTest {
   }
   @Test
   public void weateher() throws Exception {
-    String busan = OpenWeatherUtill.getWeather("busan");
+    String busan = OpenWeatherUtill.getWeather("seoul");
+    System.out.println(busan);
+
+
+
+
+
+
+
+
     Weather weather = OpenWeatherUtill.WeatherInfo(busan);
     weatherService.register(weather);
     System.out.println(weather);

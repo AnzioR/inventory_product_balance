@@ -2,6 +2,7 @@ package com.ipb.controller;
 
 import com.ipb.domain.Staff;
 import com.ipb.domain.Weather;
+import com.ipb.domain.WeatherStatus;
 import com.ipb.service.StaffService;
 import com.ipb.service.WeatherService;
 import com.ipb.utill.OpenWeatherUtill;
@@ -42,14 +43,51 @@ public class StaffController {
         if (staff1 ==null){
             return null;
         }
-        System.out.println(staff1);
+        // area 를 통해서 json 가져오기
         String weather = OpenWeatherUtill.getWeather(staff1.getArea());
+        // 가져온 json 파싱해서 필요한값 가져오기
         Weather weather1 = OpenWeatherUtill.WeatherInfo(weather);
+        //로그인한 staff의 storeid 를 입력하기
         weather1.setStore_id(staff1.getStore_id());
-        System.out.println(weather1);
+        //DB에 날씨 데이터 최종 저장하기
         weatherService.register(weather1);
         return staff1;
     }
+
+    @PostMapping("/weather")
+    public WeatherStatus getWeatherInfo(@RequestBody Staff staff) throws Exception {
+
+        // 이건 3시간 단위로 조회할꺼야
+
+        // 기존 날씨 데이터 조회
+        Weather old_weather = weatherService.get(staff.getStore_id()); // SELECT * FROM ipb1.weather where store_id = 3 order by weather_date desc limit 1;
+
+        // 새로운 날씨 데이터
+        String weather_json = OpenWeatherUtill.getWeather(staff.getArea());
+        Weather new_weather = OpenWeatherUtill.WeatherInfo(weather_json);
+        //DB에 날씨 데이터 최종 저장하기
+        new_weather.setStore_id(staff.getStore_id());
+        weatherService.register(new_weather);
+
+        boolean isSame = old_weather.getStatus().equals(new_weather.getStatus());
+        if(isSame) {
+            // 날씨가 기존의 날씨와 동일하면 false 반환
+            return new WeatherStatus(false, null);
+//                    return "{\"바꿨냐\": false}";
+        } else {
+            // 날씨가 기존의 날씨와 달라지면 true 및 바뀐 날씨 반환
+            return new WeatherStatus(true, new_weather.getStatus());
+//                    return "{\"바꿨냐\": true, \"바뀐날씨\":" + new_weather.getStatus() +"}";
+        }
+
+
+
+
+
+
+
+    }
+
 
     @GetMapping("/list")
     public List<Staff> staffList(){
@@ -59,7 +97,6 @@ public class StaffController {
             e.printStackTrace();
             return null;
         }
-
     }
     @GetMapping("/listname")
     public List<Staff> staffListName(){
