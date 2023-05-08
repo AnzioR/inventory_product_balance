@@ -34,8 +34,8 @@ public class WeatherService implements MyService<Long, Weather> {
   }
 
   @Override
-  public Weather get(Long aLong) throws Exception {
-    return null;
+  public Weather get(Long store_id) throws Exception {
+    return weatherMapper.select(store_id);
   }
 
   @Override
