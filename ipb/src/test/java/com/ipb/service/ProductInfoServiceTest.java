@@ -1,6 +1,7 @@
 package com.ipb.service;
 
-import com.ipb.domain.Product;
+
+import com.ipb.domain.ProductInfo;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,17 +9,17 @@ import org.springframework.boot.test.context.SpringBootTest;
 import java.util.List;
 
 @SpringBootTest
-class ProductServiceTest {
+class ProductInfoServiceTest {
 
   @Autowired
-  ProductService productService;
+  ProductInfoService productInfoService;
 
   @Test
   void register() {
     try {
-      Product product = new Product(null,7000, 6000, 2500, "2023-02-05",880770L);
-      productService.register(product);
-      System.out.println(product);
+      ProductInfo productInfo = new ProductInfo(880772L, "한라봉", "제주도", "제주 한라봉","한라.img", 3L, "과자",20);
+      productInfoService.register(productInfo);
+      System.out.println(productInfo);
     } catch (Exception e) {
       e.printStackTrace();
     }
@@ -26,9 +27,9 @@ class ProductServiceTest {
 
   @Test
   void modify() {
-    Product product = new Product(11L,99, 6000, 2500, "2023-02-05",880770L);
+    ProductInfo productInfo = new ProductInfo(880770L, "박카스", "오리온", "비타오백 가루","가루.img", 3L, "과자",20);
     try {
-      productService.modify(product);
+      productInfoService.modify(productInfo);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("수정 오류가 발생!");
@@ -38,7 +39,7 @@ class ProductServiceTest {
   @Test
   void remove() {
     try {
-      productService.remove(1L);
+      productInfoService.remove(880789L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류 발생!");
@@ -47,10 +48,10 @@ class ProductServiceTest {
 
   @Test
   void get() {
-    Product product = null;
+    ProductInfo productInfo = null;
     try {
-      product = productService.get(1L);
-      System.out.println(product);
+      productInfo = productInfoService.get(880771L);
+      System.out.println(productInfo);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("검색오류 발생!!!");
@@ -70,27 +71,27 @@ class ProductServiceTest {
 //      System.out.println("카테고리 검색 오류 발생!!");
 //    }
 //  }
-//@Test
-//void testSelectCategoryName() {
-//  String categoryName = "과자";
-//  List<Product> list = null;
-//  try {
-//    list = productService.selectcategoryname(categoryName);
-//    for(Product product : list) {
-//      System.out.println(product);
-//    }
-//  } catch(Exception e) {
-//    e.printStackTrace();
-//    System.out.println("카테고리 검색 오류 발생!!");
-//  }
-//}
+@Test
+void testSelectCategoryName() {
+  String categoryName = "과일";
+  List<ProductInfo> list = null;
+  try {
+    list = productInfoService.selectcategoryname(categoryName);
+    for(ProductInfo productInfo : list) {
+      System.out.println(productInfo);
+    }
+  } catch(Exception e) {
+    e.printStackTrace();
+    System.out.println("카테고리 검색 오류 발생!!");
+  }
+}
   @Test
   void testGet() {
-    List<Product> list = null;
+    List<ProductInfo> list = null;
     try {
-      list = productService.get();
-      for(Product product : list) {
-        System.out.println(product);
+      list = productInfoService.get();
+      for(ProductInfo productInfo : list) {
+        System.out.println(productInfo);
       }
     } catch(Exception e) {
       e.printStackTrace();
