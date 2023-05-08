@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.WeatherMapper">
+
+    <!-- 날씨 등록 -->
+    <insert id="insert" parameterType="Weather">
+        INSERT INTO weather VALUES (NULL, #{store_id}, #{status}, #{temp}, now())
+    </insert>
+    <select id="select" parameterType="Long" resultType="Weather">
+        SELECT * FROM weather where store_id = #{store_id}
+        order by weather_date desc limit 1
+    </select>
+
+
+</mapper>

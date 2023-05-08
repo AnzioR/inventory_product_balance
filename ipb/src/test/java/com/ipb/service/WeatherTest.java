@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.Weather;
 import com.ipb.utill.OpenWeatherUtill;
 import com.ipb.utill.WeatherUtill;
 import net.minidev.json.JSONArray;
@@ -15,6 +16,8 @@ import java.util.Date;
 
 @SpringBootTest
 public class WeatherTest {
+  @Autowired
+  WeatherService weatherService;
 
 
   @Test
@@ -37,20 +40,18 @@ public class WeatherTest {
   @Test
   public void weateher() throws Exception {
     String busan = OpenWeatherUtill.getWeather("seoul");
-    JSONParser jsonparser = new JSONParser();
-    JSONObject weather = (JSONObject)jsonparser.parse(busan);
-    JSONArray weatherA = (JSONArray) weather.get("weather");
-    JSONObject WeatherB = (JSONObject) weatherA.get(0);
-    String EWeather = (String)WeatherB.get("main");
-
-    JSONObject weatherC = (JSONObject) weather.get("main");
-    Double temps = (Double) weatherC.get("temp");
+    System.out.println(busan);
 
 
-    System.out.println("(영어)날씨 = " + EWeather);
 
-    System.out.println("기온 = " + temps);
 
+
+
+
+
+    Weather weather = OpenWeatherUtill.WeatherInfo(busan);
+    weatherService.register(weather);
+    System.out.println(weather);
 
 
   }

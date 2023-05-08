@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.ProductInfoMapper">
+
+
+    <select id="select" parameterType="Long" resultType="ProductInfo">
+        SELECT * FROM product_info WHERE product_code=#{product_code}
+    </select>
+    <select id="selectname" parameterType="String" resultType="ProductInfo">
+        SELECT * FROM product_info WHERE name=#{name}
+    </select>
+    <select id="selectall" resultType="ProductInfo">
+        SELECT * FROM product_info
+    </select>
+    <select id="selectcategoryname" parameterType="String" resultType="ProductInfo">
+        SELECT p.product_code, p.name , p.brand, p.detail, c.name as category_name, p.imgname,
+        p.box_qnt
+        FROM product_info p
+        INNER JOIN category c ON p.category_id = c.id
+        WHERE c.name = #{category_name};
+    </select>
+<!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
+<!--        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,-->
+<!--        p.exp, p.product_code, p.brand ,p.detail,-->
+<!--        p.imgname-->
+<!--        FROM product p-->
+<!--        INNER JOIN category c ON p.category_id = c.id-->
+<!--        WHERE c.name =#{categoryname};-->
+<!--    </select>-->
+    <insert id="insert" parameterType="ProductInfo">
+        INSERT INTO product_info VALUES (#{product_code},#{name},#{brand},#{detail},#{imgname},#{category_id},#{box_qnt})
+    </insert>
+    <update id="update" parameterType="ProductInfo">
+        UPDATE product_info SET name=#{name},brand=#{brand},detail=#{detail} WHERE product_code=#{product_code}
+    </update>
+    <delete id="delete" parameterType="ProductInfo">
+        DELETE FROM product_info WHERE product_code=#{product_code}
+    </delete>
+</mapper>
