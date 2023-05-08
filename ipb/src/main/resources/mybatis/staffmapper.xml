@@ -8,7 +8,11 @@
         SELECT * FROM staff WHERE id=#{id}
     </select>
     <select id="selectid" parameterType="String" resultType="Staff">
-        SELECT * FROM staff WHERE login_id=#{login_id}
+        SELECT s.name, s.login_id, s.pwd, st.name as store_name, st.area ,st.id as store_id FROM staff s
+
+                 INNER JOIN store st on s.store_id = st.id
+
+                 WHERE login_id=#{login_id}
     </select>
     <select id="getPage" resultType="Staff">
         SELECT * FROM staff ORDER BY id DESC

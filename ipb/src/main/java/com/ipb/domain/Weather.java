@@ -2,6 +2,8 @@ package com.ipb.domain;
 
 import lombok.*;
 
+import java.util.Date;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -13,4 +15,7 @@ public class Weather {
     private Long store_id;
     private String status;
     private Double temp;
+    private Date weather_date;
+
+
 }
