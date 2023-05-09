@@ -43,5 +43,8 @@ public class ProductService implements MyService <Long, Product> {
   public List<Product> selectcategoryname(String categoryname) throws Exception {
     return productMapper.selectcategoryname(categoryname);
   }
+  public List<Product> search(String search) throws Exception {
+    return productMapper.search(search);
+  }
 }
 

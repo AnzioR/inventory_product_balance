@@ -5,24 +5,42 @@
 <mapper namespace="com.ipb.mapper.BoardMapper">
 
     <select id="select" parameterType="Long" resultType="Board">
-        SELECT * FROM board WHERE id=#{id}
+        SELECT *
+        FROM board
+        WHERE id = #{id}
     </select>
     <select id="selectall" resultType="Board">
-        SELECT board.id, board.title, board.body_text, staff.name, board.imgname,board.write_date
-        FROM board INNER JOIN staff ON board.staff_id = staff.id
+        SELECT board.id, board.title, board.body_text, staff.name, board.imgname, board.write_date
+        FROM board
+                 INNER JOIN staff ON board.staff_id = staff.id
         ORDER BY write_date DESC;
     </select>
     <insert id="insert" parameterType="Board">
-        INSERT INTO board VALUES (null,#{title},#{body_text},#{staff_id},#{imgname}, NOW())
+        INSERT INTO board
+        VALUES (null, #{title}, #{body_text}, #{staff_id}, #{imgname}, NOW())
     </insert>
     <update id="update" parameterType="Board">
-        UPDATE board SET title=#{title}, body_text=#{body_text} WHERE id=#{id}
+        UPDATE board
+        SET title=#{title},
+            body_text=#{body_text}
+        WHERE id = #{id}
     </update>
     <delete id="delete" parameterType="Long">
-        DELETE FROM board WHERE id=#{id}
+        DELETE
+        FROM board
+        WHERE id = #{id}
     </delete>
     <select id="searchBoard" parameterType="String" resultType="Board">
-        SELECT * FROM board WHERE title LIKE CONCAT ('%', #{txt}, '%') OR body_text LIKE CONCAT ('%', #{txt}, '%');
+        SELECT *
+        FROM board
+        WHERE title LIKE CONCAT('%', #{txt}, '%')
+           OR body_text LIKE CONCAT('%', #{txt}, '%');
+    </select>
+    <select id="isadmin" parameterType="Long" resultType="Board">
+        SELECT b.staff_id, s.store_id, s.name
+        FROM board b
+                 INNER JOIN staff s ON b.staff_id = s.id
+        WHERE staff_id = #{staff_id};
     </select>
 
 </mapper>
