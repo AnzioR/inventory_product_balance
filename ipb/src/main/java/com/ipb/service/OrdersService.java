@@ -32,7 +32,7 @@ public class OrdersService implements MyService<Long, Orders> {
     }
   }
 
-  //주문취소
+  //발주취소
   public void orderscancel(Orders orders) throws Exception {
     if(orders.getDelivery_id() == 1) {
       ordersMapper.orderscancel(orders);
@@ -77,7 +77,7 @@ public class OrdersService implements MyService<Long, Orders> {
   }
 
   //매장별 발주 수정
-  public Orders updatestoreorders(Orders orders) throws Exception {
-    return ordersMapper.updatestoreorders(orders);
+  public void updatestoreorders(Orders orders) throws Exception {
+    ordersMapper.updatestoreorders(orders);
   }
 }
