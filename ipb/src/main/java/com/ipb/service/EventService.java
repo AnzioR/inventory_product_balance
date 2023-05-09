@@ -44,7 +44,7 @@ public class EventService implements MyService<Long, Event> {
     return eventMappper.searcheventname(name);
   }
 
-  public List<Event> selectbytype(Long id) throws Exception {
+  public Event selectbytype(Long id) throws Exception {
     return eventMappper.selectbytype(id);
   }
 }

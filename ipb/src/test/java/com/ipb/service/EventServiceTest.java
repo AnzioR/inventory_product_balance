@@ -85,16 +85,14 @@ class EventServiceTest {
   }
 
   @Test
-  void selectbytype(Long id) {
-    List<Event> list = null;
+  void selectbytype() {
+    Event event = null;
     try {
-      list = eventService.selectbytype(id);
-      for(Event event : list) {
-        System.out.println(event);
-      }
+      event = eventService.selectbytype(3L);
+      System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();
-      System.out.println("전체검색 오류가 발생했습니다.");
+      System.out.println("이벤트 타입 검색 오류가 발생했습니다.");
     }
   }
 }

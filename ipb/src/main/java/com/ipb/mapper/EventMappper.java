@@ -12,5 +12,5 @@ import java.util.List;
 public interface EventMappper extends MyMapper<Long, Event> {
   public Event searcheventname(String name) throws Exception;
 
-  public List<Event> selectbytype(Long id) throws Exception;
+  public Event selectbytype(Long id) throws Exception;
 }
