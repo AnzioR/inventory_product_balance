@@ -58,4 +58,10 @@
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
         WHERE name Like CONCAT('%', #{txt}, '%')
     </select>
+
+    <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
+    <update id="updateqnt" parameterType="Product">
+        UPDATE product SET qnt=#{qnt} WHERE id=#{id};
+    </update>
+
 </mapper>

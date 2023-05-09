@@ -46,5 +46,10 @@ public class ProductService implements MyService <Long, Product> {
   public List<Product> search(String search) throws Exception {
     return productMapper.search(search);
   }
+
+  //발주할 때, 수량을 변경함
+  public void updateqnt(Product product) throws Exception {
+    productMapper.updateqnt(product);
+  }
 }
 
