@@ -56,6 +56,17 @@ class ProductServiceTest {
       System.out.println("검색오류 발생!!!");
     }
   }
+  @Test
+  void search() {
+
+    try {
+      List<Product> 오 = productService.search("비");
+      System.out.println(오);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("검색오류 발생!!!");
+    }
+  }
 
 //  @Test
 //  void selectcategoryname() {

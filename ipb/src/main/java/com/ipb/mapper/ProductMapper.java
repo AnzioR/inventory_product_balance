@@ -12,4 +12,5 @@ import java.util.List;
 @Repository
 public interface ProductMapper extends MyMapper<Long, Product> {
   public List<Product> selectcategoryname(String categoryname) throws Exception;
+  List<Product> search(String txt) throws Exception;
 }
