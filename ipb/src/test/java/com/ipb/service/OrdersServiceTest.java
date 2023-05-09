@@ -42,12 +42,12 @@ class OrdersServiceTest {
       }
   }
 
-  // 왜 안바뀌는건지..................
+  //가져온 주문의 delivery_id가 1인 경우는 테스트 성공
+  //delivery_id가 2인 경우는 발주취소를 실패했습니다라는 문구 출력
   @Test
   void orderscancel() {
     try {
-      Orders orders = ordersService.get(1L);
-      orders.setDelivery_id(4L);
+      Orders orders = ordersService.get(2L);
       ordersService.orderscancel(orders);
     } catch (Exception e) {
       e.printStackTrace();
@@ -135,14 +135,13 @@ class OrdersServiceTest {
     }
   }
 
-  ///////////////////////오류문구가 뜨는데 mysql에서 수정됨......
   //매장별 발주 수정
   @Test
   void updatestoreorders() {
     try {
       Orders orders = ordersService.get(1L);
-      orders.setQnt(111);
-      orders.setDelivery_id(1L);
+      orders.setQnt(444);
+      orders.setDelivery_id(2L);
       ordersService.updatestoreorders(orders);
       System.out.println(orders);
     } catch(Exception e) {

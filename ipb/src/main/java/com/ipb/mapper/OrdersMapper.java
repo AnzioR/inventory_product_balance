@@ -27,5 +27,5 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
   public List<Orders> selectdetailstoreorders(Long id) throws Exception;
 
   //매장별 발주 수정
-  public Orders updatestoreorders(Orders orders) throws Exception;
+  public void updatestoreorders(Orders orders) throws Exception;
 }

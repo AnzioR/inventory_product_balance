@@ -14,10 +14,9 @@
         UPDATE orders SET qnt=#{qnt} WHERE id = #{id}
     </update>
 
-    <!-- 테스트 코드 수정 필요함 -->
-    <!-- 발주 취소 : 점포에서 주문한 발주를 취소함  -->
+    <!-- 발주 취소 : 점포에서 주문한 발주를 취소함, delivery_id를 주문취소 상태인 4로 변경함 -->
     <update id="orderscancel" parameterType="Orders">
-        UPDATE orders SET delivery_id=#{delivery_id} WHERE id = #{id}
+        UPDATE orders SET delivery_id=4 WHERE id = #{id}
     </update>
 
     <!-- 발주 내역 삭제 : 점포에서 주문한 발주 내역을 삭제 -->
