@@ -109,6 +109,20 @@ class ProductServiceTest {
     }
   }
 
+  //발주할 때, 수량을 변경해줌
+  @Test
+  void updateqnt() {
+    try {
+      Product product = productService.get(1L);
+      product.setQnt(555);
+      productService.updateqnt(product);
+      System.out.println(product);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("발주로 인한 재고 수량 변경에 실패했습니다.");
+    }
+  }
+
 }
 
 

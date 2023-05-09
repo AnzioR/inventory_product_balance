@@ -36,10 +36,10 @@
         WHERE title LIKE CONCAT('%', #{txt}, '%')
            OR body_text LIKE CONCAT('%', #{txt}, '%');
     </select>
-    <select id="isadmin" parameterType="Long" resultType="Board">
-        SELECT b.staff_id, s.store_id, s.name
-        FROM board b
-                 INNER JOIN staff s ON b.staff_id = s.id
-        WHERE staff_id = #{staff_id};
-    </select>
+<!--    <select id="isadmin" parameterType="Long" resultType="Board">-->
+<!--        SELECT b.staff_id, s.store_id, s.name-->
+<!--        FROM board b-->
+<!--                 INNER JOIN staff s ON b.staff_id = s.id-->
+<!--        WHERE staff_id = #{staff_id};-->
+<!--    </select>-->
 </mapper>

@@ -2,17 +2,7 @@
 <!DOCTYPE mapper
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.ipb.mapper.EventProductMapper">
+<mapper namespace="com.ipb.mapper.SaleMapper">
 
-    <!-- 이벤트 상품조회 : 이벤트 아이디에 해당되는 이벤트 상품 목록을 조회한다. -->
-    <!-- 이벤트 이름으로 조회하는 것에서 이벤트 이름에 띄어쓰기와 같은 공백이 있으면 오류가 발생할 수 있으므로, 공백 처리에 대한 이야기가 필요하다.   -->
-    <select id="searcheventproduct" resultType="Sale">
-        SELECT pi.name as product_name, p.price, p.cost, p.exp, st.name as store_name ,s.qnt,s.sales_date
-        FROM sales s
-                 INNER JOIN store_product sp on sp.id = s.store_product_id
-                 INNER JOIN product p on p.id = sp.product_id
-                 INNER JOIN product_info pi on  pi.product_code = p.product_info_id
-                 INNER JOIN store st on st.id = sp.store_id
-        WHERE store_id = #{store_id};
-    </select>
+
 </mapper>
