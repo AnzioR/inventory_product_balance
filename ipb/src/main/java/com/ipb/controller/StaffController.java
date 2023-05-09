@@ -79,13 +79,6 @@ public class StaffController {
             return new WeatherStatus(true, new_weather.getStatus());
 //                    return "{\"바꿨냐\": true, \"바뀐날씨\":" + new_weather.getStatus() +"}";
         }
-
-
-
-
-
-
-
     }
 
 

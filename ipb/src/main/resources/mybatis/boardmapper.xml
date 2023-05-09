@@ -42,5 +42,4 @@
                  INNER JOIN staff s ON b.staff_id = s.id
         WHERE staff_id = #{staff_id};
     </select>
-
 </mapper>
