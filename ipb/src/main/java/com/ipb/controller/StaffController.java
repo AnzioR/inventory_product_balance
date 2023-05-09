@@ -39,19 +39,19 @@ public class StaffController {
     }
     @PostMapping("/login")
     public Staff login(@RequestBody Staff staff) throws Exception {
-        Staff staff1 = staffService.login(staff.getLogin_id(),staff.getPwd());
-        if (staff1 ==null){
+        Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
+        if (loginStaff ==null){
             return null;
         }
         // area 를 통해서 json 가져오기
-        String weather = OpenWeatherUtill.getWeather(staff1.getArea());
+        String weather = OpenWeatherUtill.getWeather(loginStaff.getArea());
         // 가져온 json 파싱해서 필요한값 가져오기
-        Weather weather1 = OpenWeatherUtill.WeatherInfo(weather);
+        Weather new_weather = OpenWeatherUtill.WeatherInfo(weather);
         //로그인한 staff의 storeid 를 입력하기
-        weather1.setStore_id(staff1.getStore_id());
+        new_weather.setStore_id(loginStaff.getStore_id());
         //DB에 날씨 데이터 최종 저장하기
-        weatherService.register(weather1);
-        return staff1;
+        weatherService.register(new_weather);
+        return loginStaff;
     }
 
     @PostMapping("/weather")

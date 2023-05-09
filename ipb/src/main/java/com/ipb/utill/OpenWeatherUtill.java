@@ -54,10 +54,10 @@ public class OpenWeatherUtill {
     System.out.println("(영어)날씨 = " + EWeather);
     System.out.println("기온 = " + temps);
     //웨더에 저장하는 로직
-    Weather weather1 = new Weather();
-    weather1.setTemp(temps);
-    weather1.setStatus(EWeather);
-    return weather1;
+    Weather new_weather = new Weather();
+    new_weather.setTemp(temps);
+    new_weather.setStatus(EWeather);
+    return new_weather;
     // 이쪽 파싱 불러 오기 안댐
   }
 }
