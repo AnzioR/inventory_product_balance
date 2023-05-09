@@ -34,13 +34,25 @@ class OrdersServiceTest {
   void modify() {
       try {
         Orders orders = ordersService.get(1L);
-        orders.setQnt(50);
+        orders.setQnt(500);
         ordersService.modify(orders);
       } catch (Exception e) {
         e.printStackTrace();
         System.out.println("발주 수량 변경을 실패했습니다.");
       }
+  }
 
+  // 왜 안바뀌는건지..................
+  @Test
+  void orderscancel() {
+    try {
+      Orders orders = ordersService.get(1L);
+      orders.setDelivery_id(4L);
+      ordersService.orderscancel(orders);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("발주 취소를 실패했습니다.");
+    }
   }
 
   @Test
@@ -90,6 +102,52 @@ class OrdersServiceTest {
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("날짜로 발주조회하기를 실패했습니다.");
+    }
+  }
+
+  //매장별 전체 발주 조회
+  @Test
+  void selectstore() {
+    List<Orders> list = null;
+    try {
+      list = ordersService.selectstore(2L);
+      for(Orders or : list) {
+        System.out.println(or);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("매장별 발주 조회를 실패했습니다.");
+    }
+  }
+
+  //매장별 상세 발주 조회
+  @Test
+  void selectdetailstoreorders() {
+    List<Orders> list = null;
+    try {
+      list = ordersService.selectdetailstoreorders(2L);
+      for(Orders or : list) {
+        System.out.println(or);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("매장별 발주 상세 정보 조회를 실패했습니다.");
+    }
+  }
+
+  ///////////////////////오류문구가 뜨는데 mysql에서 수정됨......
+  //매장별 발주 수정
+  @Test
+  void updatestoreorders() {
+    try {
+      Orders orders = ordersService.get(1L);
+      orders.setQnt(111);
+      orders.setDelivery_id(1L);
+      ordersService.updatestoreorders(orders);
+      System.out.println(orders);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("수정할 수 없습니다.");
     }
   }
 }
