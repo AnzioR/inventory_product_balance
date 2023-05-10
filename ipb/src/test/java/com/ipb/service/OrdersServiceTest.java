@@ -1,6 +1,7 @@
 package com.ipb.service;
 
 import com.ipb.domain.Orders;
+import com.ipb.domain.Product;
 import com.ipb.domain.Store;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,12 +20,27 @@ class OrdersServiceTest {
   @Autowired
   OrdersService ordersService;
 
+  @Autowired
+  ProductService productService;
+
   @Test
   void register() {
     try {
-      Orders orders = new Orders(null, 200, 2L, 2L, 1L, new Date());
+      Orders orders = new Orders(null, 100, 1L, 2L, 1L, new Date());
       ordersService.register(orders);
       System.out.println(orders);
+
+      // Product 정보 조회
+      Product product = productService.get(orders.getProduct_id());
+
+      // Product 수량 변경
+      System.out.println(">>>>>>>>>>>>>>>>>1" + product.getQnt() +":" + orders.getQnt());
+      product.setQnt(product.getQnt() - orders.getQnt());
+      System.out.println(">>>>>>>>>>>>>>>>>2" + product.getQnt());
+      productService.updateqnt(product);
+      
+      //점포보유상품도 증가해야됨.......ㅠㅠ
+
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -47,8 +63,16 @@ class OrdersServiceTest {
   @Test
   void orderscancel() {
     try {
-      Orders orders = ordersService.get(2L);
+      Orders orders = ordersService.get(1L);
       ordersService.orderscancel(orders);
+
+      // Product 정보 조회
+      Product product = productService.get(orders.getProduct_id());
+
+      // Product 수량 변경
+      product.setQnt(product.getQnt() + orders.getQnt());
+      productService.updateqnt(product);
+
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("발주 취소를 실패했습니다.");
