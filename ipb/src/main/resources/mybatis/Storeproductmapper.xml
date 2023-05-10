@@ -3,7 +3,6 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.StoreProductMapper">
-
     <!--요구사항에 없지만 필요하겠지? store id로  점포별 상품 조회-->
     <select id="selectstoreproduct" parameterType="Long" resultType="StockInfo">
         SELECT pi.name as product_name, p.price as product_price, sp.qnt, pi.box_qnt, sp.is_using, p.exp, pi.brand, c.name as category_name
@@ -45,5 +44,4 @@
     <delete id="delete" parameterType="StoreProduct">
         DELETE FROM store_product WHERE id=#{id}
     </delete>
-
 </mapper>

@@ -56,6 +56,48 @@ class ProductServiceTest {
       System.out.println("검색오류 발생!!!");
     }
   }
+<<<<<<< HEAD
+=======
+  @Test
+  void search() {
+
+    try {
+      List<Product> 오 = productService.search("비");
+      System.out.println(오);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("검색오류 발생!!!");
+    }
+  }
+
+//  @Test
+//  void selectcategoryname() {
+//    List<Product> categoryname = null;
+//    try {
+//      categoryname = productService.get();
+//      for(Product product : categoryname) {
+//        System.out.println(product);
+//      }
+//    } catch(Exception e) {
+//      e.printStackTrace();
+//      System.out.println("카테고리 검색 오류 발생!!");
+//    }
+//  }
+//@Test
+//void testSelectCategoryName() {
+//  String categoryName = "과자";
+//  List<Product> list = null;
+//  try {
+//    list = productService.selectcategoryname(categoryName);
+//    for(Product product : list) {
+//      System.out.println(product);
+//    }
+//  } catch(Exception e) {
+//    e.printStackTrace();
+//    System.out.println("카테고리 검색 오류 발생!!");
+//  }
+//}
+>>>>>>> 8390789fd066878e11f48d7a18a1e53ebb4d5c27
   @Test
   void testGet() {
     List<Product> list = null;
@@ -67,6 +109,20 @@ class ProductServiceTest {
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("전체검색 오류 발생!!");
+    }
+  }
+
+  //발주할 때, 수량을 변경해줌
+  @Test
+  void updateqnt() {
+    try {
+      Product product = productService.get(1L);
+      product.setQnt(555);
+      productService.updateqnt(product);
+      System.out.println(product);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("발주로 인한 재고 수량 변경에 실패했습니다.");
     }
   }
 

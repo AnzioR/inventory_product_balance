@@ -6,36 +6,62 @@
 
 
     <select id="select" parameterType="Long" resultType="Product">
-        SELECT * FROM product WHERE id=#{id}
+        SELECT *
+        FROM product
+        WHERE id = #{id}
     </select>
-<!--    <select id="selectname" parameterType="String" resultType="Product">-->
-<!--        SELECT * FROM product WHERE name=#{name}-->
-<!--    </select>-->
+    <!--    <select id="selectname" parameterType="String" resultType="Product">-->
+    <!--        SELECT * FROM product WHERE name=#{name}-->
+    <!--    </select>-->
     <select id="selectall" resultType="Product">
-        SELECT * FROM product
+        SELECT *
+        FROM product
     </select>
     <select id="selectcategoryname" parameterType="String" resultType="Product">
-        SELECT p.id, p.qnt, p.price, p.cost, c.name as category_name,
-        p.exp
+        SELECT p.id,
+               p.qnt,
+               p.price,
+               p.cost,
+               c.name as category_name,
+               p.exp
         FROM product p
-        INNER JOIN category c ON p.category_id = c.id
+                 INNER JOIN category c ON p.category_id = c.id
         WHERE c.name = #{category_name};
     </select>
-<!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
-<!--        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,-->
-<!--        p.exp, p.product_code, p.brand ,p.detail,-->
-<!--        p.imgname-->
-<!--        FROM product p-->
-<!--        INNER JOIN category c ON p.category_id = c.id-->
-<!--        WHERE c.name =#{categoryname};-->
-<!--    </select>-->
+    <!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
+    <!--        SELECT p.id, p.name as product_name, p.qnt, p.price, p.cost, c.name as category_name, p.box_qnt,-->
+    <!--        p.exp, p.product_code, p.brand ,p.detail,-->
+    <!--        p.imgname-->
+    <!--        FROM product p-->
+    <!--        INNER JOIN category c ON p.category_id = c.id-->
+    <!--        WHERE c.name =#{categoryname};-->
+    <!--    </select>-->
     <insert id="insert" parameterType="Product">
-        INSERT INTO product VALUES (NULL,#{product_info_id},#{qnt},#{price},#{cost}, #{exp} )
+        INSERT INTO product
+        VALUES (NULL, #{product_info_id}, #{qnt}, #{price}, #{cost}, #{exp})
     </insert>
     <update id="update" parameterType="Product">
-        UPDATE product SET qnt=#{qnt},price=#{price},cost=#{cost}, WHERE id=#{id}
+        UPDATE product
+        SET qnt=#{qnt},
+            price=#{price},
+            cost=#{cost},
+            WHERE id = #{id}
     </update>
     <delete id="delete" parameterType="Product">
-        DELETE FROM product WHERE id=#{id}
+        DELETE
+        FROM product
+        WHERE id = #{id}
     </delete>
+    <select id="search" parameterType="String" resultType="Product">
+        SELECT pi.name, pi.brand, pi.product_code, p.qnt, pi.box_qnt, p.cost, p.price
+        FROM product p
+                 INNER JOIN product_info pi ON p.product_info_id = pi.product_code
+        WHERE name Like CONCAT('%', #{txt}, '%')
+    </select>
+
+    <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
+    <update id="updateqnt" parameterType="Product">
+        UPDATE product SET qnt=#{qnt} WHERE id=#{id};
+    </update>
+
 </mapper>

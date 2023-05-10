@@ -34,13 +34,25 @@ class OrdersServiceTest {
   void modify() {
       try {
         Orders orders = ordersService.get(1L);
-        orders.setQnt(50);
+        orders.setQnt(500);
         ordersService.modify(orders);
       } catch (Exception e) {
         e.printStackTrace();
         System.out.println("발주 수량 변경을 실패했습니다.");
       }
+  }
 
+  //가져온 주문의 delivery_id가 1인 경우는 테스트 성공
+  //delivery_id가 2인 경우는 발주취소를 실패했습니다라는 문구 출력
+  @Test
+  void orderscancel() {
+    try {
+      Orders orders = ordersService.get(2L);
+      ordersService.orderscancel(orders);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("발주 취소를 실패했습니다.");
+    }
   }
 
   @Test
@@ -90,6 +102,51 @@ class OrdersServiceTest {
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("날짜로 발주조회하기를 실패했습니다.");
+    }
+  }
+
+  //매장별 전체 발주 조회
+  @Test
+  void selectstore() {
+    List<Orders> list = null;
+    try {
+      list = ordersService.selectstore(2L);
+      for(Orders or : list) {
+        System.out.println(or);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("매장별 발주 조회를 실패했습니다.");
+    }
+  }
+
+  //매장별 상세 발주 조회
+  @Test
+  void selectdetailstoreorders() {
+    List<Orders> list = null;
+    try {
+      list = ordersService.selectdetailstoreorders(2L);
+      for(Orders or : list) {
+        System.out.println(or);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("매장별 발주 상세 정보 조회를 실패했습니다.");
+    }
+  }
+
+  //매장별 발주 수정
+  @Test
+  void updatestoreorders() {
+    try {
+      Orders orders = ordersService.get(1L);
+      orders.setQnt(444);
+      orders.setDelivery_id(2L);
+      ordersService.updatestoreorders(orders);
+      System.out.println(orders);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("수정할 수 없습니다.");
     }
   }
 }

@@ -19,6 +19,7 @@ public class Board {
   private String name;
   private String imgname;
   private Date write_date;
+  private Long store_id;
 
   public Board(Long id, String title, String body_text, Long staff_id, String imgname, Date write_date) {
     this.id = id;

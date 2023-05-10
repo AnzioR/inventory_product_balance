@@ -17,7 +17,7 @@ class BoardServiceTest {
   @Test
   void register() {
     try {
-      Board board = new Board(null, "테스트글입니다", "본문입니다.", 1L, null, null);
+      Board board = new Board(null, "테스트글입111니다", "본문입11니다.", 1L, null, null);
       boardService.register(board);
       System.out.println(board);
     } catch (Exception e) {

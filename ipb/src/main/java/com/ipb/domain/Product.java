@@ -19,6 +19,8 @@ public class Product {
     private Long category_id;
     private String exp;
     private String category_name;
+    private Long product_code;
+    private String name;
 
     public Product(Long id, int qnt, int price, int cost, String exp, Long product_info_id) {
         this.id = id;
