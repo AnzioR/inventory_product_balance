@@ -30,6 +30,7 @@ public class Product {
         this.exp = exp;
         this.product_info_id = product_info_id;
     }
+
 }
 
 

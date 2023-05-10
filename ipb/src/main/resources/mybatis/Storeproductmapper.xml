@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StoreProductMapper">
+    <!--요구사항에 없지만 필요하겠지? store id로  점포별 상품 조회-->
+    <select id="selectstoreproduct" parameterType="Long" resultType="StockInfo">
+        SELECT pi.name as product_name, p.price as product_price, sp.qnt, pi.box_qnt, sp.is_using, p.exp, pi.brand, c.name as category_name
+        FROM store_product sp
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
+        WHERE store_id= #{store_id};
+    </select>
+    <select id="selectall" resultType="StoreProduct">
+        SELECT * FROM store_product
+    </select>
+     <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기   -->
+    <select id="selectcategoryname" parameterType="Hashmap" resultType="StockInfo">
+        SELECT pi.name as product_name, p.price as product_price, sp.qnt, pi.box_qnt, sp.is_using, p.exp, pi.brand, c.name as category_name
+        FROM store_product sp
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
+        WHERE c.name = #{category_name} and store_id = #{store_id}
+    </select>
+    <!--요구사항에 없지만 필요하겠지?  점포 재고에서 이름 검색하면 조회됨   -->
+    <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
+        SELECT pi.name as product_name, p.price as product_price, sp.qnt, pi.box_qnt, sp.is_using, p.exp
+        FROM store_product sp
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        WHERE pi.name LIKE CONCAT('%', #{txt}, '%') and store_id=#{store_id};
+    </select>
+    <!--StoreProduct 추가 -->
+    <insert id="insert" parameterType="StoreProduct">
+        INSERT INTO store_product VALUES (NULL,#{qnt},#{product_id},#{store_id},#{is_using} )
+    </insert>
+    <!--    StoreProduct 수량, 사용여부 수정-->
+    <update id="update" parameterType="StoreProduct">
+        UPDATE store_product SET qnt=#{qnt}, is_using=#{is_using} WHERE id=#{id}
+    </update>
+    <!--    StoreProduct 삭제-->
+    <delete id="delete" parameterType="StoreProduct">
+        DELETE FROM store_product WHERE id=#{id}
+    </delete>
+</mapper>
