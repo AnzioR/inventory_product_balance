@@ -17,7 +17,7 @@ class ProductInfoServiceTest {
   @Test
   void register() {
     try {
-      ProductInfo productInfo = new ProductInfo(880772L, "한라봉", "제주도", "제주 한라봉","한라.img", 3L, "과자",20);
+      ProductInfo productInfo = new ProductInfo(880364L, "흑돼지", "제주도", "제주 흑돼지","흑돼지.img", 4L, 20);
       productInfoService.register(productInfo);
       System.out.println(productInfo);
     } catch (Exception e) {
@@ -27,7 +27,7 @@ class ProductInfoServiceTest {
 
   @Test
   void modify() {
-    ProductInfo productInfo = new ProductInfo(880770L, "박카스", "오리온", "비타오백 가루","가루.img", 3L, "과자",20);
+    ProductInfo productInfo = new ProductInfo(880364L, "흑돼지", "제주도", "제주 흑돼지","흑돼지.img", 5L, 20);
     try {
       productInfoService.modify(productInfo);
     } catch(Exception e) {
@@ -39,7 +39,7 @@ class ProductInfoServiceTest {
   @Test
   void remove() {
     try {
-      productInfoService.remove(880789L);
+      productInfoService.remove(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류 발생!");
@@ -58,19 +58,6 @@ class ProductInfoServiceTest {
     }
   }
 
-//  @Test
-//  void selectcategoryname() {
-//    List<Product> categoryname = null;
-//    try {
-//      categoryname = productService.get();
-//      for(Product product : categoryname) {
-//        System.out.println(product);
-//      }
-//    } catch(Exception e) {
-//      e.printStackTrace();
-//      System.out.println("카테고리 검색 오류 발생!!");
-//    }
-//  }
 @Test
 void testSelectCategoryName() {
   String categoryName = "과일";
