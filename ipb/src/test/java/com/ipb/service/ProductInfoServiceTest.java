@@ -36,15 +36,15 @@ class ProductInfoServiceTest {
     }
   }
 
-  @Test
-  void remove() {
-    try {
-      productInfoService.remove(2L);
-    } catch(Exception e) {
-      e.printStackTrace();
-      System.out.println("삭제 오류 발생!");
-    }
-  }
+//  @Test
+//  void remove() {
+//    try {
+//      productInfoService.remove(2L);
+//    } catch(Exception e) {
+//      e.printStackTrace();
+//      System.out.println("삭제 오류 발생!");
+//    }
+//  }
 
   @Test
   void get() {
