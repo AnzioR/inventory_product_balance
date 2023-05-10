@@ -35,7 +35,7 @@
     <update id="update" parameterType="ProductInfo">
         UPDATE product_info SET name=#{name},brand=#{brand},detail=#{detail} WHERE product_code=#{product_code}
     </update>
-    <delete id="delete" parameterType="ProductInfo">
+    <delete id="delete" parameterType="Long">
         DELETE FROM product_info WHERE product_code=#{product_code}
     </delete>
 </mapper>

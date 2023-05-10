@@ -45,16 +45,10 @@
         VALUES (NULL, #{product_info_id}, #{qnt}, #{price}, #{cost}, #{exp})
     </insert>
     <update id="update" parameterType="Product">
-        UPDATE product
-        SET qnt=#{qnt},
-            price=#{price},
-            cost=#{cost},
-            WHERE id = #{id}
+        UPDATE product SET qnt=#{qnt}, price=#{price}, cost=#{cost} WHERE id = #{id}
     </update>
-    <delete id="delete" parameterType="Product">
-        DELETE
-        FROM product
-        WHERE id = #{id}
+    <delete id="delete" parameterType="Long">
+        DELETE FROM product WHERE id = #{id}
     </delete>
 <!--    상품은 너무 많이 묶여 있어서 삭제를 진행하면 안돼-->
     <select id="search" parameterType="String" resultType="Product">
