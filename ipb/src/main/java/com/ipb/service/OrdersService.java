@@ -1,6 +1,7 @@
 package com.ipb.service;
 
 import com.ipb.domain.Orders;
+import com.ipb.domain.Product;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersMapper;
 import com.ipb.mapper.ProductMapper;
@@ -36,6 +37,13 @@ public class OrdersService implements MyService<Long, Orders> {
   public void orderscancel(Orders orders) throws Exception {
     if(orders.getDelivery_id() == 1) {
       ordersMapper.orderscancel(orders);
+
+      // Product 정보 조회
+      Product product = productMapper.select(orders.getProduct_id());
+
+      // Product 수량 변경
+      product.setQnt(product.getQnt() + orders.getQnt());
+      productMapper.updateqnt(product);
     } else {
       System.out.println("배송준비중이 아니므로 취소할 수 없습니다.");
     }
@@ -79,5 +87,11 @@ public class OrdersService implements MyService<Long, Orders> {
   //매장별 발주 수정
   public void updatestoreorders(Orders orders) throws Exception {
     ordersMapper.updatestoreorders(orders);
+  }
+
+  //매장에서 발주하기, 발주할 때 상품 수량도 변경함
+  public void orders(Orders orders, Product product) throws Exception {
+    ordersMapper.insert(orders);
+    productMapper.updateqnt(product);
   }
 }
