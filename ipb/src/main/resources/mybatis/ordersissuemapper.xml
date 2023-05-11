@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.OrdersIssueMapper">
+
+    <!-- 이슈 등록 -->
+    <insert id="insert" parameterType="OrdersIssue">
+        INSERT INTO orders_issue VALUES (NULL, #{orders_id}, #{qnt}, #{order_desc_id}, #{disposal_date})
+    </insert>
+
+    <!-- 이슈 수정 : 요구사항에는 없는데 본사에서 필요할까봐 -->
+    <update id="update" parameterType="OrdersIssue">
+        UPDATE orders_issue SET qnt=#{qnt}, disposal_date=#{disposal_date} WHERE id = #{id}
+    </update>
+
+    <!-- 이슈 삭제 : 요구사항에는 없는데 본사에서 필요할까봐 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM orders_issue WHERE id = #{id}
+    </delete>
+<!--fini-->
+
+
+
+    <!-- 이슈 조회 : 점포 아이디로 이슈 조회  -->
+    <select id="select" parameterType="Long" resultType="OrdersIssue">
+        SELECT id, orders_id, qnt, order_desc_id, disposal_date
+        FROM orders_issue
+        WHERE id = #{id}
+    </select>
+
+    <!-- 이슈 전체 조회 : 요구사항에는 없는데 본사에서 필요할까봐 (이슈 상세 조회) -->
+    <select id="selectall" resultType="OrdersIssue">
+        SELECT id, name, orders_id, qnt, order_desc_id, disposal_date FROM orders_issue
+    </select>
+</mapper>

@@ -38,9 +38,11 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public StoreProduct get(Long id) throws Exception {
     return storeProductMapper.select(id);
   }
+
   public void updateqnt(StoreProduct storeProduct) throws Exception {
     storeProductMapper.updateqnt(storeProduct);
   }
+
   @Override
   public List<StoreProduct> get() throws Exception {
     return storeProductMapper.selectall();
@@ -75,6 +77,17 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public List<StockInfo> selectstoreproduct(Long store_id)throws Exception {
     return storeProductMapper.selectstoreproduct(store_id);
 
+  }
+
+  //발주할 때, 점포의 재고수량을 변경
+  public void storeupdateqnt(StoreProduct storeProduct) throws Exception {
+    storeProductMapper.storeupdateqnt(storeProduct);
+  }
+
+  //store_id와 product_id를 조회하는 기능
+  public StoreProduct getstoreproductfromstoreidandproductid(StoreProduct storeProduct) throws Exception {
+    StoreProduct st = storeProductMapper.getstoreproductfromstoreidandproductid(storeProduct);
+    return st;
   }
 }
 

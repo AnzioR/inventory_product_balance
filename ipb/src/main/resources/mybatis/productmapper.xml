@@ -45,11 +45,7 @@
         VALUES (NULL, #{product_info_id}, #{qnt}, #{price}, #{cost}, #{exp})
     </insert>
     <update id="update" parameterType="Product">
-        UPDATE product
-        SET qnt=#{qnt},
-            price=#{price},
-            cost=#{cost},
-            WHERE id = #{id}
+        UPDATE product SET qnt=#{qnt}, price=#{price}, cost=#{cost} WHERE id = #{id}
     </update>
     <delete id="delete" parameterType="Long">
         DELETE
