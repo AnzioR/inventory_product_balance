@@ -16,7 +16,7 @@
     <!--        SELECT * FROM product WHERE name=#{name}-->
     <!--    </select>-->
     <select id="selectall" resultType="Product">
-        SELECT p.*, ,pi.product_code,pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt
+        SELECT p.*, pi.product_code, pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
