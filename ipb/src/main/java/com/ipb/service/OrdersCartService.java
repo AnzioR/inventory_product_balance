@@ -1,11 +1,13 @@
 package com.ipb.service;
 
 import com.ipb.domain.OrdersCart;
+import com.ipb.domain.Product;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersCartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -37,5 +39,10 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   @Override
   public List<OrdersCart> get() throws Exception {
     return ordersCartMapper.selectall();
+  }
+
+  //로그인 유저의 발주카트에 담긴 상품을 리스트로 가져온다.
+  public List<OrdersCart> cartlist(Long id) throws Exception {
+    return ordersCartMapper.cartlist(id);
   }
 }
