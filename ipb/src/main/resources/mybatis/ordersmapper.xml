@@ -73,10 +73,13 @@
         WHERE o.store_id=#{store_id}
     </select>
 
-    <!-- 테스트를 실행했을 때 오류문구가 뜨지만, MySQL에서는 수정된 것을 확인함 : 오류인건가??? -->
     <!-- 매장별 발주 수정 : 수량과 배송상태를 본사에서 임의로 변경할 수 있음, 주문목록에서 수정과 삭제 버튼을 누른다고 가정하고 작성함 -->
     <update id="updatestoreorders" parameterType="Orders">
         UPDATE orders SET qnt=#{qnt}, delivery_id=#{delivery_id} WHERE id = #{id}
     </update>
 
+    <!-- 발주하기 : 점포에서 발주카트를 통해 주문을 하면, 1.발주 2.상품재고감소 3.점포재고증가  -->
+    <insert id="addorder" parameterType="Orders">
+        INSERT INTO orders VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{delivery_id}, now())
+    </insert>
 </mapper>

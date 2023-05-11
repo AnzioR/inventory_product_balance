@@ -15,6 +15,11 @@ public class StoreProduct {
     private Long store_id;
     private boolean is_using;
 
+    public StoreProduct(Long product_id, Long store_id) {
+        this.product_id = product_id;
+        this.store_id = store_id;
+    }
+
     public StoreProduct(Long id, Integer qnt, Long product_id, Long store_id) {
         this.id = id;
         this.qnt = qnt;

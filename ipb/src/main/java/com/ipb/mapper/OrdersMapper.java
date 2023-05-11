@@ -29,4 +29,7 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
 
   //매장별 발주 수정
   public void updatestoreorders(Orders orders) throws Exception;
+
+  //발주하기 : 발주카트에서 발주로 이동, 상품재고 감소, 점포상품재고 증가
+  public void addorder(Long store_id) throws Exception;
 }

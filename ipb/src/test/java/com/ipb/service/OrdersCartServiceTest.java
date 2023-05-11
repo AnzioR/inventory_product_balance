@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,8 +18,9 @@ class OrdersCartServiceTest {
   @Test
   void register() {
     try {
-      OrdersCart cart = new OrdersCart(null, 50, 1L, 2L);
+      OrdersCart cart = new OrdersCart(null, 444, 1L, 2L);
       ordersCartService.register(cart);
+
       System.out.println(cart);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -69,6 +71,20 @@ class OrdersCartServiceTest {
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("전체 카트 검색 오류가 발생했습니다.");
+    }
+  }
+
+  @Test
+  void cartlist() {
+    List<OrdersCart> list = null;
+    try {
+      list = ordersCartService.cartlist(3L);
+      for(OrdersCart oc : list) {
+        System.out.println(oc);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("매장별 발주카트 가져오기를 실패했습니다.");
     }
   }
 }

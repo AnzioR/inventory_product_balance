@@ -16,7 +16,7 @@ class StoreProductServiceTest {
   @Test
   void register() {
     try {
-      StoreProduct storeProduct = new StoreProduct(null, 521, 1L, 2L, true);
+      StoreProduct storeProduct = new StoreProduct(null, 518, 1L, 2L, true);
       storeProductService.register(storeProduct);
       System.out.println(storeProduct);
     } catch (Exception e) {
@@ -49,7 +49,7 @@ class StoreProductServiceTest {
   void get() {
     StoreProduct storeProduct = null;
     try {
-      storeProduct = storeProductService.get(1L);
+      storeProduct = storeProductService.get(63L);
       System.out.println(storeProduct);
     } catch (Exception e) {
       e.printStackTrace();
@@ -111,4 +111,34 @@ class StoreProductServiceTest {
     }
   }
 
+  //발주할 때, 수량을 변경해줌
+  @Test
+  void storeupdateqnt() {
+    try {
+      StoreProduct storeProduct = storeProductService.get(1L);
+      storeProduct.setQnt(1000);
+      storeProductService.storeupdateqnt(storeProduct);
+      System.out.println(storeProduct);
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("발주로 인한 재고 수량 변경에 실패했습니다.");
+    }
+  }
+
+  //store_id와 product_id를 조회하는 기능
+  @Test
+  void getstoreproductfromstoreidandproductid() {
+    try {
+      StoreProduct st = new StoreProduct();
+      st.setStore_id(1L);
+      st.setProduct_id(1L);
+
+      System.out.println(st);
+      st = storeProductService.getstoreproductfromstoreidandproductid(st);
+      System.out.println(st);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("조회가 실패했습니다.");
+    }
+  }
 }
