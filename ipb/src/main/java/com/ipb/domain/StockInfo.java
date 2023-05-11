@@ -9,6 +9,8 @@ import lombok.*;
 @Getter
 @ToString
 public class StockInfo {
+  private Long id;
+  private String detail;
   private String product_name;
   private int product_price;
   private int qnt;
@@ -17,7 +19,7 @@ public class StockInfo {
   private String exp;
   private String brand;
   private String category_name;
-
+  private String imgname;
 }
 
 

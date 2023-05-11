@@ -100,7 +100,6 @@ public class StaffController {
             e.printStackTrace();
             return null;
         }
-
     }
     @GetMapping("/detail")
     public Staff staffDetail(Long id){

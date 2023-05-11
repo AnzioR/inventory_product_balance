@@ -40,7 +40,7 @@ public class ProductInfoController {
   @GetMapping("/detail")
   public ProductInfo detail(Long product_code) {
     try {
-      return productInfoService.get(product_code  );
+      return productInfoService.get(product_code);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
