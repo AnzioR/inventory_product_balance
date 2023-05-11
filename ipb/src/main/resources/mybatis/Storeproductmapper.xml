@@ -44,4 +44,12 @@
     <delete id="delete" parameterType="StoreProduct">
         DELETE FROM store_product WHERE id=#{id}
     </delete>
+    <update id="updateqnt" parameterType="StoreProduct">
+        UPDATE store_product SET qnt=#{qnt} WHERE id=#{id};
+    </update>
+    <select id="select" parameterType="Long" resultType="StoreProduct">
+        SELECT *
+        FROM store_product
+        WHERE id = #{id}
+    </select>
 </mapper>

@@ -42,5 +42,7 @@ public class BoardService implements MyService<Long, Board> {
 
   public List<Board> searchBoard(String txt) throws Exception {
     return boardMapper.searchBoard(txt);
+
   }
+
 }
