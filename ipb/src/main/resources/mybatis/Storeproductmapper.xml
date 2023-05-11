@@ -42,6 +42,6 @@
     </update>
     <!--    StoreProduct 삭제-->
     <delete id="delete" parameterType="StoreProduct">
-        DELETE FROM store_product WHERE id=#{id}
+        UPDATE store_product SET qnt=0, is_using=0 WHERE id=#{id}
     </delete>
 </mapper>

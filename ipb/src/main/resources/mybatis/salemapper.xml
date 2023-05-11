@@ -3,13 +3,13 @@
         PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.SaleMapper">
-    <select id="searcheventproduct" resultType="Sale">
-        SELECT pi.name as product_name, p.price, p.cost, p.exp, st.name as store_name ,s.qnt,s.sales_date
-        FROM sales s
-                 INNER JOIN store_product sp on sp.id = s.store_product_id
-                 INNER JOIN product p on p.id = sp.product_id
-                 INNER JOIN product_info pi on  pi.product_code = p.product_info_id
-                 INNER JOIN store st on st.id = sp.store_id
-        WHERE store_id = #{store_id};
-    </select>
+<!--    <select id="searcheventproduct" resultType="Sale">-->
+<!--        SELECT pi.name as product_name, p.price, p.cost, p.exp, st.name as store_name ,s.qnt,s.sales_date-->
+<!--        FROM sales s-->
+<!--                 INNER JOIN store_product sp on sp.id = s.store_product_id-->
+<!--                 INNER JOIN product p on p.id = sp.product_id-->
+<!--                 INNER JOIN product_info pi on  pi.product_code = p.product_info_id-->
+<!--                 INNER JOIN store st on st.id = sp.store_id-->
+<!--        WHERE store_id = #{store_id};-->
+<!--    </select>-->
 </mapper>
