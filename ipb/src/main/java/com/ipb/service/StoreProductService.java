@@ -19,16 +19,19 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   @Autowired
   StoreProductMapper storeProductMapper;
 
+
+//  store product 등록
   @Override
   public void register(StoreProduct storeProduct) throws Exception {
     storeProductMapper.insert(storeProduct);
   }
 
+  //  store product 수정
   @Override
   public void modify(StoreProduct storeProduct) throws Exception {
     storeProductMapper.update(storeProduct);
   }
-
+  //  store product 삭제
   @Override
   public void remove(Long id) throws Exception {
     storeProductMapper.delete(id);
@@ -38,15 +41,17 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public StoreProduct get(Long id) throws Exception {
     return storeProductMapper.select(id);
   }
-
+  //  store product 수량변경
   public void updateqnt(StoreProduct storeProduct) throws Exception {
     storeProductMapper.updateqnt(storeProduct);
   }
-
+  //  store product
   @Override
   public List<StoreProduct> get() throws Exception {
     return storeProductMapper.selectall();
   }
+
+  //  점포 재고를 카테고리별로 가져옴
   public List<StockInfo> selectcategoryname(String categoryname, Long store_id) throws Exception {
 //    return storeProductMapper.selectcategoryname(categoryname,store_id);
 //  }
@@ -58,7 +63,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
-
+//재고 전체보기
     public List<StoreProduct> selectall()throws Exception {
     return storeProductMapper.selectall();
 
@@ -68,15 +73,18 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 ////    storeProduct.changeQuantity(newQuantity);
 ////    storeProductMapper.update(storeProduct);
 //  }
+
+  //점포재고에서 검색을 해서 상품을 가져올수있음
   public List<StockInfo> searchstoreproduct(String txt, Long store_id) throws Exception {
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("txt", txt);
     map.put("store_id", store_id);
     return storeProductMapper.searchstoreproduct(map);
   }
+
+  //store id 로 각각의 점포의 재고를 조회 할 수 있음
   public List<StockInfo> selectstoreproduct(Long store_id)throws Exception {
     return storeProductMapper.selectstoreproduct(store_id);
-
   }
 
   //발주할 때, 점포의 재고수량을 변경
