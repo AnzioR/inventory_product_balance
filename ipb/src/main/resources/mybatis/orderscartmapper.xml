@@ -31,5 +31,10 @@
         SELECT id, qnt, product_id, store_id FROM orders_cart
     </select>
 
-
+    <!-- 발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 -->
+    <select id="cartlist" parameterType="Long" resultType="OrdersCart">
+        SELECT id, qnt, product_id, store_id
+        FROM  orders_cart
+        WHERE store_id=#{store_id}
+    </select>
 </mapper>
