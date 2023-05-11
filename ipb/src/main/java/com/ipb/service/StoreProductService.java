@@ -38,7 +38,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public StoreProduct get(Long id) throws Exception {
     return storeProductMapper.select(id);
   }
-
+  public void updateqnt(StoreProduct storeProduct) throws Exception {
+    storeProductMapper.updateqnt(storeProduct);
+  }
   @Override
   public List<StoreProduct> get() throws Exception {
     return storeProductMapper.selectall();
