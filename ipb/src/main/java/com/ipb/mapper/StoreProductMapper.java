@@ -13,6 +13,7 @@ import java.util.List;
 @Repository
 public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   public List<StockInfo> selectcategoryname(HashMap<String,Object> map) ;
+  public void updateqnt(StoreProduct StoreProduct) throws Exception;
 
   public List<StoreProduct> select() throws Exception;
   public List<StockInfo> searchstoreproduct(HashMap<String,Object> map);

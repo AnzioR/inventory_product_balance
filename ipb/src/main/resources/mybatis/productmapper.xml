@@ -6,7 +6,7 @@
 
 
     <select id="select" parameterType="Long" resultType="Product">
-        SELECT p.*, pi.*,c.*
+        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
@@ -48,7 +48,9 @@
         UPDATE product SET qnt=#{qnt}, price=#{price}, cost=#{cost} WHERE id = #{id}
     </update>
     <delete id="delete" parameterType="Long">
-        DELETE FROM product WHERE id = #{id}
+        DELETE
+        FROM product
+        WHERE id = #{id}
     </delete>
 <!--    상품은 너무 많이 묶여 있어서 삭제를 진행하면 안돼-->
     <select id="search" parameterType="String" resultType="Product">

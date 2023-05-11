@@ -44,17 +44,14 @@
     <delete id="delete" parameterType="StoreProduct">
         UPDATE store_product SET qnt=0, is_using=0 WHERE id=#{id}
     </delete>
-
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
     <update id="storeupdateqnt" parameterType="StoreProduct">
         UPDATE store_product SET qnt=#{qnt} WHERE id=#{id}
     </update>
-
     <!-- id를 조회하는 select문 -->
     <select id="select" parameterType="Long" resultType="StoreProduct">
         SELECT * FROM store_product WHERE id = #{id}
     </select>
-
     <!-- store_id와 product_id를 조회하는 기능  -->
     <select id="getstoreproductfromstoreidandproductid" parameterType="StoreProduct" resultType="StoreProduct">
         SELECT store_id, product_id
