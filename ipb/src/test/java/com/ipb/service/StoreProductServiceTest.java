@@ -38,7 +38,7 @@ class StoreProductServiceTest {
   @Test
   void remove() {
     try {
-      storeProductService.remove(1L);
+      storeProductService.remove(3L);
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류 발생!");
