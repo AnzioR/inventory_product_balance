@@ -18,6 +18,9 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
 
   @Override
   public void register(OrdersCart ordersCart) throws Exception {
+    if (ordersCart.getQnt() == 0) {
+      ordersCart.setQnt(1);
+    }
     ordersCartMapper.insert(ordersCart);
   }
 
@@ -44,5 +47,10 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   //로그인 유저의 발주카트에 담긴 상품을 리스트로 가져온다.
   public List<OrdersCart> cartlist(Long id) throws Exception {
     return ordersCartMapper.cartlist(id);
+  }
+
+  //store_id에 해당되는 카트를 삭제한다.
+  public void removecart(Long store_id) throws Exception {
+    ordersCartMapper.removecart(store_id);
   }
 }

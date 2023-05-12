@@ -26,6 +26,14 @@ public class StoreProduct {
         this.product_id = product_id;
         this.store_id = store_id;
     }
+
+    public StoreProduct(Integer qnt, Long product_id, Long store_id, boolean is_using) {
+        this.qnt = qnt;
+        this.product_id = product_id;
+        this.store_id = store_id;
+        this.is_using = is_using;
+    }
+
     public void changeQuantity(Integer newQuantity) {
         this.qnt = newQuantity;
     }

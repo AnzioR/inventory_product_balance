@@ -18,7 +18,7 @@ class StoreServiceTest {
   @Test
   void register() {
     try {
-      Store store = new Store(null, "분당점", "경기도 성남시 분당구 서현로", "031-7702-0828", "경기분당점", "seoungnam");
+      Store store = new Store(null, "분당점", "경기도 성남시 분당구 서현로", "031-7702-0828", "경기분당점", "seongnam-si");
       storeService.register(store);
       System.out.println(store);
     } catch (Exception e) {
