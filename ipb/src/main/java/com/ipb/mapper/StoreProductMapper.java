@@ -18,7 +18,7 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   public List<StoreProduct> select() throws Exception;
   public List<StockInfo> searchstoreproduct(HashMap<String,Object> map);
 
-  public List<StockInfo> selectstoreproduct(Long txt) throws Exception;
+  public List<StoreProduct> selectstoreproduct(Long txt) throws Exception;
 //  public void updateQuantity(Long id, Integer qnt) throws Exception;
 
   //발주할 때, 점포의 재고수량을 변경

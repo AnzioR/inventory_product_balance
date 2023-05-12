@@ -39,6 +39,9 @@ public class StoreProductController {
 //    }
 //  }
 
+
+  //store_id 랑 category_id 는 안뿌려주는데 나중에 에러가 날지 안날지 궁금하다. 내생각에는 필요 없을거같다
+
   @GetMapping("/detail")
   public StoreProduct detail(Long id) {
     try {
@@ -49,6 +52,7 @@ public class StoreProductController {
     }
   }
 // 이부분은 삭제인데 삭제는 되는것이 아니고 재고를 0으로 만드는 것이다.
+  //DELETE 라서 리턴 타입이 보이드일건데 이건 삭제가 아니기 때문에 개선해야 할 내용
   @DeleteMapping("/delete")
   public void delete(Long id) {
     try {
@@ -59,7 +63,7 @@ public class StoreProductController {
   }
 //상품의 수량과 이용중을 업데이트 한다.
   @PutMapping("/update")
-  public StoreProduct update(StoreProduct product) {
+  public StoreProduct update(@RequestBody StoreProduct product) {
     try {
       storeProductService.modify(product);
       return product;
@@ -70,12 +74,14 @@ public class StoreProductController {
   }
   //해당점포의 보유상품 전체조회
   @GetMapping("/list/{store_id}")
-  public List<StockInfo>allProductByStoreId(Long store_id) {
+  public List<StoreProduct> allProductByStoreId(@PathVariable Long store_id) {
+    System.out.println(store_id);
     try {
-      List<StockInfo> selectstoreproduct = storeProductService.selectstoreproduct(store_id);
+      List<StoreProduct> selectstoreproduct = storeProductService.selectstoreproduct(store_id);
       return selectstoreproduct;
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
+      return null;
     }
   }
 
