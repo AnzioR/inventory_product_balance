@@ -17,10 +17,13 @@ public class SalesService implements MyService<Long, Sales> {
     @Autowired
     StoreProductMapper storeProductMapper;
 
+
     @Override
     public void register(Sales sales) throws Exception {
+
+
         salesMapper.insert(sales);
-        // 상품을 주문할때 store product가 음수가 되면 안되지만 음수가 되는 상황 발생
+      // 상품을 주문할때 store product가 음수가 되면 안되지만 음수가 되는 상황 발생
     }
 
     @Override
@@ -52,12 +55,13 @@ public class SalesService implements MyService<Long, Sales> {
     public List<Sales> selectsalesbystore(Long store_id) throws Exception {
         return salesMapper.selectsalesbystore(store_id);
     }
-
-    public void salesdelete(Sales sales) throws Exception {
-        salesMapper.salesdelete(sales);
+// 매장에서 판매가된 상품을 찾아와서 판매가 이루어졌던 상품에 수량과 매장의 해당 상품의 숫자를 거해 원상복구를 해줌
+    public void salesdelete(Long id) throws Exception {
+        Sales sales = salesMapper.select(id);
         StoreProduct storeProduct = storeProductMapper.select(sales.getStore_product_id());
         storeProduct.setQnt(storeProduct.getQnt() + sales.getQnt());
         storeProductMapper.updateqnt(storeProduct);
+        salesMapper.salesdelete(sales);
     }
     public void sales(Sales sales, StoreProduct storeProduct) throws Exception {
         salesMapper.insert(sales);
