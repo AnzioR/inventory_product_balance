@@ -39,4 +39,8 @@ public class OrdersIssueService implements MyService<Long, OrdersIssue> {
   public List<OrdersIssue> get() throws Exception {
     return ordersIssueMapper.selectall();
   }
+
+//  public List<OrdersIssue> ordersissueproductlist(Long store_id) throws Exception {
+//    return ordersIssueMapper.ordersissueproductlist(store_id);
+//  }
 }

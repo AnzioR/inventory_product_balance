@@ -1,6 +1,7 @@
 package com.ipb.service;
 
 import com.ipb.domain.OrdersIssue;
+import com.ipb.domain.Staff;
 import com.ipb.domain.Store;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ class OrdersIssueServiceTest {
   @Test
   void register() {
     try {
-      OrdersIssue ordersIssue = new OrdersIssue(null,1L,20,2L,new Date());
+      OrdersIssue ordersIssue = new OrdersIssue(null,44L,20,2L,new Date());
       ordersIssueService.register(ordersIssue);
       System.out.println(ordersIssue);
     } catch (Exception e) {
@@ -28,7 +29,7 @@ class OrdersIssueServiceTest {
 
   @Test
   void modify() {
-    OrdersIssue ordersIssue = new OrdersIssue(23L,1L,22,2L,new Date());
+    OrdersIssue ordersIssue = new OrdersIssue(2L,1L,12,2L,new Date());
     try {
       ordersIssueService.modify(ordersIssue);
     } catch(Exception e) {
@@ -40,38 +41,34 @@ class OrdersIssueServiceTest {
   @Test
   void remove() {
     try {
-      ordersIssueService.remove(23L);
+      ordersIssueService.remove(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류가 발생했습니다.");
     }
   }
 //fini
+@Test
+void get() {
+  try {
+    OrdersIssue ordersIssue = ordersIssueService.get(1L);
+    System.out.println(ordersIssue);
+  } catch (Exception e) {
+    throw new RuntimeException(e);
+  }
+}
+  @Test
+  void testGet() {
+    List<OrdersIssue> list = null;
+    try {
+      list = ordersIssueService.get();
+      for (OrdersIssue ol : list) {
+        System.out.println(ol);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("전체검색 오류가 발생했습니다.");
+    }
 
-
-//  @Test
-//  void get() {
-//    OrdersIssue ordersIssue = null;
-//    try {
-//      ordersIssue = ordersIssueService.get(2L);
-//      System.out.println(ordersIssue);
-//    } catch(Exception e) {
-//      e.printStackTrace();
-//      System.out.println("검색오류가 발생했습니다.");
-//    }
-//  }
-//
-//  @Test
-//  void testGet() {
-//    List<OrdersIssue> list = null;
-//    try {
-//      list = ordersIssueService.get();
-//      for(OrdersIssue ol : list) {
-//        System.out.println(ol);
-//      }
-//    } catch(Exception e) {
-//      e.printStackTrace();
-//      System.out.println("전체검색 오류가 발생했습니다.");
-//    }
-//  }
+  }
 }
