@@ -26,25 +26,8 @@ class SalesServiceTest {
   @Test
   void register() {
     try {
-      Sales sales = new Sales(null,11,5L,null);
-      salesService.register(sales);
-      System.out.println(sales);
-
-      // StoreProduct정보 조회
-      StoreProduct product = storeProductService.get(sales.getStore_product_id());
-
-      // StoreProduct정보 수량 변경 하지만 변경은 되지만 -까지도 됨....
-      System.out.println(">>>>>>>>>>>>>>>>>1==" + product.getQnt() +":" + sales.getQnt());
-      if (product.getQnt() < sales.getQnt()){
-        System.out.println("조금만 해줘");
-
-      }
-      product.setQnt(product.getQnt() - sales.getQnt());
-      System.out.println(">>>>>>>>>>>>>>>>>2==" + product.getQnt());
-      storeProductService.updateqnt(product);
-
-
-
+      Sales sales = new Sales(null,8000,5L,null);
+        storeProductService.updateqnt(sales);
     } catch (Exception e) {
       e.printStackTrace();
     }
