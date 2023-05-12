@@ -20,7 +20,6 @@ class OrdersCartServiceTest {
     try {
       OrdersCart cart = new OrdersCart(null, 444, 1L, 2L);
       ordersCartService.register(cart);
-
       System.out.println(cart);
     } catch (Exception e) {
       throw new RuntimeException(e);
@@ -85,6 +84,16 @@ class OrdersCartServiceTest {
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("매장별 발주카트 가져오기를 실패했습니다.");
+    }
+  }
+
+  @Test
+  void removecart() {
+    try {
+      ordersCartService.removecart(1L);
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("카트 비우기 오류가 발생했습니다.");
     }
   }
 }

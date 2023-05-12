@@ -37,7 +37,7 @@
     </select>
 
     <!-- 본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 : 발주번호, 발주상품명, 발주수량, 입수, 발주점포명, 배송상태, 배송일 보여줌  -->
-    <select id="searchdate" parameterType="Date" resultType="Orders">
+    <select id="searchdate" parameterType="String" resultType="Orders">
         SELECT o.id, pi.name, o.qnt, pi.box_qnt, s.name, d.status, o.orders_date
         FROM orders o
                  INNER JOIN delivery d on d.id = o.delivery_id

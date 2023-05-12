@@ -33,8 +33,18 @@
 
     <!-- 발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 -->
     <select id="cartlist" parameterType="Long" resultType="OrdersCart">
-        SELECT id, qnt, product_id, store_id
+        SELECT *
         FROM  orders_cart
         WHERE store_id=#{store_id}
     </select>
+
+    <!-- 발주카트 비우기 : 발주카트에 담긴 상품을 삭제하는 기능이 아님! 발주카트가 주문으로 넘어갈때 카트 전체가 비워지는 기능입니다. -->
+    <delete id="removecart" parameterType="Long">
+        DELETE FROM orders_cart WHERE store_id = #{store_id}
+    </delete>
+
+    <!-- 상품목록에 보여지는 상품을 발주 카트에 추가하기 -->
+    <insert id="addcart" parameterType="OrdersCart">
+        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id})
+    </insert>
 </mapper>
