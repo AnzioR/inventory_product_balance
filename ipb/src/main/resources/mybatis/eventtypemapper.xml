@@ -4,6 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.EventTypeMapper">
 
+    <!-- 이벤트 타입에 대한 기능은 생성했지만 테스트는 실행하지 않은 상황입니다.
+    (이벤트타입 테이블만으로 특별히 조회하거나 사용되는 상황이 없어서 DB 삭제에 대한 이야기를 했으나 일단 두기로 했음...)
+    크게 사용될 부분이 없을 것 같지만 혹시 몰라서 그대로 두겠습니다. 사용하게 된다면 테스트가 필요합니다.
+    -->
+
     <!-- 이벤트 타입 등록 -->
     <insert id="insert" parameterType="EventType">
         INSERT INTO event_type VALUES (NULL, #{name})
