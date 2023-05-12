@@ -14,6 +14,14 @@ public class StoreProduct {
     private Long product_id;
     private Long store_id;
     private boolean is_using;
+    private String product_name;
+    private Integer price;
+    private Integer box_qnt;
+    private String exp;
+    private String brand;
+    private String category_name;
+    private String detail;
+
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;
@@ -28,6 +36,14 @@ public class StoreProduct {
     }
 
     public StoreProduct(Integer qnt, Long product_id, Long store_id, boolean is_using) {
+        this.qnt = qnt;
+        this.product_id = product_id;
+        this.store_id = store_id;
+        this.is_using = is_using;
+    }
+
+    public StoreProduct(Long id, Integer qnt, Long product_id, Long store_id, boolean is_using) {
+        this.id = id;
         this.qnt = qnt;
         this.product_id = product_id;
         this.store_id = store_id;

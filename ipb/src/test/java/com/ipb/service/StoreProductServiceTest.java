@@ -26,7 +26,7 @@ class StoreProductServiceTest {
 
   @Test
   void modify() {
-    StoreProduct storeProduct = new StoreProduct(7L, 334, 1L, 1L, true);
+    StoreProduct storeProduct = new StoreProduct(null, 334, 1L, 1L, true);
     try {
       storeProductService.modify(storeProduct);
     } catch (Exception e) {
@@ -100,10 +100,10 @@ class StoreProductServiceTest {
 
   @Test
   void selectstoreproduct() {
-    List<StockInfo> result = null;
+    List<StoreProduct> result = null;
     try {
         result = storeProductService.selectstoreproduct(2L);
-      for (StockInfo stockInfo : result) {
+      for (StoreProduct stockInfo : result) {
         System.out.println(stockInfo);
       }
     } catch (Exception e) {

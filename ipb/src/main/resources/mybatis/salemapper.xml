@@ -16,7 +16,7 @@
         WHERE store_id = #{store_id};
     </select>
     <insert id="insert" parameterType="Sales">
-        INSERT INTO sales VALUES (NULL, #{qnt}, now(), #{store_product_id})
+        INSERT INTO sales VALUES (NULL, #{qnt}, #{store_product_id}, now())
     </insert>
     <delete id="delete" parameterType="Sales">
         DELETE FROM sales WHERE id = #{id}
