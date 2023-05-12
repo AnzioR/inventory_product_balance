@@ -30,7 +30,7 @@
 
     <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기   -->
     <select id="selectcategoryname" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id pi.name as product_name, p.price as product_price,
+        SELECT sp.id ,pi.name as product_name, p.price as product_price,
                pi.imgname,
                sp.qnt,
                pi.box_qnt,
@@ -48,7 +48,7 @@
 
     <!--요구사항에 없지만 필요하겠지?  점포 재고에서 이름 검색하면 조회됨   -->
     <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id pi.name as product_name, p.price as product_price,
+        SELECT sp.id ,pi.name as product_name, p.price as product_price,
                sp.qnt,
                pi.box_qnt,
                pi.imgname,

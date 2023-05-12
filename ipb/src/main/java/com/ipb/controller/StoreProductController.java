@@ -101,8 +101,8 @@ public class StoreProductController {
   @GetMapping("/searchname/{store_id}")
   public List<StockInfo> searchByName(String txt,@PathVariable Long store_id) {
     try {
-      List<StockInfo> selectcategoryname = storeProductService.searchstoreproduct(txt,store_id);
-      return selectcategoryname;
+      List<StockInfo> searchstoreproduct = storeProductService.searchstoreproduct(txt,store_id);
+      return searchstoreproduct;
     } catch (Exception e) {
       e.printStackTrace();
       return null;
