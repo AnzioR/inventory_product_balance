@@ -62,7 +62,7 @@ class EventServiceTest {
   void get() {
     Event event = null;
     try {
-      event = eventService.get(3L);
+      event = eventService.get(1L);
       System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();
@@ -88,7 +88,7 @@ class EventServiceTest {
   void selectbytype() {
     Event event = null;
     try {
-      event = eventService.selectbytype(3L);
+      event = eventService.selectbytype(1L);
       System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();
