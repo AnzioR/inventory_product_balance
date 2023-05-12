@@ -21,16 +21,70 @@
 <!--fini-->
 
 
+<!--    <select id="select" parameterType="Long" resultType="OrdersIssue">-->
+<!--              SELECT id, orders_id, qnt, order_desc_id, disposal_date-->
+<!--        FROM orders_issue-->
+<!--        WHERE id = #{id}-->
+<!--    </select>-->
+
+
+
+
+
+
+
+
 
     <!-- 이슈 조회 : 점포 아이디로 이슈 조회  -->
     <select id="select" parameterType="Long" resultType="OrdersIssue">
-        SELECT id, orders_id, qnt, order_desc_id, disposal_date
-        FROM orders_issue
-        WHERE id = #{id}
+        select od.name as orders_issue , pi.name as product_name, p.price, oi.qnt, oi.disposal_date, p.exp, c.name
+        FROM orders_issue oi
+        INNER JOIN orders_desc od on od. id = oi.orders_desc_id
+        INNER JOIN orders o on o.id = oi.orders_id
+        INNER JOIN product p on p.id = o.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c on c.id = pi.category_id
+        WHERE store_id = #{store_id);
     </select>
 
     <!-- 이슈 전체 조회 : 요구사항에는 없는데 본사에서 필요할까봐 (이슈 상세 조회) -->
     <select id="selectall" resultType="OrdersIssue">
         SELECT id, name, orders_id, qnt, order_desc_id, disposal_date FROM orders_issue
     </select>
+<!--각 점포의 이슈 리스트를 이슈 이유,이슈 상품이름,판매가격,이슈 수량, 유통기한, 이슈 등록일 을 상품 카테고리 가져오고싶다-->
+    <select id="ordersissueproductlist" resultType="OrdersIssue">
+        select od.name, pi.name, p.price, oi.qnt, oi.disposal_date, p.exp, c.name
+        FROM orders_issue oi
+        INNER JOIN orders_desc od on od. id = oi.orders_desc_id
+        INNER JOIN orders o on o.id = oi.orders_id
+        INNER JOIN product p on p.id = o.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c on c.id = pi.category_id
+        WHERE store_id = #{store_id};
+    </select>
+<!--    &lt;!&ndash;각 점포의 이슈 리스트를 상품 카테고리 별로 가져오고싶다&ndash;&gt;-->
+<!--    <select id="ordersissueproductlistcategory" resultType="OrdersIssue">-->
+<!--    select od.name, pi.name, p.price, oi.qnt, oi.disposal_date, p.exp, c.name-->
+<!--    FROM orders_issue oi-->
+<!--    INNER JOIN orders_desc od on od. id = oi.orders_desc_id-->
+<!--    INNER JOIN orders o on o.id = oi.orders_id-->
+<!--    INNER JOIN product p on p.id = o.product_id-->
+<!--    INNER JOIN product_info pi on pi.product_code = p.product_info_id-->
+<!--    INNER JOIN category c on c.id = pi.category_id-->
+<!--    WHERE store_id = #{store_id} and c.name = #{category_name} ;-->
+<!--    </select>-->
+<!--    &lt;!&ndash;이슈 리스트를 상품 카테고리 별로 가져오고싶다&ndash;&gt;-->
+<!--    <select id="ordersissueproductlistcategory" resultType="OrdersIssue">-->
+<!--        select od.name, pi.name, p.price, oi.qnt, oi.disposal_date, p.exp, c.name-->
+<!--        FROM orders_issue oi-->
+<!--        INNER JOIN orders_desc od on od. id = oi.orders_desc_id-->
+<!--        INNER JOIN orders o on o.id = oi.orders_id-->
+<!--        INNER JOIN product p on p.id = o.product_id-->
+<!--        INNER JOIN product_info pi on pi.product_code = p.product_info_id-->
+<!--        INNER JOIN category c on c.id = pi.category_id-->
+<!--        WHERE c.name = #{category_name} ;-->
+<!--    </select>-->
+
 </mapper>
+
+
