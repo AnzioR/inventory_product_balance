@@ -6,7 +6,7 @@
 <mapper namespace="com.ipb.mapper.SalesMapper">
 <!--    매장에 따른  매출 조회 상품 이름별 가능 원가,판매가를 통해 이익률 조회 유 판매날과 유통기한을 통해서 진실 여부 파악 가능-->
     <select id="selectsalesbystore" resultType="Sales">
-        SELECT pi.name as product_name, p.price, p.cost, p.exp, st.name as store_name ,s.qnt, s.sales_date, c.name as category_name,c.id as category_id
+        SELECT s.id, pi.name as product_name, p.price, p.cost, p.exp, st.name as store_name ,s.qnt, s.sales_date, c.name as category_name,c.id as category_id ,s.store_product_id
         FROM sales s
                  INNER JOIN store_product sp on sp.id = s.store_product_id
                  INNER JOIN product p on p.id = sp.product_id
@@ -23,7 +23,7 @@
     </delete>
 <!--    전체 매장 매출 조회 카테고리,이름 상품 이름별 가능 원가,판매가를 통해 이익률 조회-->
     <select id="selectall" resultType="Sales">
-        SELECT p.price, p.cost,c.id as category_id , c.name as category_name,s.qnt,pi.name
+        SELECT s.id,p.price, p.cost, c.id as category_id, c.name as category_name, s.qnt, pi.name as product_name, s.store_product_id, s.sales_date
         FROM sales s
                  INNER JOIN store_product sp on sp.id = s.store_product_id
                  INNER JOIN product p on p.id = sp.product_id
@@ -36,7 +36,7 @@
         FROM sales
         WHERE id = #{id}
     </select>
-    <delete id="salesdelete" parameterType="Sales">
+    <delete id="salesdelete" parameterType="Long">
         DELETE FROM sales WHERE id = #{id}
     </delete>
 </mapper>
