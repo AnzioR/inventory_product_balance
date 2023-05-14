@@ -15,12 +15,14 @@
                  INNER JOIN category c on c.id = pi.category_id
         WHERE store_id = #{store_id};
     </select>
+<!--     매출을 등록하는 로직 사용자를 만들지는 않을 거지만 매출이 일어나려면 간단히 라도 필요함-->
     <insert id="insert" parameterType="Sales">
         INSERT INTO sales VALUES (NULL, #{qnt}, #{store_product_id}, now())
     </insert>
-    <delete id="delete" parameterType="Sales">
-        DELETE FROM sales WHERE id = #{id}
-    </delete>
+<!--    <delete id="delete" parameterType="Sales">-->
+<!--        DELETE FROM sales WHERE id = #{id}-->
+<!--    </delete>-->
+
 <!--    전체 매장 매출 조회 카테고리,이름 상품 이름별 가능 원가,판매가를 통해 이익률 조회-->
     <select id="selectall" resultType="Sales">
         SELECT s.id,p.price, p.cost, c.id as category_id, c.name as category_name, s.qnt, pi.name as product_name, s.store_product_id, s.sales_date
@@ -31,11 +33,13 @@
                  INNER JOIN store st on st.id = sp.store_id
                  INNER JOIN category c on c.id = pi.category_id
     </select>
+<!--    매출의 전체를 가져오는 것 필요는 없지만 삭제기능을 위해서 필요함-->
     <select id="select" parameterType="Long" resultType="Sales">
         SELECT *
         FROM sales
         WHERE id = #{id}
     </select>
+<!--    매출을 삭제하는 로직 위 타입은 Sales 로 되어잇길래 간단히 id 만 가져와 사용하능한 방식도 만듬-->
     <delete id="salesdelete" parameterType="Long">
         DELETE FROM sales WHERE id = #{id}
     </delete>
