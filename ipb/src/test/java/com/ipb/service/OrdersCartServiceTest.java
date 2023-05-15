@@ -40,7 +40,7 @@ class OrdersCartServiceTest {
   @Test
   void remove() {
     try {
-      ordersCartService.remove(1L);
+      ordersCartService.remove(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("카트 삭제 오류가 발생했습니다.");
@@ -51,7 +51,7 @@ class OrdersCartServiceTest {
   void get() {
     OrdersCart cart = null;
     try {
-      cart = ordersCartService.get(1L);
+      cart = ordersCartService.get(2L);
       System.out.println(cart);
     } catch(Exception e) {
       e.printStackTrace();
@@ -90,10 +90,11 @@ class OrdersCartServiceTest {
   @Test
   void removecart() {
     try {
-      ordersCartService.removecart(1L);
+      ordersCartService.removecart(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("카트 비우기 오류가 발생했습니다.");
     }
   }
+
 }

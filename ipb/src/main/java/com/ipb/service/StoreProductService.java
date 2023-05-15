@@ -19,6 +19,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   @Autowired
   StoreProductMapper storeProductMapper;
+
   @Autowired
   SalesService salesService;
 
@@ -59,6 +60,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
       salesService.register(sales);
     }
   }
+
   //  store product
   @Override
   public List<StoreProduct> get() throws Exception {
@@ -94,18 +96,43 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     map.put("store_id", store_id);
     return storeProductMapper.searchstoreproduct(map);
   }
+
   //store id 로 각각의 점포의 재고를 조회 할 수 있음
   public List<StoreProduct> selectstoreproduct(Long store_id)throws Exception {
     return storeProductMapper.selectstoreproduct(store_id);
   }
+
   //발주할 때, 점포의 재고수량을 변경
   public void storeupdateqnt(StoreProduct storeProduct) throws Exception {
     storeProductMapper.storeupdateqnt(storeProduct);
   }
+
   //store_id와 product_id를 조회하는 기능
   public StoreProduct getstoreproductfromstoreidandproductid(StoreProduct storeProduct) throws Exception {
     StoreProduct st = storeProductMapper.getstoreproductfromstoreidandproductid(storeProduct);
     return st;
+  }
+
+  //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
+  public void updateOrInsert(List<OrdersCart> orderableList) throws Exception {
+    for(OrdersCart orderableCart : orderableList) {
+      StoreProduct sp = new StoreProduct(orderableCart.getProduct_id(), orderableCart.getStore_id());
+
+      // 만약 is_using 관련해 이슈가 있다면... 이 부분에 수정이 필요!
+      StoreProduct exist_sp = storeProductMapper.getstoreproductfromstoreidandproductid(sp);
+      // storeProduct 테이블에 존재하지 않으면
+      if (exist_sp == null) {
+        // 추가
+        sp.setQnt(orderableCart.getQnt());
+        sp.set_using(true);
+        storeProductMapper.insert(sp);
+        // 존재한다면
+      } else {
+        // 수량 변경
+        exist_sp.setQnt(exist_sp.getQnt() + orderableCart.getQnt());
+        storeProductMapper.updateqnt(exist_sp);
+      }
+    }
   }
 }
 

@@ -36,4 +36,10 @@ public class Orders {
         this.orders_date = orders_date;
     }
 
+    public Orders(Integer qnt, Long product_id, Long store_id, Long delivery_id) {
+        this.qnt = qnt;
+        this.product_id = product_id;
+        this.store_id = store_id;
+        this.delivery_id = delivery_id;
+    }
 }

@@ -32,4 +32,7 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
 
   //발주하기 : 발주카트에서 발주로 이동, 상품재고 감소, 점포상품재고 증가, 해당 점포아이디의 발주카트 전체 비우기
   public void addorder(Long store_id) throws Exception;
+
+  //주문리스트 추가
+  public void insertList(List<Orders> orderList) throws Exception;
 }

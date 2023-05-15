@@ -47,7 +47,7 @@ public class ProductService implements MyService <Long, Product> {
     return productMapper.search(search);
   }
 
-  //발주할 때, 수량을 변경함
+  //발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경
   public void updateqnt(Product product) throws Exception {
     productMapper.updateqnt(product);
   }
