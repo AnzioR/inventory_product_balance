@@ -115,7 +115,7 @@ public class OrdersController {
     }
   }
 
-  //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회
+  //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 ok
   @GetMapping("/searchdate/{date}")
   public List<Orders> searchdate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
     try {
