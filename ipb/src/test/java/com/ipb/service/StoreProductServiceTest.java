@@ -1,11 +1,16 @@
 package com.ipb.service;
 
 import com.ipb.domain.*;
+import com.ipb.mapper.StoreProductMapper;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import static org.mockito.Mockito.mock;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class StoreProductServiceTest {
@@ -140,5 +145,32 @@ class StoreProductServiceTest {
       e.printStackTrace();
       System.out.println("조회가 실패했습니다.");
     }
+  }
+
+  //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
+  @Test
+  void updateOrInsert() {
+    // 테스트를 위한 임시 주문 가능한 상품 목록 생성
+    List<OrdersCart> orderableList = new ArrayList<>();
+    orderableList.add(new OrdersCart(1L, 10,1L, 1L)); // 상품 ID: 1, 점포 ID: 1, 수량: 100
+    orderableList.add(new OrdersCart(2L, 50,2L, 1L)); // 상품 ID: 2, 점포 ID: 1, 수량: 100
+
+    // 테스트를 위한 임시 StoreProduct 객체 생성
+    StoreProduct sp1 = new StoreProduct(1L, 1L);
+    sp1.setQnt(20); // 기존 재고 수량: 20
+    sp1.set_using(true);
+
+    StoreProduct sp2 = new StoreProduct(2L, 1L);
+    sp1.setQnt(20); // 기존 재고 수량: 20
+    sp1.set_using(true);
+
+    try {
+      storeProductService.updateOrInsert(orderableList);
+      System.out.println(orderableList);
+    } catch (Exception e) {
+      System.out.println("점포보유상품 재고 변경을 실패했습니다.");
+      e.printStackTrace();
+    }
+
   }
 }

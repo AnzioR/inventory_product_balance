@@ -6,6 +6,7 @@ import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersCartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -52,5 +53,10 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   //store_id에 해당되는 카트를 삭제한다.
   public void removecart(Long store_id) throws Exception {
     ordersCartMapper.removecart(store_id);
+  }
+
+  //카트 리스트를 삭제한다.
+  public void removeCartList(List<OrdersCart> orderableList) throws Exception {
+    ordersCartMapper.removeCartList(orderableList);
   }
 }

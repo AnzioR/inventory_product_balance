@@ -1,6 +1,7 @@
 package com.ipb.mapper;
 
 
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.Product;
 import com.ipb.frame.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
@@ -16,4 +17,7 @@ public interface ProductMapper extends MyMapper<Long, Product> {
 
   //발주할 때, 재고를 변경
   public void updateqnt(Product product) throws Exception;
+
+  //발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경
+  public void updateQntAll(List<OrdersCart> orderableList) throws Exception;
 }

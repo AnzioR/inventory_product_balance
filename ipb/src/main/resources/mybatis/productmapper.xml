@@ -65,4 +65,11 @@
         UPDATE product SET qnt=#{qnt} WHERE id=#{id};
     </update>
 
+    <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
+    <update id="updateQntAll" parameterType="java.util.List">
+        <foreach collection="orderableList" item="item" index="index" separator=";" close=";">
+            UPDATE product SET qnt=qnt-#{item.qnt} WHERE id=#{item.product_id}
+        </foreach>
+    </update>
+
 </mapper>
