@@ -57,6 +57,5 @@ public class SalesController {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
-
     }
 }
