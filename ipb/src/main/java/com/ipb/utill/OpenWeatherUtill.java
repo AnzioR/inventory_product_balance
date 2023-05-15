@@ -58,6 +58,5 @@ public class OpenWeatherUtill {
     new_weather.setTemp(temps);
     new_weather.setStatus(EWeather);
     return new_weather;
-    // 이쪽 파싱 불러 오기 안댐
   }
 }
