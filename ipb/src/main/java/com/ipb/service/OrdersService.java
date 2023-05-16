@@ -11,14 +11,12 @@ import com.ipb.mapper.ProductMapper;
 import com.ipb.mapper.StoreProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import static java.time.LocalTime.now;
 
 @Service
 public class OrdersService implements MyService<Long, Orders> {
@@ -34,12 +32,6 @@ public class OrdersService implements MyService<Long, Orders> {
 
   @Autowired
   StoreProductMapper storeProductMapper;
-
-  @Autowired
-  OrdersCartService ordersCartService;
-
-  @Autowired
-  ProductService productService;
 
   @Autowired
   StoreProductService storeProductService;
@@ -125,101 +117,51 @@ public class OrdersService implements MyService<Long, Orders> {
     productMapper.updateqnt(product);
   }
 
-
   //발주카트에 담긴 상품들을 리스트로 처리해서 발주로 이동시킴
   //(카트:상품번호,수량,발주매장번호에 추가로 배송상태, 발주일을 더해서 Orders로 보낸다.)
-  @Transactional
   public List<OrdersCart> addorder(Long store_id) throws Exception {
-    List<OrdersCart> cartItems = ordersCartService.cartlist(store_id);
-    List<Orders> transOrders = new ArrayList<>();
-    List<OrdersCart> errorItems = new ArrayList<>();
-    for (OrdersCart item : cartItems) {
-      Orders order = new Orders();
-      order.setProduct_id(item.getProduct_id());
-      order.setQnt(item.getQnt());
-      order.setStore_id(item.getStore_id());
-      order.setDelivery_id(1L); //발주가 이루어지는 시점에서 상품의 배송상태는 배송준비중(1)이다
-      order.setOrders_date(new Date());
-
-      // 여기서 각 상품에 대한 본사재고를 확인합니다
-      int store_qnt = productService.get(order.getProduct_id()).getQnt();
-      int wish_qnt = item.getQnt();
-
-      if (store_qnt < wish_qnt) {
-        // 주문이 정상적으로 처리될 수 없다
-        int max_qnt = store_qnt;
-        item.setQnt(max_qnt);
-        errorItems.add(item);
-        continue;
-      } else {
-        // 정상주문 처리 가능
-        transOrders.add(order);
-        ordersMapper.insert(order);
-        //발주카트의 정보가 발주로 이동되었으므로 store_id가 가진 발주카트를 비운다. (store_id에 해당되는 orderCart를 전부 삭제함)
-        ordersCartService.removecart(1L);
-        //발주를 하는 경우 발주가능상품의 수량에서 주문수량을 차감한다
-        // 1. 해당 상품 정보 조회
-        Product product = productService.get(order.getProduct_id());
-        product.setQnt(product.getQnt() - order.getQnt());
-        productService.updateqnt(product);
-
-        // 2. 존재 여부 파악
-        StoreProduct sp = new StoreProduct(order.getProduct_id(), order.getStore_id());
-        sp = storeProductService.getstoreproductfromstoreidandproductid(sp);
-        System.out.println(sp);
-        if (sp != null) {
-          // 2-1. 점포에 상품이 존재할 떄, qnt 증가
-          sp.setQnt(sp.getQnt() + order.getQnt());
-          storeProductService.storeupdateqnt(sp);
-        } else {
-          //2-2. 존재하지 않는 경우에는,레코드 추가
-          sp = new StoreProduct(order.getQnt(), order.getProduct_id(), order.getStore_id(), false);
-          storeProductService.register(sp);
-        }
-      }
-    }
-    System.out.println("주문이 실패된 상품들은 다음과 같습니다");
-    for (OrdersCart item : errorItems) {
-      System.out.println(item);
-    }
-    return errorItems;
-  }
-
-  public void maxOrder(List<OrdersCart> failOrderList) throws Exception {
-    List<Orders> transOrders = new ArrayList<>();
-
-    for (OrdersCart item : failOrderList) {
-      Orders order = new Orders();
-      order.setProduct_id(item.getProduct_id());
-      order.setQnt(item.getQnt());
-      order.setStore_id(item.getStore_id());
-      order.setDelivery_id(1L); //발주가 이루어지는 시점에서 상품의 배송상태는 배송준비중(1)이다
-      order.setOrders_date(new Date());
-
-      // 정상주문 처리 가능
-      transOrders.add(order);
-      ordersMapper.insert(order);
-      //발주카트의 정보가 발주로 이동되었으므로 store_id가 가진 발주카트를 비운다. (store_id에 해당되는 orderCart를 전부 삭제함)
-      ordersCartService.removecart(1L);
-      //발주를 하는 경우 발주가능상품의 수량에서 주문수량을 차감한다
-      // 1. 해당 상품 정보 조회
-      Product product = productService.get(order.getProduct_id());
-      product.setQnt(product.getQnt() - order.getQnt());
-      productService.updateqnt(product);
-
-      // 2. 존재 여부 파악
-      StoreProduct sp = new StoreProduct(order.getProduct_id(), order.getStore_id());
-      sp = storeProductService.getstoreproductfromstoreidandproductid(sp);
-      System.out.println(sp);
-      if (sp != null) {
-        // 2-1. 점포에 상품이 존재할 떄, qnt 증가
-        sp.setQnt(sp.getQnt() + order.getQnt());
-        storeProductService.storeupdateqnt(sp);
-      } else {
-        //2-2. 존재하지 않는 경우에는,레코드 추가
-        sp = new StoreProduct(order.getQnt(), order.getProduct_id(), order.getStore_id(), false);
-        storeProductService.register(sp);
-      }
+    // 장바구니 목록(상품번호, 수량, 점포번호)에서 발주를 진행한다.
+    // 본사에 충분한 재고가 있는지 고려해야하고, (주문가능한 것만 조회)
+    List<OrdersCart> orderableList = ordersCartMapper.findOrderableOrders(store_id);
+    // 정상적으로 재고가 있는 경우에는, 발주가 정상 처리되고
+    normalOrderProcess(orderableList);
+    // 정상적으로 재고가 없는 경우에는, 따로 리스트를 반환합니다.
+    List<OrdersCart> unorderableList = ordersCartMapper.findUnorderableOrders(store_id);
+    System.out.println(unorderableList);
+    if (unorderableList.size() == 0) {
+      return null;
+    } else {
+      return unorderableList;
     }
   }
+
+  // 본사재고보다 많은 발주가 들어간 목록들을 매개변수로 하여, 본사 보유 최대 수량을 발주
+  public void maxOrder(List<OrdersCart> unOrderableList) throws Exception {
+    // 장바구니 목록에 수량을 본사 최대 수량으로 변경
+    for (OrdersCart oc : unOrderableList) {
+      int maxQnt = productMapper.select(oc.getProduct_id()).getQnt();
+      oc.setQnt(maxQnt);
+    }
+    // 정상 발주 처리 진행
+    normalOrderProcess(unOrderableList);
+  }
+
+  // 정상적으로 발주처리되는 부분이 반복되기 때문에 하나의 메서드로 추출해서 이용하도록 작성
+  private void normalOrderProcess(List<OrdersCart> orderRequestList) throws Exception {
+    if (orderRequestList.size() > 0) {
+      List<Orders> orderList = new ArrayList<Orders>();
+      for (OrdersCart oc : orderRequestList) {
+        orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L));
+      }
+      // (order 테이블 레코드 추가)
+      ordersMapper.insertList(orderList);
+      // 정상처리된 발주는 점포재고 테이블에 새롭게 추가되거나, qnt가 증가되고
+      storeProductService.updateOrInsert(orderRequestList);
+      // cart에서 제거됩니다.
+      ordersCartMapper.removeCartList(orderRequestList);
+      // 본사에서 재고도 줄입니다.
+      productMapper.updateQntAll(orderRequestList);
+    }
+  }
+
 }

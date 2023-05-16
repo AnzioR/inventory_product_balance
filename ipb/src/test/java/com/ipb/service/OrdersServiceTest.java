@@ -33,7 +33,7 @@ class OrdersServiceTest {
   @Test
   void modify() {
       try {
-        Orders orders = ordersService.get(1L);
+        Orders orders = ordersService.get(2L);
         orders.setQnt(500);
         ordersService.modify(orders);
       } catch (Exception e) {
@@ -46,7 +46,7 @@ class OrdersServiceTest {
   @Test
   void orderscancel() {
     try {
-      Orders orders = ordersService.get(1L);
+      Orders orders = ordersService.get(2L);
       ordersService.orderscancel(orders);
       // Product 정보 조회
       Product product = productService.get(orders.getProduct_id());
@@ -62,7 +62,7 @@ class OrdersServiceTest {
   @Test
   void remove() {
     try {
-      ordersService.remove(1L);
+      ordersService.remove(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("발주 취소 오류가 발생했습니다.");
@@ -72,7 +72,7 @@ class OrdersServiceTest {
   void get() {
     Orders orders = null;
     try {
-      orders = ordersService.get(1L);
+      orders = ordersService.get(2L);
       System.out.println(orders);
     } catch(Exception e) {
       e.printStackTrace();
@@ -140,7 +140,7 @@ class OrdersServiceTest {
   @Test
   void updatestoreorders() {
     try {
-      Orders orders = ordersService.get(1L);
+      Orders orders = ordersService.get(2L);
       orders.setQnt(444);
       orders.setDelivery_id(2L);
       ordersService.updatestoreorders(orders);
@@ -168,7 +168,7 @@ class OrdersServiceTest {
     // 카트에 있는 상품들을 가져와서 주문할꺼야
     List<OrdersCart> addorder = new ArrayList<>();
     try {
-      addorder = ordersService.addorder(1L);
+      addorder = ordersService.addorder(2L);
       System.out.println(addorder);
     } catch(Exception e) {
       e.printStackTrace();

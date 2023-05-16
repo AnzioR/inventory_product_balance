@@ -12,38 +12,38 @@ import java.util.List;
 public class EventService implements MyService<Long, Event> {
 
   @Autowired
-  EventMapper eventMappper;
+  EventMapper eventMapper;
 
   @Override
   public void register(Event event) throws Exception {
-    eventMappper.insert(event);
+    eventMapper.insert(event);
   }
 
   @Override
   public void modify(Event event) throws Exception {
-    eventMappper.update(event);
+    eventMapper.update(event);
   }
 
   @Override
   public void remove(Long id) throws Exception {
-    eventMappper.delete(id);
+    eventMapper.delete(id);
   }
 
   @Override
   public Event get(Long id) throws Exception {
-    return eventMappper.select(id);
+    return eventMapper.select(id);
   }
 
   @Override
   public List<Event> get() throws Exception {
-    return eventMappper.selectall();
+    return eventMapper.selectall();
   }
 
   public Event searcheventname(String name) throws Exception {
-    return eventMappper.searcheventname(name);
+    return eventMapper.searcheventname(name);
   }
 
   public Event selectbytype(Long id) throws Exception {
-    return eventMappper.selectbytype(id);
+    return eventMapper.selectbytype(id);
   }
 }

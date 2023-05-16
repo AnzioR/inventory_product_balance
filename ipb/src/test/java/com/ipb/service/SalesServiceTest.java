@@ -26,7 +26,7 @@ class SalesServiceTest {
   @Test
   void register() {
     try {
-      Sales sales = new Sales(null,8000,5L,null);
+      Sales sales = new Sales(null,3,1L,null);
         storeProductService.updateqnt(sales);
     } catch (Exception e) {
       e.printStackTrace();
@@ -75,6 +75,12 @@ class SalesServiceTest {
       e.printStackTrace();
       System.out.println("발주 취소 오류가 발생했습니다.");
     }
+  }
+  @Test
+  void 점포_반품() {
+
+
+
   }
 //
 //  @Test

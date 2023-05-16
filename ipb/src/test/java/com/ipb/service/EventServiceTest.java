@@ -39,7 +39,7 @@ class EventServiceTest {
   @Test
   void remove() {
     try {
-      eventService.remove(3L);
+      eventService.remove(8L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류가 발생했습니다.");
