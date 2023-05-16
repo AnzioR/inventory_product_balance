@@ -15,6 +15,7 @@ class OrdersIssueServiceTest {
   @Autowired
   OrdersIssueService ordersIssueService;
 
+//  ordersIssue에 order_id, qnt, orders_desc_id, dispossal_date 을 써서 주문 이슈가 발생한 상품을 등록 할 수 있다.
   @Test
   void register() {
     try {
@@ -26,8 +27,10 @@ class OrdersIssueServiceTest {
     }
   }
 
+  // (요구사항에는 없지만 필요할까봐) ordersIssue에 order_id, qnt, orders_desc_id, dispossal_date 을 써서 주문 이슈가 발생한 상품을 수정 할 수 있다.
+//  수정 되는 부분은 qnt,disposal 부분만 업데이트 할 수 있도록 만들었다
   @Test
-  void modify() {
+   void modify() {
     OrdersIssue ordersIssue = new OrdersIssue(2L, 1L, 12, 2L, new Date());
     try {
       ordersIssueService.modify(ordersIssue);
@@ -37,6 +40,7 @@ class OrdersIssueServiceTest {
     }
   }
 
+  // (요구사항에는 없지만 필요할까봐)ordersIssue id를 삭제를 할 수 있다.
   @Test
   void remove() {
     try {
@@ -47,6 +51,7 @@ class OrdersIssueServiceTest {
     }
   }
 
+// (요구사항에는 없지만필요할까봐)
   @Test
   void get() {
     try {
@@ -56,7 +61,8 @@ class OrdersIssueServiceTest {
       throw new RuntimeException(e);
     }
   }
-
+  // orders issue 전체 상세조회가 가능하다
+//  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리,점포아이디
   @Test
   @DisplayName("Order issue test")
   void ordersissuealllist() {
@@ -72,6 +78,10 @@ class OrdersIssueServiceTest {
       System.out.println("전체검색 오류가 발생했습니다.");
     }
   }
+
+
+//  점포의 아이디 값으로 order issue 상세 조회가 가능하다
+  //  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리
     @Test
     void ordersissuestore() {
       try {
@@ -84,6 +94,9 @@ class OrdersIssueServiceTest {
         System.out.println("오류가 발생.");
       }
     }
+
+//    orders issue로 issue product 상세 조회가 가능하다
+  //  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리,점포아이디
   @Test
   void ordersissuedesc() {
     try {
