@@ -15,6 +15,8 @@ class SalesIssueServiceTest {
 
   @Autowired
   SalesIssueService salesIssueService;
+
+  //  salesIssue에 store_product_id, qnt, sales_desc_id, dispossal_date 을 써서 판매 이슈가 발생한 상품을 등록 할 수 있다.
   @Test
   void register() {
     try {
@@ -25,7 +27,8 @@ class SalesIssueServiceTest {
       throw new RuntimeException(e);
     }
   }
-
+  // (요구사항에는 없지만 필요할까봐) //  salesIssue에 store_product_id, qnt, sales_desc_id, dispossal_date 을 써서 판매 이슈가 발생한 상품을 수정 할 수 있다.
+//  수정 되는 부분은 qnt,disposal 부분만 업데이트 할 수 있도록 만들었다
   @Test
   void modify() {
     SalesIssue salesIssue = new SalesIssue(16L, 1L, 12, 2L, new Date());
@@ -36,7 +39,7 @@ class SalesIssueServiceTest {
       System.out.println("수정 오류가 발생했습니다.");
     }
   }
-
+  // (요구사항에는 없지만 필요할까봐)salesIssue에 id를 삭제를 할 수 있다.
   @Test
   void remove() {
     try {
@@ -57,6 +60,8 @@ class SalesIssueServiceTest {
     }
   }
 
+  // salesIssue 전체 상세조회가 가능하다
+//  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리,점포아이디
   @Test
   @DisplayName("Sales issue test")
   void salesissuealllist() {
@@ -72,6 +77,9 @@ class SalesIssueServiceTest {
       System.out.println("전체검색 오류가 발생했습니다.");
     }
   }
+
+  //  점포의 아이디 값으로 salesIssue  상세 조회가 가능하다
+  //  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리
   @Test
   void salesissuestore() {
     try {
@@ -84,6 +92,9 @@ class SalesIssueServiceTest {
       System.out.println("오류가 발생.");
     }
   }
+
+  //   salesIssue로 issue product 상세 조회가 가능하다
+  //  이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리,점포아이디
   @Test
   void ordersissuedesc() {
     try {
