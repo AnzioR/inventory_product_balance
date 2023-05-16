@@ -42,7 +42,16 @@ public class SalesIssueService implements MyService<Long, SalesIssue> {
     return salesIssueMapper.selectall();
   }
 
-//  public List<SalesIssue> ordersissueproductlist(Long store_id) throws Exception {
-//    return salesIssueMapper.ordersissueproductlist(store_id);
-//  }
-}
+    public List<SalesIssue> salesissuealllist() throws Exception {
+    return salesIssueMapper.salesissuealllist();
+  }
+
+  public List<SalesIssue> salesissuestore(Long store_id) throws Exception {
+    return salesIssueMapper.salesissuestore(store_id);
+  }
+  public List<SalesIssue> salesissuedesc(Long sales_desc_id) throws Exception {
+    return salesIssueMapper.salesissuedesc(sales_desc_id);
+  }
+  }
+
+

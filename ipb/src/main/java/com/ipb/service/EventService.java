@@ -1,9 +1,8 @@
 package com.ipb.service;
 
-import com.ipb.domain.Board;
 import com.ipb.domain.Event;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.EventMappper;
+import com.ipb.mapper.EventMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +12,7 @@ import java.util.List;
 public class EventService implements MyService<Long, Event> {
 
   @Autowired
-  EventMappper eventMappper;
+  EventMapper eventMappper;
 
   @Override
   public void register(Event event) throws Exception {
