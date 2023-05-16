@@ -38,7 +38,7 @@
 
     <!-- 본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 : 발주번호, 발주상품명, 발주수량, 입수, 발주점포명, 배송상태, 배송일 보여줌  -->
     <select id="searchdate" parameterType="String" resultType="Orders">
-        SELECT o.id, pi.name, o.qnt, pi.box_qnt, s.name, d.status, o.orders_date
+        SELECT o.id, pi.name as product_name, o.qnt, pi.box_qnt as product_box_qnt, s.name as store_name, d.status as orders_status, o.orders_date
         FROM orders o
                  INNER JOIN delivery d on d.id = o.delivery_id
                  INNER JOIN product p on p.id = o.product_id
@@ -49,7 +49,7 @@
 
     <!-- 발주한 상품의 배송 상태를 조회한다 : 일단 발주 id로 조회할 수 있도록 만들었음 -->
     <select id="searchdeliverystatus" parameterType="Long" resultType="Orders">
-        SELECT o.id, pi.name, d.status
+        SELECT o.id, pi.name as product_name, d.status as orders_status
         FROM orders o
                 INNER JOIN delivery d on d.id = o.delivery_id
                 INNER JOIN product p on p.id = o.product_id
@@ -81,5 +81,11 @@
     <!-- 발주하기 : 점포에서 발주카트를 통해 주문을 하면, 1.발주 2.상품재고감소 3.점포재고증가  -->
     <insert id="addorder" parameterType="Orders">
         INSERT INTO orders VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{delivery_id}, now())
+    </insert>
+
+    <!-- 주문리스트 추가 -->
+    <insert id="insertList" parameterType="java.util.List">
+        INSERT INTO orders VALUES
+        <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now()) </foreach>
     </insert>
 </mapper>

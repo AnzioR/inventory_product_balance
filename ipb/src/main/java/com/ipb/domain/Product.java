@@ -32,7 +32,7 @@ public class Product {
         this.exp = exp;
         this.product_info_id = product_info_id;
     }
-
+// 냉장 냉동 상온 등등 만들어야함
 }
 
 

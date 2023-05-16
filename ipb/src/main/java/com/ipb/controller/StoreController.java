@@ -13,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+
 public class StoreController {
 
   @Autowired

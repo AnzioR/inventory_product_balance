@@ -26,7 +26,7 @@ public class EventController {
 
   //이벤트 등록 ok
   @PostMapping("/event/add")
-  public Event register(Event event){
+  public Event register(@RequestBody Event event){
     try {
       eventService.register(event);
       return event;
@@ -38,7 +38,7 @@ public class EventController {
 
   //이벤트 상품 수정 : id 작성안하면 에러 발생하므로 적어줘야 한다 ok
   @PutMapping("/eventdetail/update/{id}")
-  public Event updateEvent(@PathVariable Long id, Event event) {
+  public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
     try {
       eventService.modify(event);
       return event;
