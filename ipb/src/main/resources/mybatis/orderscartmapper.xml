@@ -21,9 +21,11 @@
 
     <!-- 발주 카트 조회 : 점포에서 발주카트에 담은 상품 중 아이디번호에 해당되는 내역을 조회 -->
     <select id="select" parameterType="Long" resultType="OrdersCart">
-        SELECT id, qnt, product_id, store_id
-        FROM orders_cart
-        WHERE id = #{id}
+        SELECT oc.*, pi.*
+        FROM orders_cart oc
+                INNER JOIN product p on p.id = oc.product_id
+                INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        WHERE oc.id = #{id}
     </select>
 
     <!-- 발주 카트 전체 조회 : 본사에서 모든 점포들이 발주카트에 담은 내역 전체를 조회할 수 있음 -->

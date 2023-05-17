@@ -12,4 +12,8 @@ import java.util.List;
 @Repository
 public interface SalesIssueMapper extends MyMapper<Long, SalesIssue> {
 
+  public List<SalesIssue> salesissuealllist() throws Exception;
+  public List<SalesIssue> salesissuestore(Long store_id) throws Exception;
+
+  public List<SalesIssue> salesissuedesc(Long orders_desc_id) throws Exception;
 }
