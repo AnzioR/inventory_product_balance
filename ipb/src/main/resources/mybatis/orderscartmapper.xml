@@ -35,8 +35,10 @@
 
     <!-- 발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 -->
     <select id="cartlist" parameterType="Long" resultType="OrdersCart">
-        SELECT *
-        FROM  orders_cart
+        SELECT oc.*, pi.*
+        FROM  orders_cart oc
+                  INNER JOIN product p on p.id = oc.product_id
+                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
         WHERE store_id=#{store_id}
     </select>
 
