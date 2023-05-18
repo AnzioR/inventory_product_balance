@@ -4,10 +4,7 @@ import com.ipb.domain.Store;
 import com.ipb.service.StoreService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -42,8 +39,8 @@ public class StoreController {
   }
 
   //점포상세조회
-  @GetMapping("/storedetail")
-  public Store storeDetail(Long id){
+  @GetMapping("/storedetail/{id}")
+  public Store storeDetail(@PathVariable Long id){
     try {
       return storeService.get(id);
     } catch (Exception e) {

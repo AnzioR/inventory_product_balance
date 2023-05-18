@@ -62,7 +62,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문 넣기
   @PostMapping("/ordersdetail/add")
-  public Orders addorder(Orders orders){
+  public Orders addorder(@RequestBody Orders orders){
     try {
       ordersService.register(orders);
       return orders;
