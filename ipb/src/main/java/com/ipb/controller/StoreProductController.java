@@ -75,7 +75,6 @@ public class StoreProductController {
   //해당점포의 보유상품 전체조회
   @GetMapping("/list/{store_id}")
   public List<StoreProduct> allProductByStoreId(@PathVariable Long store_id) {
-    System.out.println(store_id);
     try {
       List<StoreProduct> selectstoreproduct = storeProductService.selectstoreproduct(store_id);
       return selectstoreproduct;

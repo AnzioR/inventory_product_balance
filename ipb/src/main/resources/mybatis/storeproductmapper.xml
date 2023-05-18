@@ -6,7 +6,7 @@
 
     <!-- store id로  점포별 상품 조회-->
     <select id="selectstoreproduct" parameterType="Long" resultType="StoreProduct">
-        SELECT sp.id,
+        SELECT sp.id,sp.status,
                pi.name as product_name,
                p.price as product_price,
                pi.imgname,
@@ -48,7 +48,7 @@
 
     <!--요구사항에 없지만 필요하겠지?  점포 재고에서 이름 검색하면 조회됨   -->
     <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price as product_price,
+        SELECT sp.id ,pi.name as product_name, p.price as product_price,sp.status,
                sp.qnt,
                pi.box_qnt,
                pi.imgname,
@@ -74,7 +74,8 @@
     <update id="update" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt},
-            is_using=#{is_using}
+            is_using=#{is_using},
+        status=#{status}
         WHERE id = #{id}
     </update>
 
@@ -95,7 +96,7 @@
 
     <!-- 해당상품을 상세 조회 -->
     <select id="select" parameterType="Long" resultType="StoreProduct">
-        SELECT sp.id,
+        SELECT sp.id,sp.status,
                sp.qnt,
                sp.product_id,
                sp.store_id,
