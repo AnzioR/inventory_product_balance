@@ -24,7 +24,7 @@ public class StaffController {
     WeatherService weatherService;
 
     @PostMapping("/add")
-    public Staff register(Staff staff) throws Exception {
+    public Staff register(@RequestBody Staff staff) throws Exception {
         try {
             if (staffService.checkId(staff.getLogin_id())) {
                 staffService.register(staff);
@@ -111,7 +111,7 @@ public class StaffController {
         }
     }
     @PutMapping("/update")
-    public Staff staffUpdate(Staff staff){
+    public Staff staffUpdate(@RequestBody Staff staff){
         try {
             staffService.modify(staff);
             return staff;

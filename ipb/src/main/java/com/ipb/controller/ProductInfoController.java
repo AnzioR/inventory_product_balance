@@ -27,7 +27,7 @@ public class ProductInfoController {
   }
 
   @PostMapping("/add")
-  public ProductInfo register(ProductInfo productInfo) {
+  public ProductInfo register(@RequestBody ProductInfo productInfo) {
     try {
       productInfoService.register(productInfo);
       return productInfo;
@@ -57,7 +57,7 @@ public class ProductInfoController {
   }
 
   @PutMapping("/update")
-  public ProductInfo update(ProductInfo productInfo) {
+  public ProductInfo update(@RequestBody ProductInfo productInfo) {
     try {
       productInfoService.modify(productInfo);
       return productInfo;

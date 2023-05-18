@@ -16,7 +16,7 @@ public class BoardController {
   BoardService boardService;
 
   @PostMapping("/add")
-  public Board add(Board board) {
+  public Board add(@RequestBody Board board) {
     try {
       boardService.register(board);
       return board;
@@ -35,7 +35,7 @@ public class BoardController {
   }
 
   @PutMapping("/update")
-  public Board boardUpdate(Board board) {
+  public Board boardUpdate(@RequestBody Board board) {
     try {
       boardService.modify(board);
       return board;
@@ -45,7 +45,7 @@ public class BoardController {
   }
 
   @GetMapping("/detail")
-  public Board boardDetail (Long id){
+  public Board boardDetail(Long id){
     try {
       return boardService.get(id);
     } catch (Exception e) {

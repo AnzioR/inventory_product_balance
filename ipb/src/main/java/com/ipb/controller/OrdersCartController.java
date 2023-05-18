@@ -32,7 +32,7 @@ public class OrdersCartController {
 
   //발주카트에서 주문하려는 상품의 수량을 변경하기 ok
   @PutMapping("/update/{id}")
-  public OrdersCart updateCart(@PathVariable Long id, OrdersCart ordersCart) {
+  public OrdersCart updateCart(@PathVariable Long id, @RequestBody OrdersCart ordersCart) {
     try {
       ordersCartService.modify(ordersCart);
       return ordersCart;

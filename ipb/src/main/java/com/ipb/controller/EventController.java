@@ -114,7 +114,7 @@ public class EventController {
 
 //  //이벤트 타입 등록하기
 //  @PostMapping("/eventtype/add")
-//  public EventType register(EventType type){
+//  public EventType register(@RequestBody EventType type){
 //    try {
 //      eventTypeService.register(type);
 //      return type;
@@ -126,7 +126,7 @@ public class EventController {
 //
 //  //이벤트 타입 수정하기
 //  @PutMapping("/eventtypedetail/update/{id}")
-//  public EventType updateEvent(@PathVariable Long id, EventType type) {
+//  public EventType updateEvent(@PathVariable Long id, @RequestBody EventType type) {
 //    try {
 //      eventTypeService.modify(type);
 //      return type;
