@@ -26,7 +26,7 @@ public class ProductController {
   }
 
   @PostMapping("/add")
-  public Product register(Product product) {
+  public Product register(@RequestBody Product product) {
     try {
       productService.register(product);
       return product;
@@ -56,7 +56,7 @@ public class ProductController {
   }
 
   @PutMapping("/update")
-  public Product update(Product product) {
+  public Product update(@RequestBody Product product) {
     try {
       productService.modify(product);
       return product;

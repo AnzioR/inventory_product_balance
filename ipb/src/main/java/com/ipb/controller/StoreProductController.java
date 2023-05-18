@@ -29,7 +29,7 @@ public class StoreProductController {
 //  }
 //이것도 발주의 개념이라 필요 없음
 //  @PostMapping("/add")
-//  public StoreProduct register(StoreProduct product) {
+//  public StoreProduct register(@RequestBody StoreProduct product) {
 //    try {
 //      productService.register(product);
 //      return product;
@@ -88,7 +88,7 @@ public class StoreProductController {
 
   //해당 점포보유상품을 카테고리 이름별로 분류
   @GetMapping("/categoryname/{store_id}")
-  public List<StockInfo> getByCategory(String categoryname,@PathVariable Long store_id) {
+  public List<StockInfo> getByCategory(String categoryname, @PathVariable Long store_id) {
     try {
       List<StockInfo> selectcategoryname = storeProductService.selectcategoryname(categoryname,store_id);
       return selectcategoryname;
@@ -99,7 +99,7 @@ public class StoreProductController {
   }
   //해당 점포 보유 상품을 검색해서 찾아오기 (리스트로 가능)
   @GetMapping("/searchname/{store_id}")
-  public List<StockInfo> searchByName(String txt,@PathVariable Long store_id) {
+  public List<StockInfo> searchByName(String txt, @PathVariable Long store_id) {
     try {
       List<StockInfo> searchstoreproduct = storeProductService.searchstoreproduct(txt,store_id);
       return searchstoreproduct;
