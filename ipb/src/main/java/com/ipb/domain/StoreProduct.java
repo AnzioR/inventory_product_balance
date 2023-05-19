@@ -21,6 +21,7 @@ public class StoreProduct {
     private String brand;
     private String category_name;
     private String detail;
+    private StoreProductEventStatus status;
 
 
     public StoreProduct(Long product_id, Long store_id) {
