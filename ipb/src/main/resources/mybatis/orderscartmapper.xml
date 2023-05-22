@@ -30,7 +30,7 @@
 
     <!-- 발주 카트 전체 조회 : 본사에서 모든 점포들이 발주카트에 담은 내역 전체를 조회할 수 있음 -->
     <select id="selectall" resultType="OrdersCart">
-        SELECT id, qnt, product_id, store_id FROM orders_cart
+        SELECT * FROM orders_cart
     </select>
 
     <!-- 발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 -->
