@@ -22,7 +22,7 @@
 
     <!-- 이벤트 이름으로 조회하기 : 이벤트 해당 상품을 검색하는 것과 다름, 이벤트 이름을 조회하면 해당 이벤트의 정보를 보여주는 것 -->
     <select id="searcheventname" parameterType="String" resultType="Event">
-        SELECT ev.name as event_name, et.name as type_name, ev.imgname, ev.start_date, ev.end_date
+        SELECT ev.*, et.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id
         WHERE ev.name = #{name};
@@ -30,19 +30,17 @@
 
     <!-- 이벤트 상세 조회하기 (이벤트 아이디로 상세조회) -->
     <select id="select" parameterType="Long" resultType="Event">
-        SELECT name, event_type_id, imgname, start_date, end_date
-        FROM event
-        WHERE id = #{id};
+        SELECT * FROM event WHERE id = #{id};
     </select>
 
     <!-- 전체 이벤트 목록 조회 : 전체를 출력하는 것보다 가독성을 위해 이벤트명, 이벤트시작일, 이벤트종료일을 보여줌 -->
     <select id="selectall" resultType="Event">
-        SELECT name, start_date, end_date FROM event
+        SELECT * FROM event
     </select>
 
     <!-- 이벤트 타입별로 조회하기 : 이벤트 타입의 아이디 번호로 이벤트 타입정보가 조회됨 -->
     <select id="selectbytype" parameterType="Long" resultType="Event">
-        SELECT et.name as event_name, ev.name as type_name, ev.imgname, ev.start_date, ev.end_date
+        SELECT et.*, ev.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id
         WHERE ev.id = #{id};

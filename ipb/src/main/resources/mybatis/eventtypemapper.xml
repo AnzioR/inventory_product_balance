@@ -26,14 +26,12 @@
 
     <!-- 이벤트 타입 상세조회 : 이벤트 타입은 아이디비번호와 이벤트타입이름만 있기 때문에 상세보기 화면이 필요한지 조금 의문이 있었으나 생성함 -->
     <select id="select" parameterType="Long" resultType="EventType">
-        SELECT id, name
-        FROM event_type
-        WHERE id = #{id}
+        SELECT * FROM event_type WHERE id = #{id}
     </select>
 
     <!-- 이벤트 타입 전체 조회 : 현재 존재하는 이벤트 타입 전체의 정보를 가져옴 -->
     <select id="selectall" resultType="EventType">
-        SELECT name FROM event_type
+        SELECT * FROM event_type
     </select>
 
 
