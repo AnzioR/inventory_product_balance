@@ -20,6 +20,7 @@ public class StockInfo {
   private String brand;
   private String category_name;
   private String imgname;
+  private String storage;
 }
 
 

@@ -23,7 +23,7 @@ public class StoreProduct {
     private String detail;
     private Integer store_price;
     private Double event_rate;
-
+   private String storage;
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;
@@ -44,12 +44,15 @@ public class StoreProduct {
         this.is_using = is_using;
     }
 
-    public StoreProduct(Long id, Integer qnt, Long product_id, Long store_id, boolean is_using) {
+    public StoreProduct(Long id, Integer qnt, Long product_id, Long store_id, boolean is_using,Integer store_price,Double event_rate) {
         this.id = id;
         this.qnt = qnt;
         this.product_id = product_id;
         this.store_id = store_id;
         this.is_using = is_using;
+        this.store_price = store_price;
+        this.event_rate = event_rate;
+
     }
 
     public void changeQuantity(Integer newQuantity) {

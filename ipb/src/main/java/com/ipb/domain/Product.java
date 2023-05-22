@@ -23,7 +23,7 @@ public class Product {
     private String name;
     private String imgname;
     private String detail;
-
+    private String storage;
     public Product(Long id, int qnt, int price, int cost, String exp, Long product_info_id) {
         this.id = id;
         this.qnt = qnt;
@@ -32,7 +32,6 @@ public class Product {
         this.exp = exp;
         this.product_info_id = product_info_id;
     }
-// 냉장 냉동 상온 등등 만들어야함
 }
 
 
