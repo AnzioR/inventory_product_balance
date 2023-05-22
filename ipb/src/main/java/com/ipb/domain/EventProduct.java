@@ -21,6 +21,7 @@ public class EventProduct {
   private String start_date;
   private String end_date;
 
+
   public EventProduct(Long id, Long product_id, Long event_id) {
     this.id = id;
     this.product_id = product_id;

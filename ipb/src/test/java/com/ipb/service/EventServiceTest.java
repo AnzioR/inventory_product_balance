@@ -23,6 +23,12 @@ class EventServiceTest {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    //디티오를 받아왔어 매개변수로
+    // new Order
+
+
+
   }
 
   @Test
