@@ -13,7 +13,16 @@
                  INNER JOIN product p on p.id = ep.product_id
                  INNER JOIN event e on e.id = ep.event_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
-        WHERE e.name = #{name};
+        WHERE e.name = #{name}
+    </select>
+    <select id="searcheventproductbystartdate"  parameterType="String" resultType="EventProduct">
+        SELECT ep.id,e.name, pi.imgname as product_imgname, pi.name as product_name, p.qnt, p.price,p.id as product_id,
+               e.imgname as event_imgname, e.start_date, e.end_date
+        FROM event_product ep
+                 INNER JOIN product p on p.id = ep.product_id
+                 INNER JOIN event e on e.id = ep.event_id
+                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        WHERE e.start_date = #{start_date}
     </select>
 
 </mapper>
