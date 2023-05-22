@@ -111,7 +111,7 @@ public class OrdersService implements MyService<Long, Orders> {
     ordersMapper.updatestoreorders(orders);
   }
 
-  //매장에서 발주하기, 발주할 때 상품 수량도 변경함
+  //매장에서 발주하기, 발주할 때 상품 수량도 변경함(안씀 오류 코드)
   public void orders(Orders orders, Product product) throws Exception {
     ordersMapper.insert(orders);
     productMapper.updateqnt(product);
@@ -152,12 +152,16 @@ public class OrdersService implements MyService<Long, Orders> {
       List<Orders> orderList = new ArrayList<Orders>();
       for (OrdersCart oc : orderRequestList) {
         orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L));
-      }
+      }//프로덕트 아이드를 통해서 productmapper.get(product_id).price*event_rate = store_price ,, 상태가 배송완료일떄 이걸 처리할게
       // (order 테이블 레코드 추가)
       ordersMapper.insertList(orderList);
+
       // 정상처리된 발주는 점포재고 테이블에 새롭게 추가되거나, qnt가 증가되고
+      //지금은 1일떄 증가하지만 나중에 delivery_id =3 일떄 추가하는 걸로.
+
       storeProductService.updateOrInsert(orderRequestList);
       // cart에서 제거됩니다.
+      //본사 재고는 delivery_id 가 2번일떄 줄어들어야해
       ordersCartMapper.removeCartList(orderRequestList);
       // 본사에서 재고도 줄입니다.
       productMapper.updateQntAll(orderRequestList);

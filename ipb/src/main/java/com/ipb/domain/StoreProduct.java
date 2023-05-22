@@ -21,6 +21,8 @@ public class StoreProduct {
     private String brand;
     private String category_name;
     private String detail;
+    private Integer store_price;
+    private Double event_rate;
 
 
     public StoreProduct(Long product_id, Long store_id) {
