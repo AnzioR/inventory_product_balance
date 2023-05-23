@@ -3,9 +3,9 @@ package com.ipb.service;
 import com.ipb.domain.Weather;
 import com.ipb.utill.OpenWeatherUtill;
 import com.ipb.utill.WeatherUtill;
-import net.minidev.json.JSONArray;
-import net.minidev.json.JSONObject;
-import net.minidev.json.parser.JSONParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -42,6 +42,20 @@ public class WeatherTest {
     String busan = OpenWeatherUtill.getWeather("seoul");
     System.out.println(busan);
 
+    org.json.simple.parser.JSONParser jsonParser = new JSONParser();
+    org.json.simple.JSONObject weather = (org.json.simple.JSONObject)jsonParser.parse(busan);
+    org.json.simple.JSONArray weatherA = (JSONArray) weather.get("weather");
+    org.json.simple.JSONObject WeatherB = (org.json.simple.JSONObject) weatherA.get(0);
+    String EWeather = (String)WeatherB.get("main");
+    String icon = (String)WeatherB.get("icon");
+    System.out.println(EWeather);
+    System.out.println(icon);
+
+    org.json.simple.JSONObject weatherC = (JSONObject) weather.get("main");
+    Double temps = (Double) weatherC.get("temp");
+
+
+    System.out.println(temps);
 
 
 
@@ -49,9 +63,10 @@ public class WeatherTest {
 
 
 
-    Weather weather = OpenWeatherUtill.WeatherInfo(busan);
-    weatherService.register(weather);
-    System.out.println(weather);
+
+//    Weather weather = OpenWeatherUtill.WeatherInfo(busan);
+//    weatherService.register(weather);
+//    System.out.println(weather);
 
 
   }
