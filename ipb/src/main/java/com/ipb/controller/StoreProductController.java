@@ -8,6 +8,7 @@ import com.ipb.service.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -91,6 +92,25 @@ public class StoreProductController {
     try {
       List<StockInfo> selectcategoryname = storeProductService.selectcategoryname(categoryname,store_id);
       return selectcategoryname;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  @GetMapping("/categoryname/{store_id}/days")
+  public List<StockInfo> selectexpAndExpiringSoon(
+      @PathVariable Long store_id,
+      @RequestParam("categoryname") String categoryname,
+      @RequestParam("days") int days
+  ) {
+    try {
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("category_name", categoryname);
+      map.put("store_id", store_id);
+      map.put("days", days);
+
+      List<StockInfo> selectexpAndExpiringSoon = storeProductService.selectexpAndExpiringSoon(categoryname, store_id, days);
+      return selectexpAndExpiringSoon;
     } catch (Exception e) {
       e.printStackTrace();
       return null;
