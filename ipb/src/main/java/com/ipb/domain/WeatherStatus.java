@@ -8,8 +8,9 @@ import lombok.ToString;
 public class WeatherStatus {
     Boolean isChanged;
     String presentWeather;
+    String icon;
 
-    public WeatherStatus(Boolean isChanged, String presentWeather) {
+    public WeatherStatus(Boolean isChanged, String presentWeather, String icon) {
         this.isChanged = isChanged;
         this.presentWeather = presentWeather;
     }

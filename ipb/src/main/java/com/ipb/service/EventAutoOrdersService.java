@@ -16,7 +16,7 @@ public class EventAutoOrdersService {
     @Autowired
     EventProductMapper eventMapper;
 
-    @Scheduled(fixedDelay = 60 * 60)
+    @Scheduled(fixedDelay = 60 * 60 * 1000)
     public void run() throws Exception {
 // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
