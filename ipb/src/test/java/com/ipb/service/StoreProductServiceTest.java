@@ -75,9 +75,23 @@ class StoreProductServiceTest {
 
   }
 
+//  @Test
+//  void testselectexp() {
+//    String categoryName = "생선";
+//    List<StockInfo> list = null;
+//    try {
+//      list = storeProductService.selectcategoryname(categoryName,2L);
+//      for (StockInfo stockInfo : list) {
+//        System.out.println(stockInfo);
+//      }
+//    } catch (Exception e) {
+//      e.printStackTrace();
+//      System.out.println("카테고리 검색 오류 발생!!");
+//    }
+//  }
   @Test
   void testSelectCategoryName() {
-    String categoryName = "과자";
+    String categoryName = "생선";
     List<StockInfo> list = null;
     try {
       list = storeProductService.selectcategoryname(categoryName,2L);
@@ -89,7 +103,21 @@ class StoreProductServiceTest {
       System.out.println("카테고리 검색 오류 발생!!");
     }
   }
-
+// (유통기한 날짜 별 조회) store 아이디로 카테고리를 검색한 후 날짜를 검색하면 그 오늘 기준으로 날짜 이하의 상품이 조회된다
+  @Test
+  void selectexpAndExpiringSoon() {
+    String categoryName = "생선";
+    List<StockInfo> list = null;
+    try {
+      list = storeProductService.selectexpAndExpiringSoon (categoryName,2L,5);
+      for (StockInfo stockInfo : list) {
+        System.out.println(stockInfo);
+      }
+    } catch (Exception e) {
+      e.printStackTrace();
+      System.out.println("카테고리 검색 오류 발생!!");
+    }
+  }
   @Test
   void searchstoreproduct() {
     List<StockInfo> result = null;

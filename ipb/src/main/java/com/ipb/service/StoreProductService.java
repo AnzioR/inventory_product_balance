@@ -79,6 +79,17 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
+  //today 기준으로 날짜별 상품 확인 (D-3,D-4..)
+  public List<StockInfo> selectexpAndExpiringSoon(String categoryname, Long store_id, int days) throws Exception {
+    HashMap<String, Object> map = new HashMap<String, Object>();
+    map.put("category_name", categoryname);
+    map.put("store_id", store_id);
+    map.put("days", days);
+    System.out.println(map);
+    List<StockInfo> storeProducts = storeProductMapper.selectexpAndExpiringSoon(map);
+
+    return storeProducts;
+  }
 //재고 전체보기
     public List<StoreProduct> selectall()throws Exception {
     return storeProductMapper.selectall();
