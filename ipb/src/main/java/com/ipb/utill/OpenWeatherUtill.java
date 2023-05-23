@@ -47,6 +47,7 @@ public class OpenWeatherUtill {
     JSONArray weatherA = (JSONArray) weather.get("weather");
     JSONObject WeatherB = (JSONObject) weatherA.get(0);
     String EWeather = (String)WeatherB.get("main");
+    String icon = (String)WeatherB.get("icon");
 
     JSONObject weatherC = (JSONObject) weather.get("main");
     Double temps = (Double) weatherC.get("temp");
@@ -57,6 +58,7 @@ public class OpenWeatherUtill {
     Weather new_weather = new Weather();
     new_weather.setTemp(temps);
     new_weather.setStatus(EWeather);
+    new_weather.setIcon(icon);
     return new_weather;
   }
 }

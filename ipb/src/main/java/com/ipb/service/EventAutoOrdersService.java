@@ -1,21 +1,17 @@
 package com.ipb.service;
 
-import com.ipb.domain.Event;
 import com.ipb.domain.EventProduct;
-import com.ipb.mapper.EventMapper;
 import com.ipb.mapper.EventProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import java.text.SimpleDateFormat;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.Date;
 import java.util.List;
 
 @Service
-public class AutoEventProductService {
+public class EventAutoOrdersService {
 
     @Autowired
     EventProductMapper eventMapper;
