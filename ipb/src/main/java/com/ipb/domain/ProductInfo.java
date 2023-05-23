@@ -18,7 +18,9 @@ public class ProductInfo {
     private String category_name;
     private int box_qnt;
 
-  public ProductInfo(Long product_code, String name, String brand, String detail, String imgname, Long category_id, int box_qnt) {
+    private String storage;
+
+  public ProductInfo(Long product_code, String name, String brand, String detail, String imgname, Long category_id, int box_qnt, String storage) {
     this.product_code = product_code;
     this.name = name;
     this.brand = brand;
@@ -26,6 +28,7 @@ public class ProductInfo {
     this.imgname = imgname;
     this.category_id = category_id;
     this.box_qnt = box_qnt;
+    this.storage = storage;
   }
 }
 

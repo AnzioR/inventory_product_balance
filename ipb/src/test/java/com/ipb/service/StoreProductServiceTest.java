@@ -21,7 +21,7 @@ class StoreProductServiceTest {
   @Test
   void register() {
     try {
-      StoreProduct storeProduct = new StoreProduct(null, 518, 1L, 2L, true);
+      StoreProduct storeProduct = new StoreProduct(null, 518, 3L, 2L, true,2000,1.0);
       storeProductService.register(storeProduct);
       System.out.println(storeProduct);
     } catch (Exception e) {
@@ -31,7 +31,7 @@ class StoreProductServiceTest {
 
   @Test
   void modify() {
-    StoreProduct storeProduct = new StoreProduct(null, 334, 1L, 1L, true);
+    StoreProduct storeProduct = new StoreProduct(270L, 800, 3L, 2L, false,4000,2.0);
     try {
       storeProductService.modify(storeProduct);
     } catch (Exception e) {
@@ -54,7 +54,7 @@ class StoreProductServiceTest {
   void get() {
     StoreProduct storeProduct = null;
     try {
-      storeProduct = storeProductService.get(63L);
+      storeProduct = storeProductService.get(261L);
       System.out.println(storeProduct);
     } catch (Exception e) {
       e.printStackTrace();
@@ -66,7 +66,7 @@ class StoreProductServiceTest {
   void select() {
     StoreProduct storeProduct = null;
     try {
-      storeProduct = storeProductService.get(3L);
+      storeProduct = storeProductService.get(1L);
       System.out.println(storeProduct);
     } catch (Exception e) {
       e.printStackTrace();
@@ -77,7 +77,7 @@ class StoreProductServiceTest {
 
   @Test
   void testSelectCategoryName() {
-    String categoryName = "생선";
+    String categoryName = "과자";
     List<StockInfo> list = null;
     try {
       list = storeProductService.selectcategoryname(categoryName,2L);
@@ -91,10 +91,10 @@ class StoreProductServiceTest {
   }
 
   @Test
-  void testSearchBoard() {
+  void searchstoreproduct() {
     List<StockInfo> result = null;
     try {
-      result = storeProductService.searchstoreproduct("독도",2L);
+      result = storeProductService.searchstoreproduct("오징어",2L);
       for (StockInfo stockInfo : result) {
         System.out.println(stockInfo);
       }
