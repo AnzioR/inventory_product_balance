@@ -13,5 +13,6 @@ public class WeatherStatus {
     public WeatherStatus(Boolean isChanged, String presentWeather, String icon) {
         this.isChanged = isChanged;
         this.presentWeather = presentWeather;
+        this.icon = icon;
     }
 }
