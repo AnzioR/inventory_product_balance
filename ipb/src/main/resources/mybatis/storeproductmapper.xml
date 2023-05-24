@@ -26,8 +26,7 @@
     </select>
 <!--   전체 상품을 다 조회하지만 재고가 0인 상품은 조회 x (유통기한 기준으로 오름차순)-->
     <select id="selectall" resultType="StoreProduct">
-        SELECT *
-        FROM store_product   WHERE qnt > 0 ORDER BY p.exp ASC
+        SELECT * FROM store_product   WHERE qnt > 0 ORDER BY p.exp ASC
     </select>
 
     <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기  (재고 0인 상품은 조회 x, 유통기한 기준으로 오름차순 ) -->
