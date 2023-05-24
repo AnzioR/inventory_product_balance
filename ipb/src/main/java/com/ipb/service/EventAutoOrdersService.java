@@ -2,14 +2,17 @@ package com.ipb.service;
 
 import com.ipb.domain.EventAutoOrders;
 import com.ipb.domain.EventProduct;
+import com.ipb.domain.Orders;
 import com.ipb.mapper.EventAutoOrdersMapper;
 import com.ipb.mapper.EventProductMapper;
+import com.ipb.mapper.OrdersMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -19,6 +22,8 @@ public class EventAutoOrdersService {
     EventProductMapper eventMapper;
     @Autowired
     EventAutoOrdersMapper eventAutoOrdersMapper;
+    @Autowired
+    OrdersMapper ordersMapper;
 
     @Scheduled(fixedDelay = 60 * 60* 1000)
     public void AutoEventProductFirst() throws Exception {
@@ -54,8 +59,28 @@ public class EventAutoOrdersService {
         DateTimeFormatter formatterSec = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
         String dateStringSec = afterDateSec.format(formatterSec);
+
 //이벤트 3일 남은 상품이 리스트에 있을시에 발주를 진행 (진행중)
-        List<EventAutoOrders> eventAutoOrders = eventAutoOrdersMapper.searchDueEventProduct(dateStringSec);
-    }
+        System.out.println("하나");
+
+//        List<EventAutoOrders> eventAutoOrders = eventAutoOrdersMapper.searchDueEventProduct(dateStringSec);
+//        if (eventAutoOrders != null) {
+//            System.out.println("둘");
+//            System.out.println("ㄴ"+eventAutoOrders);
+//            List<Orders> orderList = new ArrayList<Orders>();
+//            for (EventAutoOrders ea : eventAutoOrders) {
+//                orderList.add(new Orders(ea.getQnt(), ea.getProduct_id(), ea.getStore_id() ,1L,1L));
+//            }
+//            ordersMapper.insertList(orderList);
+////            for (EventAutoOrders ea : eventAutoOrders) {
+////                eventAutoOrdersMapper.removeList(ea.getEvent_product_id());}
+//        }else {
+//            System.out.println("실패");
+//        }
+//
+//
+//    }
+
 }
+6}
 

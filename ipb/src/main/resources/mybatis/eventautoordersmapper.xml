@@ -18,13 +18,17 @@
                   INNER JOIN product p on p.id = ep.product_id
                   INNER JOIN product_info pi on pi.product_code = p.product_info_id
     </select>
-    <select id="searchDueEventProduct"  parameterType="String" resultType="EventProduct">
-        SELECT eao.*,p.id as product_id
+    <select id="searchDueEventProduct"  parameterType="String" resultType="EventAutoOrders">
+        SELECT eao.qnt,eao.store_id,p.id as product_id
         FROM event_auto_orders eao
                  INNER JOIN event_product ep on ep.id = eao.event_product_id
                  INNER JOIN product p on p.id = ep.product_id
                  INNER JOIN event e on e.id = ep.event_id
         WHERE e.start_date = #{start_date}
     </select>
+    <delete id="removeList" parameterType="Long">
+        DELETE FROM event_auto_orders
+        WHERE  event_product_id = #{event_product_id}
+    </delete>
 
 </mapper>
