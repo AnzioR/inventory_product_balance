@@ -4,8 +4,27 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.EventAutoOrdersMapper">
 
-    <!-- 이벤트 등록 -->
-    <insert id="insert" parameterType="EventAutoOrders">
-        INSERT INTO event_auto_orders VALUES (NULL, #{qnt}, #{event_product_id}, #{store_id})
+    <!-- 자동발주 등록 -->
+    <insert id="inserteventorder" parameterType="Long">
+        INSERT event_auto_orders (id,qnt,event_product_id, store_id)
+        SELECT  null, 50, #{event_product_id}, s.id
+        FROM store s
     </insert>
+<!--    리스트를 전체 불러 오기-->
+    <select id="selectall"  resultType="EventAutoOrders">
+        SELECT eao.*,p.id as product_id, pi.name as product_name
+        FROM  event_auto_orders eao
+                  INNER JOIN event_product ep on ep.id = eao.event_product_id
+                  INNER JOIN product p on p.id = ep.product_id
+                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
+    </select>
+    <select id="searchDueEventProduct"  parameterType="String" resultType="EventProduct">
+        SELECT eao.*,p.id as product_id
+        FROM event_auto_orders eao
+                 INNER JOIN event_product ep on ep.id = eao.event_product_id
+                 INNER JOIN product p on p.id = ep.product_id
+                 INNER JOIN event e on e.id = ep.event_id
+        WHERE e.start_date = #{start_date}
+    </select>
+
 </mapper>

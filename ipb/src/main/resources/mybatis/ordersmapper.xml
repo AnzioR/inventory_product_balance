@@ -86,11 +86,9 @@
         INSERT INTO orders VALUES
         <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now()) </foreach>
     </insert>
-    
+
     <!-- 발주된 상품의 배송상태 변경하기 -->
     <update id="updateDeliveryStatus" parameterType="Orders">
         UPDATE orders SET delivery_id=#{delivery_id} WHERE id= #{id}
     </update>
-
-
 </mapper>
