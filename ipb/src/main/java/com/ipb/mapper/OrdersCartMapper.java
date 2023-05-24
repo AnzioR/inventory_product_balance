@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Mapper
 @Repository
@@ -22,7 +23,8 @@ public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
 
   public List<OrdersCart> findUnorderableOrders(Long store_id) throws Exception;
   public void removeCartList(List<OrdersCart> orderableList) throws Exception;
-  OrdersCart selectByProductIdAndStoreId(Long product_id, Long store_id) throws Exception;
-  void updateQnt(HashMap<String, Object> map);
+  OrdersCart selectByProductIdAndStoreId(Map<String, Object> params);
+
+  void updateQnt(Map<String, Object> params);
 
 }
