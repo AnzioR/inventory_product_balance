@@ -24,7 +24,11 @@
                  INNER JOIN category c ON pi.category_id = c.id
         WHERE sp.store_id = #{store_id} AND sp.qnt > 0 ORDER BY p.exp ASC
     </select>
-<!--   전체 상품을 다 조회하지만 재고가 0인 상품은 조회 x (유통기한 기준으로 오름차순)-->
+
+    <!-- 이 부분은 추후 자동발주 또는 점포보유상품을 불러오는 과정에서 바뀔수 있으니 서로 공유 해줘야합니다!!!
+        윤민지, 채란 에게 얘기해줘야함!!!!
+        -->
+    <!-- 전체 상품을 store_id로 다 조회하지만 재고가 0인 상품은 조회 x (유통기한 기준으로 오름차순) -->
     <select id="selectall" resultType="StoreProduct">
         SELECT sp.*, p.* FROM store_product sp
         INNER JOIN product p on p.id = sp.product_id

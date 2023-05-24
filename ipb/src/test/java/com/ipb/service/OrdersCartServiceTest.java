@@ -73,7 +73,7 @@ class OrdersCartServiceTest {
   }
 
   @Test
-  void cartlist() {
+  void cartList() {
     List<OrdersCart> list = null;
     try {
       list = ordersCartService.cartList(3L);
@@ -87,7 +87,7 @@ class OrdersCartServiceTest {
   }
 
   @Test
-  void removecart() {
+  void removeCart() {
     try {
       ordersCartService.removeCart(2L);
     } catch(Exception e) {
