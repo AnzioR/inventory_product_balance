@@ -1,6 +1,5 @@
 package com.ipb.service;
 
-import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +76,7 @@ class OrdersCartServiceTest {
   void cartlist() {
     List<OrdersCart> list = null;
     try {
-      list = ordersCartService.cartlist(3L);
+      list = ordersCartService.cartList(3L);
       for(OrdersCart oc : list) {
         System.out.println(oc);
       }
@@ -90,7 +89,7 @@ class OrdersCartServiceTest {
   @Test
   void removecart() {
     try {
-      ordersCartService.removecart(2L);
+      ordersCartService.removeCart(2L);
     } catch(Exception e) {
       e.printStackTrace();
       System.out.println("카트 비우기 오류가 발생했습니다.");

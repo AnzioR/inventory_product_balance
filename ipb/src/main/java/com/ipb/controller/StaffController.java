@@ -77,7 +77,7 @@ public class StaffController {
 ////                    return "{\"바꿨냐\": false}";
 //        } else {
             // 날씨가 기존의 날씨와 달라지면 true 및 바뀐 날씨 반환
-            return new WeatherStatus(true, new_weather.getStatus());
+            return new WeatherStatus(true, new_weather.getStatus() , new_weather.getIcon());
 //                    return "{\"바꿨냐\": true, \"바뀐날씨\":" + new_weather.getStatus() +"}";
 //        }
     }

@@ -8,6 +8,7 @@ import com.ipb.service.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
 
 @RestController
@@ -75,7 +76,6 @@ public class StoreProductController {
   //해당점포의 보유상품 전체조회
   @GetMapping("/list/{store_id}")
   public List<StoreProduct> allProductByStoreId(@PathVariable Long store_id) {
-    System.out.println(store_id);
     try {
       List<StoreProduct> selectstoreproduct = storeProductService.selectstoreproduct(store_id);
       return selectstoreproduct;
@@ -97,6 +97,25 @@ public class StoreProductController {
       return null;
     }
   }
+  @GetMapping("/categoryname/{store_id}/days")
+  public List<StockInfo> selectexpAndExpiringSoon(
+      @PathVariable Long store_id,
+      @RequestParam("categoryname") String categoryname,
+      @RequestParam("days") int days
+  ) {
+    try {
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("category_name", categoryname);
+      map.put("store_id", store_id);
+      map.put("days", days);
+
+      List<StockInfo> selectexpAndExpiringSoon = storeProductService.selectexpAndExpiringSoon(categoryname, store_id, days);
+      return selectexpAndExpiringSoon;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
   //해당 점포 보유 상품을 검색해서 찾아오기 (리스트로 가능)
   @GetMapping("/searchname/{store_id}")
   public List<StockInfo> searchByName(String txt, @PathVariable Long store_id) {
@@ -108,6 +127,19 @@ public class StoreProductController {
       return null;
     }
   }
+
+
+  //store_id에 해당하는 점포의 재고 수량과 자동발주에 등록된 최소재고수량을 가져오는 기능
+//  @GetMapping("/checkqnt")
+//  public StoreProduct checkqnt(Long id) {
+//    try {
+//      return storeProductService.checkqnt(id);
+//    } catch(Exception e) {
+//      System.out.println("점포id에 해당하는 재고 조회가 실패했습니다.");
+//      e.printStackTrace();
+//      return null;
+//    }
+//  }
 }
 
 

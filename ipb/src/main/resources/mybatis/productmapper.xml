@@ -6,7 +6,7 @@
 
 
     <select id="select" parameterType="Long" resultType="Product">
-        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name
+        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name , pi.storage
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
@@ -16,7 +16,7 @@
     <!--        SELECT * FROM product WHERE name=#{name}-->
     <!--    </select>-->
     <select id="selectall" resultType="Product">
-        SELECT p.*, pi.product_code, pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt
+        SELECT p.*, pi.product_code, pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt, pi.storage
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
@@ -61,7 +61,7 @@
     </select>
 
     <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
-    <update id="updateqnt" parameterType="Product">
+    <update id="updateQnt" parameterType="Product">
         UPDATE product SET qnt=#{qnt} WHERE id=#{id};
     </update>
 

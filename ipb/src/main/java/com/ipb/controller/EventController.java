@@ -2,7 +2,6 @@ package com.ipb.controller;
 
 import com.ipb.domain.Event;
 import com.ipb.domain.EventProduct;
-import com.ipb.domain.EventType;
 import com.ipb.service.EventProductService;
 import com.ipb.service.EventService;
 import com.ipb.service.EventTypeService;
@@ -61,9 +60,9 @@ public class EventController {
 
   //이벤트 이름으로 조회하기 ok
   @GetMapping("/event/search/{name}")
-  public Event searcheventname(@PathVariable String name) {
+  public Event searchEventName(@PathVariable String name) {
     try {
-      return eventService.searcheventname(name);
+      return eventService.searchEventName(name);
     } catch (Exception e) {
       e.printStackTrace();
       return null;
@@ -92,9 +91,9 @@ public class EventController {
 
   //이벤트 타입별로 조회하기 ok
   @GetMapping("/selectbytype/{id}")
-  public Event selectbytype(@PathVariable Long id) {
+  public Event selectByType(@PathVariable Long id) {
     try {
-      return eventService.selectbytype(id);
+      return eventService.selectByType(id);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -102,9 +101,9 @@ public class EventController {
 
   //이벤트가 진행중인 상품 조회 ok
   @GetMapping("/eventproductlist/{name}")
-  public List<EventProduct> searcheventproduct(@PathVariable String name) {
+  public List<EventProduct> searchEventProduct(@PathVariable String name) {
     try {
-      return eventProductService.searcheventproduct(name);
+      return eventProductService.searchEventProduct(name);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }

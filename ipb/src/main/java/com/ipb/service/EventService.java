@@ -39,11 +39,11 @@ public class EventService implements MyService<Long, Event> {
     return eventMapper.selectall();
   }
 
-  public Event searcheventname(String name) throws Exception {
-    return eventMapper.searcheventname(name);
+  public Event searchEventName(String name) throws Exception {
+    return eventMapper.searchEventName(name);
   }
 
-  public Event selectbytype(Long id) throws Exception {
-    return eventMapper.selectbytype(id);
+  public Event selectByType(Long id) throws Exception {
+    return eventMapper.selectByType(id);
   }
 }

@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.StoreProductMapper">
 
-    <!-- store id로  점포별 상품 조회-->
+    <!-- store id로  점포별 재고가 0인 상품을 제외하고  조회 (유통기한 기준으로 오름차순)-->
     <select id="selectstoreproduct" parameterType="Long" resultType="StoreProduct">
         SELECT sp.id,
                pi.name as product_name,
-               p.price as product_price,
+               p.price,
                pi.imgname,
                sp.qnt,
                pi.box_qnt,
@@ -16,65 +16,97 @@
                p.exp,
                pi.brand,
                c.name  as category_name,
-               pi.detail
+               pi.detail,
+               pi.storage
         FROM store_product sp
                  INNER JOIN product p on p.id = sp.product_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
                  INNER JOIN category c ON pi.category_id = c.id
-        WHERE sp.store_id = #{store_id}
+        WHERE sp.store_id = #{store_id} AND sp.qnt > 0 ORDER BY p.exp ASC
     </select>
+<!--   전체 상품을 다 조회하지만 재고가 0인 상품은 조회 x (유통기한 기준으로 오름차순)-->
     <select id="selectall" resultType="StoreProduct">
         SELECT *
-        FROM store_product
+        FROM store_product   WHERE qnt > 0 ORDER BY p.exp ASC
     </select>
 
-    <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기   -->
+    <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기  (재고 0인 상품은 조회 x, 유통기한 기준으로 오름차순 ) -->
     <select id="selectcategoryname" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price as product_price,
+        SELECT sp.id ,pi.name as product_name, p.price,
                pi.imgname,
                sp.qnt,
                pi.box_qnt,
                sp.is_using,
                p.exp,
                pi.brand,
-               c.name as category_name
+               pi.storage,
+               c.name as category_name,
+               pi.storage
         FROM store_product sp
                  INNER JOIN product p on p.id = sp.product_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
                  INNER JOIN category c ON pi.category_id = c.id
         WHERE c.name = #{category_name}
-          and store_id = #{store_id}
+          and store_id = #{store_id} AND sp.qnt > 0
+        ORDER BY p.exp ASC
     </select>
 
-    <!--요구사항에 없지만 필요하겠지?  점포 재고에서 이름 검색하면 조회됨   -->
-    <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price as product_price,
-               sp.qnt,
-               pi.box_qnt,
-               pi.imgname,
-               sp.is_using,
-               p.exp,
-               pi.brand,
-               c.name as category_name
+<!--  (유통기한 날짜 별 조회) store아이디로 카테고리, 날짜를 검색하면 today 기준으로 원하는 그 날짜의 이하 상품이 조회된다-->
+    <select id="selectexpAndExpiringSoon" parameterType="Hashmap" resultType="StockInfo">
+        SELECT sp.id ,pi.name as product_name, p.price,
+        pi.imgname,
+        sp.qnt,
+        pi.box_qnt,
+        sp.is_using,
+        p.exp,
+        pi.brand,
+        pi.storage,
+        c.name as category_name,
+        pi.storage
         FROM store_product sp
-                 INNER JOIN product p on p.id = sp.product_id
-                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
-                 INNER JOIN category c ON pi.category_id = c.id
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
+        WHERE c.name = #{category_name}
+        and p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
+        AND store_id = #{store_id} AND sp.qnt > 0
+        ORDER BY p.exp ASC
+    </select>
+
+
+
+<!-- 요구사항에 없지만 필요하겠지? store_id 와 상품으로 검색하면 재고가 0인 상품 제외하고 검색 상품이 조회됨(유통기한 기준으로 오름차순) -->
+    <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
+        SELECT sp.id ,pi.name as product_name, p.price,
+        sp.qnt,
+        pi.box_qnt,
+        pi.imgname,
+        sp.is_using,
+        p.exp,
+        pi.brand,
+        pi.storage,
+        c.name as category_name
+        FROM store_product sp
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
         WHERE pi.name LIKE CONCAT('%', #{txt}, '%')
-          and store_id = #{store_id}
+        and store_id = #{store_id} AND sp.qnt > 0 ORDER BY p.exp ASC
     </select>
 
     <!--StoreProduct 추가 -->
     <insert id="insert" parameterType="StoreProduct">
         INSERT INTO store_product
-        VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{is_using})
+        VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{is_using}, #{store_price}, #{event_rate})
     </insert>
 
     <!--    StoreProduct 수량, 사용여부 수정-->
     <update id="update" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt},
-            is_using=#{is_using}
+        is_using=#{is_using},
+        store_price= #{store_price},
+        event_rate= #{event_rate}
         WHERE id = #{id}
     </update>
 
@@ -82,14 +114,17 @@
     <delete id="delete" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=0,
-            is_using=0
+        is_using=0
         WHERE id = #{id}
     </delete>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
     <update id="updateqnt" parameterType="StoreProduct">
         UPDATE store_product
-        SET qnt=#{qnt}
+        SET
+            qnt=#{qnt},
+            store_price=#{store_price},
+            event_rate=#{event_rate}
         WHERE id = #{id}
     </update>
 
@@ -107,7 +142,8 @@
                p.exp,
                pi.brand,
                c.name  as category_name,
-               pi.detail
+               pi.detail,
+               pi.storage
         FROM store_product sp
                  INNER JOIN product p on p.id = sp.product_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
@@ -119,20 +155,20 @@
     발주를 했을 때 해당되는 product_id와 store_id를 갖고 is_using=1(사용중)인 store_product를 검색한다.
     이 검색으로 찾은 store_product의 id를 사용하여 qnt를 수정함
     -->
-    <select id="getstoreproductfromstoreidandproductid" parameterType="StoreProduct" resultType="StoreProduct">
+    <select id="getStoreProductFromStoreIdAndProductId" parameterType="StoreProduct" resultType="StoreProduct">
         SELECT *
         FROM store_product
         WHERE store_id = #{store_id}
           AND product_id = #{product_id}
-          AND is_using = 1
     </select>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다
     위의 getstoreproductfromstoreidandproductid가 실행되면 해당되는 store_product의 id의 qnt를 발주 수량만큼 변화시킴
     -->
-    <update id="storeupdateqnt" parameterType="StoreProduct">
+    <update id="storeUpdateQnt" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt}
         WHERE id = #{id}
     </update>
+
 </mapper>

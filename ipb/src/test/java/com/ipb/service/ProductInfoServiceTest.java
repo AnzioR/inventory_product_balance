@@ -17,7 +17,7 @@ class ProductInfoServiceTest {
   @Test
   void register() {
     try {
-      ProductInfo productInfo = new ProductInfo(880364L, "흑돼지", "제주도", "제주 흑돼지","흑돼지.img", 4L, 20);
+      ProductInfo productInfo = new ProductInfo(880221364L, "버터오징어", "제주도", "버터오징어","버터오징어.img", 4L, 20,"실온");
       productInfoService.register(productInfo);
       System.out.println(productInfo);
     } catch (Exception e) {
@@ -27,7 +27,7 @@ class ProductInfoServiceTest {
 
   @Test
   void modify() {
-    ProductInfo productInfo = new ProductInfo(880364L, "흑돼지", "제주도", "제주 흑돼지","흑돼지.img", 5L, 20);
+    ProductInfo productInfo = new ProductInfo(880221364L, "버터오징어", "독도", "버터오징어","버터오징어.img", 5L, 20,"실온");
     try {
       productInfoService.modify(productInfo);
     } catch(Exception e) {

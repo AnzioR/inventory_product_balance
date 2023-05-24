@@ -48,8 +48,8 @@ public class ProductService implements MyService <Long, Product> {
   }
 
   //발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경
-  public void updateqnt(Product product) throws Exception {
-    productMapper.updateqnt(product);
+  public void updateQnt(Product product) throws Exception {
+    productMapper.updateQnt(product);
   }
 }
 

@@ -23,6 +23,12 @@ class EventServiceTest {
     } catch (Exception e) {
       e.printStackTrace();
     }
+
+    //디티오를 받아왔어 매개변수로
+    // new Order
+
+
+
   }
 
   @Test
@@ -47,10 +53,10 @@ class EventServiceTest {
   }
 
   @Test
-  void searcheventname() {
+  void searchEventName() {
     Event event = null;
     try {
-      event = eventService.searcheventname("심야이벤트");
+      event = eventService.searchEventName("심야이벤트");
       System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();
@@ -85,10 +91,10 @@ class EventServiceTest {
   }
 
   @Test
-  void selectbytype() {
+  void selectByType() {
     Event event = null;
     try {
-      event = eventService.selectbytype(1L);
+      event = eventService.selectByType(1L);
       System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();

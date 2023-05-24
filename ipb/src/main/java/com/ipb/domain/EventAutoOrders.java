@@ -2,7 +2,6 @@ package com.ipb.domain;
 
 import lombok.*;
 
-import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -11,13 +10,9 @@ import java.util.Date;
 @Setter
 @Getter
 @ToString
-public class Weather {
+public class EventAutoOrders {
     private Long id;
+    private Integer qnt;
+    private Long event_product_id;
     private Long store_id;
-    private String status;
-    private Double temp;
-    private LocalDate weather_date;
-    private String icon;
-
-
 }

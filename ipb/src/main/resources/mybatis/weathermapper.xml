@@ -6,7 +6,7 @@
 
     <!-- 날씨 등록 -->
     <insert id="insert" parameterType="Weather">
-        INSERT INTO weather VALUES (NULL, #{store_id}, #{status}, #{temp}, now())
+        INSERT INTO weather VALUES (NULL, #{store_id}, #{status}, #{temp}, now(), #{icon})
     </insert>
     <select id="select" parameterType="Long" resultType="Weather">
         SELECT * FROM weather where store_id = #{store_id}

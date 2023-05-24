@@ -12,7 +12,7 @@ public class StockInfo {
   private Long id;
   private String detail;
   private String product_name;
-  private int product_price;
+  private int price;
   private int qnt;
   private int box_qnt;
   private boolean is_using;
@@ -20,6 +20,8 @@ public class StockInfo {
   private String brand;
   private String category_name;
   private String imgname;
+  private String storage;
+  private int days;
 }
 
 
