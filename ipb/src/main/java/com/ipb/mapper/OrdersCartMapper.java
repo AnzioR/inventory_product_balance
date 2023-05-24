@@ -14,7 +14,7 @@ import java.util.Map;
 public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
 
   //발주카트들을 리스트로 만들어주는 기능
-  public List<OrdersCart> cartlist(Long id) throws Exception;
+  public List<OrdersCart> cartList(Long id) throws Exception;
 
   //발주카트의 리스트 전체를 비우는 기능
   public void removeCart(Long store_id) throws Exception;
