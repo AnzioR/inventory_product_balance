@@ -15,7 +15,7 @@ public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
   public List<OrdersCart> cartlist(Long id) throws Exception;
 
   //발주카트의 리스트 전체를 비우는 기능
-  public void removecart(Long store_id) throws Exception;
+  public void removeCart(Long store_id) throws Exception;
 
   public List<OrdersCart> findOrderableOrders(Long store_id) throws Exception;
 

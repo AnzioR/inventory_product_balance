@@ -1,6 +1,5 @@
 package com.ipb.controller;
 
-import com.ipb.domain.Event;
 import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
 import com.ipb.service.OrdersCartService;
@@ -28,11 +27,11 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우) ok
   @PostMapping("/addorder")
-  public ResponseEntity<?> testMethod(@RequestBody Map<String, Long> requestBody) {
+  public ResponseEntity<?> addOrder(@RequestBody Map<String, Long> requestBody) {
     // 특정 점포에 있는 카트 상품들을 주문
     try {
       Long store_id = requestBody.get("store_id");
-      List<OrdersCart> addorder = ordersService.addorder(store_id);
+      List<OrdersCart> addorder = ordersService.addOrder(store_id);
       System.out.println(addorder);
       if (addorder.size() > 0) {
         // 일부가 주문되지 않은 경우
@@ -49,7 +48,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우) ok
   @PostMapping("/maxorder")
-  public ResponseEntity<?> maxTestMethod(@RequestBody List<OrdersCart> unOrderableList) {
+  public ResponseEntity<?> maxOrder(@RequestBody List<OrdersCart> unOrderableList) {
     try {
       ordersService.maxOrder(unOrderableList);
       System.out.println(unOrderableList);
@@ -62,7 +61,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문 넣기
   @PostMapping("/ordersdetail/add")
-  public Orders addorder(@RequestBody Orders orders){
+  public Orders insert(@RequestBody Orders orders){
     try {
       ordersService.register(orders);
       return orders;
@@ -107,7 +106,7 @@ public class OrdersController {
 
   //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회 ok
   @GetMapping("/all")
-  public List<Orders> cartall() {
+  public List<Orders> cartAll() {
     try {
       return ordersService.get();
     } catch (Exception e) {
@@ -117,19 +116,19 @@ public class OrdersController {
 
   //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 ok
   @GetMapping("/searchdate/{date}")
-  public List<Orders> searchdate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
+  public List<Orders> searchDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
     try {
-      return ordersService.searchdate(date);
+      return ordersService.searchDate(date);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
   }
 
-  //발주한 상품의 배송 상태를 조회
+  //발주한 상품의 배송 상태를 조회 ok
   @GetMapping("/delivery/{id}")
-  public Orders searchdeliverystatus(@PathVariable Long id) {
+  public Orders searchDeliveryStatus(@PathVariable Long id) {
     try {
-      return ordersService.searchdeliverystatus(id);
+      return ordersService.searchDeliveryStatus(id);
     } catch(Exception e) {
       System.out.println("배송상태 조회를 실패했습니다.");
       e.printStackTrace();
@@ -143,9 +142,9 @@ public class OrdersController {
   //ex) http://localhost:8080/orders/selectstoreorders/2
   //id , 2
   @GetMapping("/selectstoreorders/{id}")
-  public List<Orders> selectstore(@PathVariable Long id) {
+  public List<Orders> selectStore(@PathVariable Long id) {
     try {
-      return ordersService.selectstore(id);
+      return ordersService.selectStore(id);
     } catch(Exception e) {
       System.out.println("매장별 전체 발주 조회를 실패했습니다.");
       e.printStackTrace();
@@ -155,9 +154,9 @@ public class OrdersController {
 
   //매장별 상세 발주 조회 ok
   @GetMapping("/selectstoreordersdetails/{id}")
-  public List<Orders> selectdetailstoreorders(@PathVariable Long id) {
+  public List<Orders> selectDetailStoreOrders(@PathVariable Long id) {
     try {
-      return ordersService.selectdetailstoreorders(id);
+      return ordersService.selectDetailStoreOrders(id);
     } catch(Exception e) {
       System.out.println("매장별 상세정보 발주 조회를 실패했습니다.");
       e.printStackTrace();
@@ -165,18 +164,31 @@ public class OrdersController {
     }
   }
 
-  //매장별 발주 수정
-  @PutMapping("/updateOrders/{id}")
-  public void updateStoreOrders(@PathVariable Long id, @RequestBody Orders orders) {
+  //매장별 발주 수정 ok
+  @PutMapping("/updateorders")
+  public void updateStoreOrders(Long id, @RequestBody Orders orders) {
     try {
-      ordersService.updatestoreorders(orders);
+      ordersService.updateStoreOrders(orders);
     } catch(Exception e) {
       System.out.println("발주 수정에 실패했습니다.");
       e.printStackTrace();
     }
   }
 
-  //매장별 발주 삭제
+  //매장별 발주 삭제 (api 정의서에 있는데 위에 작성된 삭제기능과 동일하다고 생각되어 만들지 않음)
 
+
+  //발주한 상품의 배송상태를 변경 ok
+  // -> 상태를 변경해주면 바뀐 배송상태에 따라 발주가능상품 재고수량 또는 점포보유상품 재고수량이 변경된다.
+  @PutMapping("/updateDelivery")
+  public Orders updateDeliveryStatus(@RequestBody Orders orders) {
+    try {
+      return ordersService.updateDeliveryStatus(orders);
+    } catch(Exception e) {
+      System.out.println("배송상태 변경에 실패했습니다.");
+      e.printStackTrace();
+      return null;
+    }
+  }
 
 }

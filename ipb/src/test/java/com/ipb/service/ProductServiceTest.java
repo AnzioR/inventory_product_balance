@@ -88,7 +88,7 @@ class ProductServiceTest {
     try {
       Product product = productService.get(1L);
       product.setQnt(555);
-      productService.updateqnt(product);
+      productService.updateQnt(product);
       System.out.println(product);
     } catch (Exception e) {
       e.printStackTrace();

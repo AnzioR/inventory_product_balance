@@ -21,7 +21,7 @@
     </delete>
 
     <!-- 이벤트 이름으로 조회하기 : 이벤트 해당 상품을 검색하는 것과 다름, 이벤트 이름을 조회하면 해당 이벤트의 정보를 보여주는 것 -->
-    <select id="searcheventname" parameterType="String" resultType="Event">
+    <select id="searchEventName" parameterType="String" resultType="Event">
         SELECT ev.*, et.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id
@@ -39,7 +39,7 @@
     </select>
 
     <!-- 이벤트 타입별로 조회하기 : 이벤트 타입의 아이디 번호로 이벤트 타입정보가 조회됨 -->
-    <select id="selectbytype" parameterType="Long" resultType="Event">
+    <select id="selectByType" parameterType="Long" resultType="Event">
         SELECT et.*, ev.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id

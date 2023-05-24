@@ -3,8 +3,6 @@ package com.ipb.service;
 
 import com.ipb.domain.*;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.ProductMapper;
-import com.ipb.mapper.SalesMapper;
 import com.ipb.mapper.StoreProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,7 +43,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     return storeProductMapper.select(id);
   }
 
-  //  store product 수량변경 (재고 수량보다 많은 주문 시 작동하지 않도록 수정 완료)
+  //  store product 수량변경 (재고 수량보다 많은 주문 시 작동하지 않도록 수정 완료) - sales 에서 사용중...
   public void updateqnt(Sales sales) throws Exception {
     StoreProduct product = get(sales.getStore_product_id());
     int real_stock = product.getQnt();
@@ -114,36 +112,49 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   }
 
   //발주할 때, 점포의 재고수량을 변경
-  public void storeupdateqnt(StoreProduct storeProduct) throws Exception {
-    storeProductMapper.storeupdateqnt(storeProduct);
+  public void storeUpdateQnt(StoreProduct storeProduct) throws Exception {
+    storeProductMapper.storeUpdateQnt(storeProduct);
   }
 
   //store_id와 product_id를 조회하는 기능
-  public StoreProduct getstoreproductfromstoreidandproductid(StoreProduct storeProduct) throws Exception {
-    StoreProduct st = storeProductMapper.getstoreproductfromstoreidandproductid(storeProduct);
+  public StoreProduct getStoreProductFromStoreIdAndProductId(StoreProduct storeProduct) throws Exception {
+    StoreProduct st = storeProductMapper.getStoreProductFromStoreIdAndProductId(storeProduct);
     return st;
   }
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
-  public void updateOrInsert(List<OrdersCart> orderableList) throws Exception {
-    for(OrdersCart orderableCart : orderableList) {
-      StoreProduct sp = new StoreProduct(orderableCart.getProduct_id(), orderableCart.getStore_id());
+  // //----> 배송상태가 변경되었을 때 재고 증가 + store_price, event_rate 등록으로 변경
+//  public void updateOrInsert(List<OrdersCart> orderableList) throws Exception {
+//    for(OrdersCart orderableCart : orderableList) {
+//      StoreProduct sp = new StoreProduct(orderableCart.getProduct_id(), orderableCart.getStore_id());
+//
+//      // 만약 is_using 관련해 이슈가 있다면... 이 부분에 수정이 필요!
+//      StoreProduct exist_sp = storeProductMapper.getStoreProductFromStoreIdAndProductId(sp);
+//      // storeProduct 테이블에 존재하지 않으면
+//      if (exist_sp == null) {
+//        // 추가
+//        sp.setQnt(orderableCart.getQnt());
+//        sp.set_using(true);
+//        storeProductMapper.insert(sp);
+//        // 존재한다면
+//      } else {
+//        // 수량 변경
+//        exist_sp.setQnt(exist_sp.getQnt() + orderableCart.getQnt());
+//        storeProductMapper.updateqnt(exist_sp);
+//      }
+//    }
+//  }
 
-      // 만약 is_using 관련해 이슈가 있다면... 이 부분에 수정이 필요!
-      StoreProduct exist_sp = storeProductMapper.getstoreproductfromstoreidandproductid(sp);
-      // storeProduct 테이블에 존재하지 않으면
-      if (exist_sp == null) {
-        // 추가
-        sp.setQnt(orderableCart.getQnt());
-        sp.set_using(true);
-        storeProductMapper.insert(sp);
-        // 존재한다면
-      } else {
-        // 수량 변경
-        exist_sp.setQnt(exist_sp.getQnt() + orderableCart.getQnt());
-        storeProductMapper.updateqnt(exist_sp);
-      }
-    }
-  }
+
+  //배송상태가 변경되었을 때, 점포보유상품의 재고를 증가시키는 기능 ing...
+//  public StoreProduct storeupdateqnt(Orders orders) throws Exception {
+//    if()
+//    //store_id와 product_id 조회를 이용하여 발주된 상품을 찾아서 해당 재고 수량을 변경해준다.
+//    StoreProduct sp = storeProductMapper.getstoreproductfromstoreidandproductid(orders.getProduct_id(), orders.getStore_id());
+//    storeProductMapper.storeupdateqnt(storeProduct);
+//    return sp;
+//  }
+
+
 }
 
