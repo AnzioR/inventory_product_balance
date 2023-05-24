@@ -6,7 +6,7 @@
 
     <!-- 발주 : 점포에서 주문 넣기 -->
     <insert id="insert" parameterType="Orders">
-        INSERT INTO orders VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{delivery_id}, now(), #{orders_type_id})
+        INSERT INTO orders VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{delivery_id}, now(),#{orders_type_id})
     </insert>
 
     <!-- 발주 수정 : 점포에서 주문한 발주 수량을 수정  -->
@@ -84,7 +84,7 @@
     <!-- 주문리스트 추가 -->
     <insert id="insertList" parameterType="java.util.List">
         INSERT INTO orders VALUES
-        <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now()) </foreach>
+        <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now(), #{item.orders_type_id}) </foreach>
     </insert>
     
     <!-- 발주된 상품의 배송상태 변경하기 -->

@@ -6,7 +6,7 @@
 
     <!-- 발주카트에 담기 -->
     <insert id="insert" parameterType="OrdersCart">
-        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id})
+        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id} )
     </insert>
 
     <!-- 발주카트에 담긴 상품 수량 수정  -->
