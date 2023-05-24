@@ -17,10 +17,9 @@ public class WeatherService implements MyService<Long, Weather> {
 
 
   @Override
-  public OrdersCart register(Weather weather) throws Exception {
+  public void register(Weather weather) throws Exception {
     weatherMapper.insert(weather);
 
-    return null;
   }
 
   @Override

@@ -19,9 +19,9 @@ public class ProductInfoService implements MyService <Long, ProductInfo> {
   ProductInfoMapper productInfoMapper;
 
   @Override
-  public OrdersCart register(ProductInfo productInfo) throws Exception {
+  public void register(ProductInfo productInfo) throws Exception {
     productInfoMapper.insert(productInfo);
-    return null;
+
   }
 
   @Override

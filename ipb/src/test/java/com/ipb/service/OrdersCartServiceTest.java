@@ -17,7 +17,7 @@ class OrdersCartServiceTest {
   @Test
   void register() {
     try {
-      OrdersCart cart = new OrdersCart(null, 1, 10L, 2L);
+      OrdersCart cart = new OrdersCart(null, 20, 1L, 6L);
       ordersCartService.register(cart);
       System.out.println(cart);
     } catch (Exception e) {

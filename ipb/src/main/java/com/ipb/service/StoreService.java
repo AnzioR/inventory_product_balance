@@ -17,9 +17,8 @@ public class StoreService implements MyService<Long, Store> {
 
 
   @Override
-  public OrdersCart register(Store store) throws Exception {
+  public void register(Store store) throws Exception {
     storeMapper.insert(store);
-    return null;
   }
 
   @Override

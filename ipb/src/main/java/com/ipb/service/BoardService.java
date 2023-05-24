@@ -15,9 +15,8 @@ public class BoardService implements MyService<Long, Board> {
   @Autowired
   BoardMapper boardMapper;
   @Override
-  public OrdersCart register(Board board) throws Exception {
+  public void register(Board board) throws Exception {
     boardMapper.insert(board);
-    return null;
   }
   //board 의 staff id 가 아닌 staff 의 로그인 정보에서 store_id 를 받아와야함 이쪽은 세션으로 프론트에서 처리
 

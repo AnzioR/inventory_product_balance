@@ -19,9 +19,8 @@ public class StaffService implements MyService<Long, Staff> {
 
 
     @Override
-    public OrdersCart register(Staff staff) throws Exception {
+    public void register(Staff staff) throws Exception {
         staffMapper.insert(staff);
-      return null;
     }
 
     @Override

@@ -16,9 +16,8 @@ public class EventProductService implements MyService<Long, EventProduct> {
   EventProductMapper eventProductMapper;
 
   @Override
-  public OrdersCart register(EventProduct eventProduct) throws Exception {
+  public void register(EventProduct eventProduct) throws Exception {
 
-    return null;
   }
 
   @Override
