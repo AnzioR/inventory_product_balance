@@ -8,6 +8,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class OrdersType {
-  private Long orders_type_id;
+  private Long id;
   private String type;
 }
