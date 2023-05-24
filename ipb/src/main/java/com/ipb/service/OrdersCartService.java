@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class OrdersCartService implements MyService<Long, OrdersCart> {
@@ -19,18 +20,23 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
     if (ordersCart.getQnt() == 0) {
       ordersCart.setQnt(1);
     }
-    OrdersCart findOrderCart = ordersCartMapper.selectByProductIdAndStoreId(ordersCart.getProduct_id(), ordersCart.getStore_id());
+
+    Map<String, Object> params = new HashMap<>();
+    params.put("product_id", ordersCart.getProduct_id());
+    params.put("store_id", ordersCart.getStore_id());
+
+    OrdersCart findOrderCart = ordersCartMapper.selectByProductIdAndStoreId(params);
     System.out.println("findOrderCart = " + findOrderCart);
+
     if (findOrderCart == null) {
       ordersCartMapper.insert(ordersCart);
     } else {
       int finalQnt = ordersCart.getQnt() + findOrderCart.getQnt();
-      HashMap<String, Object> map = new HashMap<String, Object>();
-      map.put("finalQnt", finalQnt);
-      map.put("ordersCart.getId()", ordersCart.getId());
-      ordersCartMapper.updateQnt(map);
-
+      params.put("qnt", finalQnt);
+      params.put("id", findOrderCart.getId());
+      ordersCartMapper.updateQnt(params);
     }
+
     return findOrderCart;
   }
 
