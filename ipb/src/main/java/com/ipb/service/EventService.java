@@ -17,6 +17,7 @@ public class EventService implements MyService<Long, Event> {
   @Override
   public void register(Event event) throws Exception {
     eventMapper.insert(event);
+
   }
 
   @Override

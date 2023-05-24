@@ -1,9 +1,8 @@
 package com.ipb.service;
 
-import com.ipb.domain.OrdersIssue;
+
 import com.ipb.domain.SalesIssue;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.OrdersIssueMapper;
 import com.ipb.mapper.SalesIssueMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;

@@ -1,5 +1,7 @@
 package com.ipb.frame;
 
+import com.ipb.domain.OrdersCart;
+
 import java.util.List;
 
 public interface MyService<K, V> {

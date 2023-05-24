@@ -1,6 +1,5 @@
 package com.ipb.service;
 
-import com.ipb.domain.Board;
 import com.ipb.domain.EventType;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.EventTypeMapper;
