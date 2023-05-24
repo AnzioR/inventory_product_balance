@@ -8,7 +8,7 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface EventMapper extends MyMapper<Long, Event> {
-  public Event searcheventname(String name) throws Exception;
+  public Event searchEventName(String name) throws Exception;
 
-  public Event selectbytype(Long id) throws Exception;
+  public Event selectByType(Long id) throws Exception;
 }

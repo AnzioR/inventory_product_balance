@@ -67,7 +67,7 @@
     <!--StoreProduct 추가 -->
     <insert id="insert" parameterType="StoreProduct">
         INSERT INTO store_product
-        VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{is_using})
+        VALUES (NULL, #{qnt}, #{product_id}, #{store_id}, #{is_using}, #{store_price}, #{event_rate})
     </insert>
 
     <!--    StoreProduct 수량, 사용여부 수정-->
@@ -90,7 +90,10 @@
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
     <update id="updateqnt" parameterType="StoreProduct">
         UPDATE store_product
-        SET qnt=#{qnt}
+        SET
+            qnt=#{qnt},
+            store_price=#{store_price},
+            event_rate=#{event_rate}
         WHERE id = #{id}
     </update>
 
@@ -120,20 +123,20 @@
     발주를 했을 때 해당되는 product_id와 store_id를 갖고 is_using=1(사용중)인 store_product를 검색한다.
     이 검색으로 찾은 store_product의 id를 사용하여 qnt를 수정함
     -->
-    <select id="getstoreproductfromstoreidandproductid" parameterType="StoreProduct" resultType="StoreProduct">
+    <select id="getStoreProductFromStoreIdAndProductId" parameterType="StoreProduct" resultType="StoreProduct">
         SELECT *
         FROM store_product
         WHERE store_id = #{store_id}
           AND product_id = #{product_id}
-          AND is_using = 1
     </select>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다
     위의 getstoreproductfromstoreidandproductid가 실행되면 해당되는 store_product의 id의 qnt를 발주 수량만큼 변화시킴
     -->
-    <update id="storeupdateqnt" parameterType="StoreProduct">
+    <update id="storeUpdateQnt" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt}
         WHERE id = #{id}
     </update>
+
 </mapper>

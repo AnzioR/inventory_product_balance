@@ -107,6 +107,19 @@ public class StoreProductController {
       return null;
     }
   }
+
+
+  //store_id에 해당하는 점포의 재고 수량과 자동발주에 등록된 최소재고수량을 가져오는 기능
+//  @GetMapping("/checkqnt")
+//  public StoreProduct checkqnt(Long id) {
+//    try {
+//      return storeProductService.checkqnt(id);
+//    } catch(Exception e) {
+//      System.out.println("점포id에 해당하는 재고 조회가 실패했습니다.");
+//      e.printStackTrace();
+//      return null;
+//    }
+//  }
 }
 
 

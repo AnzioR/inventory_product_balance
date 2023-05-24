@@ -39,7 +39,7 @@ public class EventProductService implements MyService<Long, EventProduct> {
     return null;
   }
 
-  public List<EventProduct> searcheventproduct(String name) throws Exception {
-    return eventProductMapper.searcheventproduct(name);
+  public List<EventProduct> searchEventProduct(String name) throws Exception {
+    return eventProductMapper.searchEventProduct(name);
   }
 }
