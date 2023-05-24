@@ -67,7 +67,7 @@ public class OrdersCartController {
 
   // 발주 카트 전체 조회 : 본사에서 모든 점포들이 발주카트에 담은 내역 전체를 조회 ok
   @GetMapping("/all")
-  public List<OrdersCart> cartall() {
+  public List<OrdersCart> cartAll() {
     try {
       return ordersCartService.get();
     } catch (Exception e) {
@@ -77,9 +77,9 @@ public class OrdersCartController {
 
   //발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 OK
   @GetMapping("/cartlist/{id}")
-  public ResponseEntity<List<OrdersCart>> cartlist(@PathVariable Long id) {
+  public ResponseEntity<List<OrdersCart>> cartList(@PathVariable Long id) {
     try {
-      return ResponseEntity.ok(ordersCartService.cartlist(id));
+      return ResponseEntity.ok(ordersCartService.cartList(id));
     } catch(Exception e) {
       System.out.println("주문정보 전송에 오류가 발생했습니다.");
       e.printStackTrace();
@@ -91,7 +91,7 @@ public class OrdersCartController {
   @DeleteMapping("/removecart/{id}")
   public void deleteCart(@PathVariable Long id) {
     try {
-      ordersCartService.removecart(id);
+      ordersCartService.removeCart(id);
       System.out.println("발주카트가 비워졌습니다.");
     } catch (Exception e) {
       System.out.println("발주카트비우기를 실패했습니다.");

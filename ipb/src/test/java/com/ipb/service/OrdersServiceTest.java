@@ -41,18 +41,19 @@ class OrdersServiceTest {
         System.out.println("발주 수량 변경을 실패했습니다.");
       }
   }
+
   //가져온 주문의 delivery_id가 1인 경우는 테스트 성공
   //delivery_id가 2인 경우는 발주취소를 실패했습니다라는 문구 출력
   @Test
-  void orderscancel() {
+  void ordersCancel() {
     try {
       Orders orders = ordersService.get(2L);
-      ordersService.orderscancel(orders);
+      ordersService.ordersCancel(orders);
       // Product 정보 조회
       Product product = productService.get(orders.getProduct_id());
       // Product 수량 변경
       product.setQnt(product.getQnt() + orders.getQnt());
-      productService.updateqnt(product);
+      productService.updateQnt(product);
 
     } catch (Exception e) {
       e.printStackTrace();
@@ -95,11 +96,11 @@ class OrdersServiceTest {
 
   //날짜별로 주문한 내역을 조회
   @Test
-  void searchdate() {
+  void searchDate() {
     List<Orders> ordersList = null;
     try {
       Date nowDate = new Date();
-      ordersList = ordersService.searchdate(nowDate);
+      ordersList = ordersService.searchDate(nowDate);
       for(Orders orders : ordersList) {
         System.out.println(orders);
       }
@@ -110,10 +111,10 @@ class OrdersServiceTest {
   }
   //매장별 전체 발주 조회
   @Test
-  void selectstore() {
+  void selectStore() {
     List<Orders> list = null;
     try {
-      list = ordersService.selectstore(2L);
+      list = ordersService.selectStore(2L);
       for(Orders or : list) {
         System.out.println(or);
       }
@@ -124,10 +125,10 @@ class OrdersServiceTest {
   }
   //매장별 상세 발주 조회
   @Test
-  void selectdetailstoreorders() {
+  void selectDetailStoreOrders() {
     List<Orders> list = null;
     try {
-      list = ordersService.selectdetailstoreorders(2L);
+      list = ordersService.selectDetailStoreOrders(2L);
       for(Orders or : list) {
         System.out.println(or);
       }
@@ -138,12 +139,12 @@ class OrdersServiceTest {
   }
   //매장별 발주 수정
   @Test
-  void updatestoreorders() {
+  void updateStoreOrders() {
     try {
       Orders orders = ordersService.get(2L);
       orders.setQnt(444);
       orders.setDelivery_id(2L);
-      ordersService.updatestoreorders(orders);
+      ordersService.updateStoreOrders(orders);
       System.out.println(orders);
     } catch(Exception e) {
       e.printStackTrace();
@@ -164,11 +165,11 @@ class OrdersServiceTest {
   // 최대주문 하기 서비스 ->
 
   @Test
-  List<OrdersCart> addorder() {
+  List<OrdersCart> addOrder() {
     // 카트에 있는 상품들을 가져와서 주문할꺼야
     List<OrdersCart> addorder = new ArrayList<>();
     try {
-      addorder = ordersService.addorder(2L);
+      addorder = ordersService.addOrder(2L);
       System.out.println(addorder);
     } catch(Exception e) {
       e.printStackTrace();
@@ -179,7 +180,7 @@ class OrdersServiceTest {
 
   @Test
   void maxItemOrder() {
-    List<OrdersCart> failOrderList = addorder();
+    List<OrdersCart> failOrderList = addOrder();
     try {
       ordersService.maxOrder(failOrderList);
     } catch (Exception e) {

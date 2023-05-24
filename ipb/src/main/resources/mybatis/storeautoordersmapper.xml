@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StoreAutoOrdersMapper">
+
+<!--    &lt;!&ndash; 기준이 되는 시간에 해당 점포의 재고가 최소재고수량에 미달인 경우 자동으로 부족한 수량만큰 주문해준다.&ndash;&gt;-->
+<!--    <insert id="insertList" parameterType="java.util.List">-->
+<!--        INSERT INTO orders VALUES-->
+<!--        <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now(), #{item.orders_type_id}) </foreach>-->
+<!--    </insert>-->
+
+    <!-- store_product_id로 store_auto_orders 전체를 가져온다.   -->
+    <select id="selectBySpi" parameterType="Long" resultType="StoreAutoOrders">
+        SELECT * FROM store_auto_orders WHERE store_product_id = #{store_product_id}
+    </select>
+</mapper>
