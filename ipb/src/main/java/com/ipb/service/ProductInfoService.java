@@ -1,6 +1,6 @@
 package com.ipb.service;
 
-import com.ipb.domain.Product;
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.ProductInfo;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.ProductInfoMapper;
@@ -21,6 +21,7 @@ public class ProductInfoService implements MyService <Long, ProductInfo> {
   @Override
   public void register(ProductInfo productInfo) throws Exception {
     productInfoMapper.insert(productInfo);
+
   }
 
   @Override

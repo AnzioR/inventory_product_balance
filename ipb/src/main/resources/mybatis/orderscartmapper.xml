@@ -6,7 +6,7 @@
 
     <!-- 발주카트에 담기 -->
     <insert id="insert" parameterType="OrdersCart">
-        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id})
+        INSERT INTO orders_cart VALUES (NULL, #{qnt}, #{product_id}, #{store_id} )
     </insert>
 
     <!-- 발주카트에 담긴 상품 수량 수정  -->
@@ -62,11 +62,20 @@
     </select>
 
     <!-- 발주 카트 리스트 비우기 -->
+<!--    하나만 지우는 거지만 아이디를 for 문을 돌려서 전부다 지우는 메서드-->
     <delete id="removeCartList" parameterType="java.util.List">
         DELETE FROM orders_cart WHERE id IN
         <foreach item="item" collection="orderableList" open="(" separator="," close=")">
             #{item.id}
         </foreach>
     </delete>
-
+    <!--  동일한 product_id, store_id가 있는지 확인하는 쿼리  -->
+    <select id="selectByProductIdAndStoreId" parameterType="map" resultType="OrdersCart">
+        SELECT oc.* FROM orders_cart oc
+        WHERE oc.product_id = #{product_id} AND oc.store_id = #{store_id}
+    </select>
+    <!--  동일한 product_id, store_id가 들어온 경우 order_cart.qnt를 업데이트   -->
+    <update id="updateQnt" parameterType="map">
+        UPDATE orders_cart SET qnt = #{qnt} WHERE id = #{id}
+    </update>
 </mapper>
