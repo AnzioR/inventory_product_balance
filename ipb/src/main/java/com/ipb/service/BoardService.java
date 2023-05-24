@@ -1,11 +1,11 @@
 package com.ipb.service;
 
 import com.ipb.domain.Board;
+import com.ipb.domain.OrdersCart;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
 package com.ipb.service;
 
-import com.ipb.domain.Board;
 import com.ipb.domain.EventType;
+import com.ipb.domain.OrdersCart;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.EventTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;

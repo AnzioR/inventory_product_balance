@@ -1,9 +1,8 @@
 package com.ipb.service;
 
-import com.ipb.domain.Store;
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.Weather;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.StoreMapper;
 import com.ipb.mapper.WeatherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
