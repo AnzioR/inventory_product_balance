@@ -5,6 +5,7 @@ import com.ipb.frame.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.springframework.stereotype.Repository;
 
+import java.util.HashMap;
 import java.util.List;
 
 @Mapper
@@ -21,5 +22,7 @@ public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
 
   public List<OrdersCart> findUnorderableOrders(Long store_id) throws Exception;
   public void removeCartList(List<OrdersCart> orderableList) throws Exception;
+  OrdersCart selectByProductIdAndStoreId(Long product_id, Long store_id) throws Exception;
+  void updateQnt(HashMap<String, Object> map);
 
 }

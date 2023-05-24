@@ -1,9 +1,8 @@
 package com.ipb.service;
 
-import com.ipb.domain.Store;
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.Weather;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.StoreMapper;
 import com.ipb.mapper.WeatherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,9 +17,10 @@ public class WeatherService implements MyService<Long, Weather> {
 
 
   @Override
-  public void register(Weather weather) throws Exception {
+  public OrdersCart register(Weather weather) throws Exception {
     weatherMapper.insert(weather);
 
+    return null;
   }
 
   @Override

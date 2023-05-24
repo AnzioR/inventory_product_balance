@@ -1,9 +1,8 @@
 package com.ipb.service;
 
-import com.ipb.domain.OrdersIssue;
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.SalesIssue;
 import com.ipb.frame.MyService;
-import com.ipb.mapper.OrdersIssueMapper;
 import com.ipb.mapper.SalesIssueMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +17,9 @@ public class SalesIssueService implements MyService<Long, SalesIssue> {
 
 
   @Override
-  public void register(SalesIssue salesIssue) throws Exception {
+  public OrdersCart register(SalesIssue salesIssue) throws Exception {
     salesIssueMapper.insert(salesIssue);
+    return null;
   }
 
   @Override

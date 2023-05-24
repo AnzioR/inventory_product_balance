@@ -1,6 +1,7 @@
 package com.ipb.service;
 
 import com.ipb.domain.EventProduct;
+import com.ipb.domain.OrdersCart;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.EventProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +16,9 @@ public class EventProductService implements MyService<Long, EventProduct> {
   EventProductMapper eventProductMapper;
 
   @Override
-  public void register(EventProduct eventProduct) throws Exception {
+  public OrdersCart register(EventProduct eventProduct) throws Exception {
 
+    return null;
   }
 
   @Override

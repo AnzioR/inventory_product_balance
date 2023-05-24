@@ -5,7 +5,7 @@ import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersCartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-
+import java.util.HashMap;
 import java.util.List;
 
 @Service
@@ -15,11 +15,23 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   OrdersCartMapper ordersCartMapper;
 
   @Override
-  public void register(OrdersCart ordersCart) throws Exception {
+  public OrdersCart register(OrdersCart ordersCart) throws Exception {
     if (ordersCart.getQnt() == 0) {
       ordersCart.setQnt(1);
     }
-    ordersCartMapper.insert(ordersCart);
+    OrdersCart findOrderCart = ordersCartMapper.selectByProductIdAndStoreId(ordersCart.getProduct_id(), ordersCart.getStore_id());
+    System.out.println("findOrderCart = " + findOrderCart);
+    if (findOrderCart == null) {
+      ordersCartMapper.insert(ordersCart);
+    } else {
+      int finalQnt = ordersCart.getQnt() + findOrderCart.getQnt();
+      HashMap<String, Object> map = new HashMap<String, Object>();
+      map.put("finalQnt", finalQnt);
+      map.put("ordersCart.getId()", ordersCart.getId());
+      ordersCartMapper.updateQnt(map);
+
+    }
+    return findOrderCart;
   }
 
   @Override

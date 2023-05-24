@@ -38,8 +38,9 @@ public class OrdersService implements MyService<Long, Orders> {
 
   // storeId 추가로 인해 addOrder() 메서드로 대체
   @Override
-  public void register(Orders orders) throws Exception {
+  public OrdersCart register(Orders orders) throws Exception {
     ordersMapper.insert(orders);
+    return null;
   }
 
   //배송중인 경우, 점포에서 주문한 발주 수량을 수정

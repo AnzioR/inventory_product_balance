@@ -1,5 +1,6 @@
 package com.ipb.service;
 
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.Staff;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
@@ -18,8 +19,9 @@ public class StaffService implements MyService<Long, Staff> {
 
 
     @Override
-    public void register(Staff staff) throws Exception {
+    public OrdersCart register(Staff staff) throws Exception {
         staffMapper.insert(staff);
+      return null;
     }
 
     @Override

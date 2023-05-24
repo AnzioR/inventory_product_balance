@@ -23,8 +23,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   //  store product 등록
   @Override
-  public void register(StoreProduct storeProduct) throws Exception {
+  public OrdersCart register(StoreProduct storeProduct) throws Exception {
     storeProductMapper.insert(storeProduct);
+    return null;
   }
 
   //  store product 수정

@@ -1,6 +1,6 @@
 package com.ipb.service;
 
-import com.ipb.domain.Board;
+import com.ipb.domain.OrdersCart;
 import com.ipb.domain.Store;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StoreMapper;
@@ -17,8 +17,9 @@ public class StoreService implements MyService<Long, Store> {
 
 
   @Override
-  public void register(Store store) throws Exception {
+  public OrdersCart register(Store store) throws Exception {
     storeMapper.insert(store);
+    return null;
   }
 
   @Override

@@ -1,11 +1,11 @@
 package com.ipb.service;
 
 import com.ipb.domain.Board;
+import com.ipb.domain.OrdersCart;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.BoardMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,8 +15,9 @@ public class BoardService implements MyService<Long, Board> {
   @Autowired
   BoardMapper boardMapper;
   @Override
-  public void register(Board board) throws Exception {
+  public OrdersCart register(Board board) throws Exception {
     boardMapper.insert(board);
+    return null;
   }
   //board 의 staff id 가 아닌 staff 의 로그인 정보에서 store_id 를 받아와야함 이쪽은 세션으로 프론트에서 처리
 
