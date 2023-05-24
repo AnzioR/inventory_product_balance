@@ -69,5 +69,4 @@
             #{item.id}
         </foreach>
     </delete>
-
 </mapper>
