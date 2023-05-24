@@ -15,4 +15,6 @@ public class EventAutoOrders {
     private Integer qnt;
     private Long event_product_id;
     private Long store_id;
+    private String product_name;
+    private Long product_id;
 }

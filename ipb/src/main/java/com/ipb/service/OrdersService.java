@@ -151,9 +151,10 @@ public class OrdersService implements MyService<Long, Orders> {
   // 정상적으로 발주처리되는 부분이 반복되기 때문에 하나의 메서드로 추출해서 이용하도록 작성
   private void normalOrderProcess(List<OrdersCart> orderRequestList) throws Exception {
     if (orderRequestList.size() > 0) {
+      //오더를 담고 있는 리스트를 만든다
       List<Orders> orderList = new ArrayList<Orders>();
       for (OrdersCart oc : orderRequestList) {
-        orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L));
+        orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L,1L));
       }
       // (order 테이블 레코드 추가)
       ordersMapper.insertList(orderList);
@@ -204,7 +205,6 @@ public class OrdersService implements MyService<Long, Orders> {
     //값을 리턴한다.
     return orders;
   }
-
 
 }
 
