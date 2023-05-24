@@ -84,7 +84,7 @@ class ProductServiceTest {
 
   //발주할 때, 수량을 변경해줌
   @Test
-  void updateqnt() {
+  void updateQnt() {
     try {
       Product product = productService.get(1L);
       product.setQnt(555);

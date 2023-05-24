@@ -31,6 +31,7 @@ public class StoreAutoOrdersService {
     try {
       //store_product 전체를 리스트로 가져온다.
       List<StoreProduct> storeProductList = storeProductMapper.selectall();
+      System.out.println(storeProductList);
 
       for (StoreProduct storeProduct : storeProductList) {
         Integer have_qnt = storeProduct.getQnt(); //현재 점포가 보유한 재고수량
