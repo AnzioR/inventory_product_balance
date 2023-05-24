@@ -33,7 +33,7 @@ public class OrdersController {
       Long store_id = requestBody.get("store_id");
       List<OrdersCart> addorder = ordersService.addOrder(store_id);
       System.out.println(addorder);
-      if (addorder.size() > 0) {
+      if (addorder != null && addorder.size() > 0) {
         // 일부가 주문되지 않은 경우
         return ResponseEntity.ok(addorder);
       } else {

@@ -153,7 +153,7 @@ public class OrdersService implements MyService<Long, Orders> {
       //오더를 담고 있는 리스트를 만든다
       List<Orders> orderList = new ArrayList<Orders>();
       for (OrdersCart oc : orderRequestList) {
-        orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L));
+        orderList.add(new Orders(oc.getQnt(), oc.getProduct_id(), oc.getStore_id(), 1L,1L));
       }
       // (order 테이블 레코드 추가)
       ordersMapper.insertList(orderList);
