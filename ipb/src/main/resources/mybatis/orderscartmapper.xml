@@ -69,6 +69,7 @@
             #{item.id}
         </foreach>
     </delete>
+
     <!--  동일한 product_id, store_id가 있는지 확인하는 쿼리  -->
     <select id="selectByProductIdAndStoreId" parameterType="map" resultType="OrdersCart">
         SELECT oc.* FROM orders_cart oc
@@ -78,4 +79,5 @@
     <update id="updateQnt" parameterType="map">
         UPDATE orders_cart SET qnt = #{qnt} WHERE id = #{id}
     </update>
+
 </mapper>
