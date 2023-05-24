@@ -14,5 +14,6 @@ import java.util.List;
 @Mapper
 @Repository
 public interface EventAutoOrdersMapper extends MyMapper<Long, EventAutoOrders> {
-
+    public void inserteventorder (Long id) throws Exception;
+    public List<EventAutoOrders> searchDueEventProduct (String date) throws Exception;
 }
