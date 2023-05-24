@@ -16,7 +16,7 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   OrdersCartMapper ordersCartMapper;
 
   @Override
-  public OrdersCart register(OrdersCart ordersCart) throws Exception {
+  public void register(OrdersCart ordersCart) throws Exception {
     if (ordersCart.getQnt() == 0) {
       ordersCart.setQnt(1);
     }
@@ -36,8 +36,6 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
       params.put("id", findOrderCart.getId());
       ordersCartMapper.updateQnt(params);
     }
-
-    return findOrderCart;
   }
 
   @Override

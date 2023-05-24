@@ -16,9 +16,9 @@ public class EventService implements MyService<Long, Event> {
   EventMapper eventMapper;
 
   @Override
-  public OrdersCart register(Event event) throws Exception {
+  public void register(Event event) throws Exception {
     eventMapper.insert(event);
-    return null;
+
   }
 
   @Override

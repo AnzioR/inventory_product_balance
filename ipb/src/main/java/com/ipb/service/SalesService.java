@@ -20,12 +20,11 @@ public class SalesService implements MyService<Long, Sales> {
 
 
     @Override
-    public OrdersCart register(Sales sales) throws Exception {
+    public void register(Sales sales) throws Exception {
 
 
         salesMapper.insert(sales);
       // 상품을 주문할때 store product가 음수가 되면 안되지만 음수가 되는 상황 발생
-      return null;
     }
 
     @Override

@@ -17,9 +17,8 @@ public class OrdersIssueService implements MyService<Long, OrdersIssue> {
 
 
   @Override
-  public OrdersCart register(OrdersIssue ordersIssue) throws Exception {
+  public void register(OrdersIssue ordersIssue) throws Exception {
     ordersIssueMapper.insert(ordersIssue);
-    return null;
   }
 
   @Override
