@@ -24,6 +24,8 @@ public class StoreProduct {
     private Integer store_price;
     private Double event_rate;
    private String storage;
+  private Long product_code;
+
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;
