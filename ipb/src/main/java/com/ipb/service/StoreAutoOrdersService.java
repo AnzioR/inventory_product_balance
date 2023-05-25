@@ -27,7 +27,6 @@ public class StoreAutoOrdersService {
   @Scheduled(fixedDelay = 1000*60*60) // 1시간마다 실행
   public void checkStock() throws IOException {
     ///////////////////////////////////////////////////////////////유통기한에 따른 재고 관리 추가해야 함 --> 어떻게 하지...???
-    System.out.println("0시 기준 재고 확인");
     try {
       //store_product 전체를 리스트로 가져온다.
       List<StoreProduct> storeProductList = storeProductMapper.selectall();

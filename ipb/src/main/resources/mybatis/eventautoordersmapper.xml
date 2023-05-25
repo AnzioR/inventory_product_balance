@@ -26,6 +26,7 @@
                  INNER JOIN event e on e.id = ep.event_id
         WHERE e.start_date = #{start_date}
     </select>
+
     <delete id="removeList" parameterType="Long">
         DELETE FROM event_auto_orders
         WHERE  event_product_id = #{event_product_id}
