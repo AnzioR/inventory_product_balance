@@ -6,14 +6,18 @@
 
     <!-- 이벤트 상품조회 : 이벤트 아이디에 해당되는 이벤트 상품 목록을 조회한다. -->
     <!-- 이벤트 이름으로 조회하는 것에서 이벤트 이름에 띄어쓰기와 같은 공백이 있으면 오류가 발생할 수 있으므로, 공백 처리에 대한 이야기가 필요하다.   -->
+
+   <!-- category_name만  null 값으로 나옴 나중에 프론트랑 확인해보기-->
     <select id="searchEventProduct" resultType="EventProduct">
-        SELECT e.*, pi.*, p.*
+        SELECT e.*, pi.*, p.*, c.*
         FROM event_product ep
                  INNER JOIN product p on p.id = ep.product_id
                  INNER JOIN event e on e.id = ep.event_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
-        WHERE e.name = #{name}
+                 INNER JOIN category c on c.id = pi.category_id
+                 WHERE e.name = #{name}
     </select>
+
     <select id="searcheventproductbystartdate"  parameterType="String" resultType="EventProduct">
         SELECT ep.id,e.name, pi.imgname as product_imgname, pi.name as product_name, p.qnt, p.price,p.id as product_id,
                e.imgname as event_imgname, e.start_date, e.end_date

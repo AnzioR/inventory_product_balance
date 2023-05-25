@@ -33,7 +33,7 @@ class EventServiceTest {
 
   @Test
   void modify() {
-    Event event = new Event(4L, "광안리 이벤트", 1L, "gwang.jpg", "2023-05-18", "2023-05-18");
+    Event event = new Event(60L, "광안리 이벤트", 1L, "gwang.jpg", "2023-05-18", "2023-05-18");
     try {
       eventService.modify(event);
     } catch(Exception e) {
@@ -56,7 +56,7 @@ class EventServiceTest {
   void searchEventName() {
     Event event = null;
     try {
-      event = eventService.searchEventName("심야이벤트");
+      event = eventService.searchEventName("과자");
       System.out.println(event);
     } catch(Exception e) {
       e.printStackTrace();

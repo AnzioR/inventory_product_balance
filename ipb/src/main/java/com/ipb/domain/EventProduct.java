@@ -13,13 +13,22 @@ public class EventProduct {
   private Long product_id;
   private Long event_id;
 
-  private String product_name;
-  private String product_imgname;
-  private String event_imgname;
+  private String name;
+  private String imgname;
   private int qnt;
   private int price;
   private String start_date;
   private String end_date;
+  private Long product_code;
+
+  private String brand;
+  private String detail;
+
+  private Long category_id;
+  private String category_name;
+  private int box_qnt;
+
+  private String storage;
 
 
   public EventProduct(Long id, Long product_id, Long event_id) {
