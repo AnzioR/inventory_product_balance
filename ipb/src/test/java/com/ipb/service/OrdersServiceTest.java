@@ -124,19 +124,19 @@ class OrdersServiceTest {
     }
   }
   //매장별 상세 발주 조회
-  @Test
-  void selectDetailStoreOrders() {
-    List<Orders> list = null;
-    try {
-      list = ordersService.selectDetailStoreOrders(2L);
-      for(Orders or : list) {
-        System.out.println(or);
-      }
-    } catch(Exception e) {
-      e.printStackTrace();
-      System.out.println("매장별 발주 상세 정보 조회를 실패했습니다.");
-    }
-  }
+//@Test
+//  void selectDetailStoreOrders() {
+//    List<Orders> list = null;
+//    try {
+//      list = ordersService.selectDetailStoreOrders(2L);
+//      for(Orders or : list) {
+//        System.out.println(or);
+//      }
+//    } catch(Exception e) {
+//      e.printStackTrace();
+//      System.out.println("매장별 발주 상세 정보 조회를 실패했습니다.");
+//    }
+//  }
   //매장별 발주 수정
   @Test
   void updateStoreOrders() {

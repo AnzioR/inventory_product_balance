@@ -4,7 +4,7 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.EventProductMapper">
 
-    <!-- 이벤트 상품조회 : 이벤트 아이디에 해당되는 이벤트 상품 목록을 조회한다. -->
+    <!-- 이벤트 상품조회 : 이벤트 이름에 해당되는 이벤트 상품 목록을 조회한다. -->
     <!-- 이벤트 이름으로 조회하는 것에서 이벤트 이름에 띄어쓰기와 같은 공백이 있으면 오류가 발생할 수 있으므로, 공백 처리에 대한 이야기가 필요하다.   -->
 
    <!-- category_name만  null 값으로 나옴 나중에 프론트랑 확인해보기-->
