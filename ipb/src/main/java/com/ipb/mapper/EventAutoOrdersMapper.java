@@ -18,5 +18,5 @@ public interface EventAutoOrdersMapper extends MyMapper<Long, EventAutoOrders> {
     public List<EventAutoOrders> searchDueEventProduct (String date) throws Exception;
     public void removeEventList(List<EventAutoOrders> eventAutoOrders) throws Exception;
     public List<EventAutoOrders> listByStoreId (Long store_id) throws Exception;
-    public EventAutoOrders updateQnt (EventAutoOrders eventAutoOrders) throws Exception;
+    public void updateQnt (EventAutoOrders eventAutoOrders) throws Exception;
 }
