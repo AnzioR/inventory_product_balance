@@ -31,6 +31,7 @@ public class StoreAutoOrdersService {
   OrdersMapper ordersMapper;
 
 
+
   @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
   //@Scheduled(fixedDelay = 1000*60*60)
   public void checkStock() throws IOException {
@@ -105,5 +106,7 @@ public class StoreAutoOrdersService {
       e.printStackTrace();
     }
   }
+
+
 
 }
