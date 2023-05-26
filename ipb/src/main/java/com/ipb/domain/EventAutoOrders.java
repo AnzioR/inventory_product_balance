@@ -25,4 +25,16 @@ public class EventAutoOrders {
     public EventAutoOrders(Long event_product_id) {
         this.event_product_id = event_product_id;
     }
+
+    public EventAutoOrders(Long id, Integer qnt) {
+        this.id = id;
+        this.qnt = qnt;
+    }
+
+    public EventAutoOrders(Long id, Integer qnt, Long event_product_id, Long store_id) {
+        this.id = id;
+        this.qnt = qnt;
+        this.event_product_id = event_product_id;
+        this.store_id = store_id;
+    }
 }
