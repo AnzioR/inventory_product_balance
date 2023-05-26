@@ -102,10 +102,14 @@ public class OrdersService implements MyService<Long, Orders> {
     return ordersMapper.selectStore(id);
   }
 
-  //매장별 상세 발주 조회(본사에서 사용함)
-  public List<Orders> selectDetailStoreOrders(Long id) throws Exception {
+  //매장의 상세 발주 조회(본사에서 사용함)
+  public Orders selectDetailStoreOrders(Long id) throws Exception {
    return ordersMapper.selectDetailStoreOrders(id);
   }
+
+  public List<Orders> selectStoreOrdersByStoreId(Long store_id) throws Exception {
+    return ordersMapper.selectStoreOrdersByStoreId(store_id);
+  };
 
   //매장별 발주 수정(본사에서 사용함)
   public void updateStoreOrders(Orders orders) throws Exception {
@@ -176,10 +180,8 @@ public class OrdersService implements MyService<Long, Orders> {
     if(orders.getDelivery_id() == 2) {//배송중인 경우, 본사의 재고 수량 감소
 
       int orders_qnt = orders.getQnt(); //발주 수량을 가져온다.
-      System.out.println("전 - "+product);
       product.setQnt(product.getQnt()-orders_qnt); //발주가능상품의 재고를 기존 수량에서 발주수량만큼 감소시킨다.
       productMapper.updateQnt(product); //발주가능상품의 재고수량을 업데이트 해준다.
-      System.out.println("후 - "+product);
 
     } else if (orders.getDelivery_id() == 3) {//배송완료인 경우, 점포의 재고 수량 증가
         //점포에 처음 들어오는 상품이거나 들어왔던 상품이겠찌? -> product_id와 store_id로 store_product를 조회한다.

@@ -13,4 +13,7 @@ public class StoreAutoOrders {
   private int min_qnt;
   private Long store_product_id;
   private Long product_id;
+  private Long product_code;
+
+  private Long store_id;
 }

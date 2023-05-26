@@ -111,7 +111,8 @@
         SET qnt=#{qnt},
         is_using=#{is_using},
         store_price= #{store_price},
-        event_rate= #{event_rate}
+        event_rate= #{event_rate},
+        is_auto = #{is_auto}
         WHERE id = #{id}
     </update>
 
@@ -135,24 +136,8 @@
 
     <!-- 해당상품을 상세 조회 -->
     <select id="select" parameterType="Long" resultType="StoreProduct">
-        SELECT sp.id,
-               sp.qnt,
-               sp.product_id,
-               sp.store_id,
-               pi.name as product_name,
-               p.price,
-               pi.box_qnt,
-               pi.imgname,
-               sp.is_using,
-               p.exp,
-               pi.brand,
-               c.name  as category_name,
-               pi.detail,
-               pi.storage
+        SELECT *
         FROM store_product sp
-                 INNER JOIN product p on p.id = sp.product_id
-                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
-                 INNER JOIN category c ON pi.category_id = c.id
         WHERE sp.id = #{id}
     </select>
 
@@ -176,4 +161,12 @@
         WHERE id = #{id}
     </update>
 
+    <!-- 상세페이지에서 자동발주를 신청하면 신청한 정보를 자동발주로 보내준다. -->
+    <select id="registerAuto" parameterType="StoreProduct">
+        SELECT * FROM
+    </select>
+
+    <select id="getStoreProdListByProdCodeAndStoreId" parameterType="Long" resultType="StoreProduct">
+        SELECT * FROM store_product WHERE product_code = #{productCode} AND store_id = #{storeId}
+    </select>
 </mapper>

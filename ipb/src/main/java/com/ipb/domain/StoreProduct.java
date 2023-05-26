@@ -23,7 +23,10 @@ public class StoreProduct {
     private String detail;
     private Integer store_price;
     private Double event_rate;
-   private String storage;
+    private String storage;
+    private boolean is_auto;
+    private Long product_code;
+
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;
@@ -67,5 +70,6 @@ public class StoreProduct {
     public void changeQuantity(Integer newQuantity) {
         this.qnt = newQuantity;
     }
+
 }
 

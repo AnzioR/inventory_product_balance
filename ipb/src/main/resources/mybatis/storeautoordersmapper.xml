@@ -4,14 +4,21 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ipb.mapper.StoreAutoOrdersMapper">
 
-<!--    &lt;!&ndash; 기준이 되는 시간에 해당 점포의 재고가 최소재고수량에 미달인 경우 자동으로 부족한 수량만큰 주문해준다.&ndash;&gt;-->
-<!--    <insert id="insertList" parameterType="java.util.List">-->
-<!--        INSERT INTO orders VALUES-->
-<!--        <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now(), #{item.orders_type_id}) </foreach>-->
-<!--    </insert>-->
-
-    <!-- store_product_id로 store_auto_orders 전체를 가져온다.   -->
+    <!-- store_product_id로 store_auto_orders 전체를 가져온다. -->
     <select id="selectBySpi" parameterType="Long" resultType="StoreAutoOrders">
         SELECT * FROM store_auto_orders WHERE store_product_id = #{store_product_id}
     </select>
+
+    <!-- 자동발주를 할 상품을 선택해서 자동발주테이블에 담기 -->
+    <insert id="insert" parameterType="StoreAutoOrders">
+        INSERT INTO store_auto_orders VALUES (NULL, #{qnt}, #{min_qnt}, #{store_product_id}, #{product_code})
+    </insert>
+
+    <!-- 자동발주 등록된 리스트 전체 불러오기 -->
+    <select id="getAutoList" resultType="StoreAutoOrders">
+        SELECT sao.*, sp.*
+        FROM store_auto_orders sao
+                 INNER JOIN store_product sp on sp.id = sao.store_product_id
+    </select>
+
 </mapper>
