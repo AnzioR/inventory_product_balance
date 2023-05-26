@@ -47,7 +47,7 @@
     <delete id="delete" parameterType="Long">
         DELETE FROM event_auto_orders WHERE id = #{id}
     </delete>
-    <update id="updateQnt" parameterType="EventAutoOrders">
+    <update id="updateQnt" parameterType="EventAutoOrders" >
         UPDATE event_auto_orders SET qnt=#{qnt} WHERE id= #{id}
     </update>
 </mapper>
