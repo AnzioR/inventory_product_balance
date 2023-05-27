@@ -51,7 +51,7 @@ class StoreProductServiceTest {
   void get() {
     StoreProduct storeProduct = null;
     try {
-      storeProduct = storeProductService.get(261L);
+      storeProduct = storeProductService.get(1L);
       System.out.println(storeProduct);
     } catch (Exception e) {
       e.printStackTrace();
