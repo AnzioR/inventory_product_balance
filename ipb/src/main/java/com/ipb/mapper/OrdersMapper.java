@@ -23,7 +23,8 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
   public List<Orders> selectStore(Long id) throws Exception;
 
   //매장별 상세 발주 조회
-  public List<Orders> selectDetailStoreOrders(Long id) throws Exception;
+  public Orders selectDetailStoreOrders(Long id) throws Exception;
+  public List<Orders> selectStoreOrdersByStoreId(Long store_id) throws Exception;
 
   //매장별 발주 수정
   public void updateStoreOrders(Orders orders) throws Exception;

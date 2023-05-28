@@ -3,6 +3,7 @@ package com.ipb.service;
 
 import com.ipb.domain.*;
 import com.ipb.frame.MyService;
+import com.ipb.mapper.StoreAutoOrdersMapper;
 import com.ipb.mapper.StoreProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   @Autowired
   SalesService salesService;
+
+  @Autowired
+  StoreAutoOrdersMapper storeAutoOrdersMapper;
 
   //  store product 등록
   @Override
@@ -123,6 +127,15 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     return st;
   }
 
+  //자동발주를 신청하면 자동주문상태를 변경하고 자동발주 리스트에 추가해준다.
+  public void autoOrderRequest(StoreAutoOrders sao) throws Exception {
+    storeAutoOrdersMapper.insert(sao);
+    StoreProduct sp = storeProductMapper.select(sao.getStore_product_id());
+    sp.set_auto(true);
+    storeProductMapper.update(sp);
+  }
+
+
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
   // //----> 배송상태가 변경되었을 때 재고 증가 + store_price, event_rate 등록으로 변경
 //  public void updateOrInsert(List<OrdersCart> orderableList) throws Exception {
@@ -145,17 +158,6 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 //      }
 //    }
 //  }
-
-
-  //배송상태가 변경되었을 때, 점포보유상품의 재고를 증가시키는 기능 ing...
-//  public StoreProduct storeupdateqnt(Orders orders) throws Exception {
-//    if()
-//    //store_id와 product_id 조회를 이용하여 발주된 상품을 찾아서 해당 재고 수량을 변경해준다.
-//    StoreProduct sp = storeProductMapper.getstoreproductfromstoreidandproductid(orders.getProduct_id(), orders.getStore_id());
-//    storeProductMapper.storeupdateqnt(storeProduct);
-//    return sp;
-//  }
-
 
 }
 
