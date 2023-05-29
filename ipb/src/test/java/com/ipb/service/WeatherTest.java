@@ -1,6 +1,7 @@
 package com.ipb.service;
 
 import com.ipb.domain.Weather;
+import com.ipb.utill.FutureOpenWeatherUtill;
 import com.ipb.utill.OpenWeatherUtill;
 import com.ipb.utill.WeatherUtill;
 import org.json.simple.JSONArray;
@@ -18,6 +19,8 @@ import java.util.Date;
 public class WeatherTest {
   @Autowired
   WeatherService weatherService;
+
+
 
 
   @Test
@@ -64,8 +67,22 @@ public class WeatherTest {
 
 
 
+
+
 //    Weather weather = OpenWeatherUtill.WeatherInfo(busan);
 //    weatherService.register(weather);
+//    System.out.println(weather);
+
+
+  }
+  @Test
+  public void futureweateher() throws Exception {
+    String futureWeather = FutureOpenWeatherUtill.getFutureWeather();
+
+    String s = FutureOpenWeatherUtill.FutureWeatherInfo(futureWeather);
+    System.out.println(s);
+
+//    Weather weather = FutureOpenWeatherUtill.FutureWeatherInfo(futureWeather);
 //    System.out.println(weather);
 
 

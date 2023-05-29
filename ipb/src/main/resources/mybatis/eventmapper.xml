@@ -28,6 +28,13 @@
         WHERE ev.name LIKE CONCAT('%', #{txt}, '%')
     </select>
 
+    <select id="findPreviousEvent" parameterType="String" resultType="Event">
+        SELECT * FROM event where start_date = date_add(#{start_date}, INTERVAL -1 YEAR)
+    </select>
+
+
+
+
     <!-- 이벤트 상세 조회하기 (이벤트 아이디로 상세조회) -->
     <select id="select" parameterType="Long" resultType="Event">
         SELECT * FROM event WHERE id = #{id};

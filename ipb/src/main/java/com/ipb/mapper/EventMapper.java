@@ -11,4 +11,5 @@ public interface EventMapper extends MyMapper<Long, Event> {
   public Event searchEventName(String name) throws Exception;
 
   public Event selectByType(Long id) throws Exception;
+  public Event findPreviousEvent(String dateString) throws Exception;
 }
