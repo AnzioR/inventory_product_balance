@@ -39,7 +39,6 @@ x
         INNER JOIN product p on p.id = sp.product_id
         INNER JOIN product_info pi on pi.product_code = p.product_info_id
         INNER JOIN category c on c.id = pi.category_id
-
     </select>
 
 
