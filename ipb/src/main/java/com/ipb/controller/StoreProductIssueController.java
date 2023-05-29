@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.util.Date;
 
+import static java.time.LocalTime.now;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/issue")
@@ -28,7 +30,7 @@ public class StoreProductIssueController {
   @PostMapping("/add")
   public StoreProductIssue register(@RequestBody StoreProduct sp) {
     try {
-      storeProductIssueService.register(new StoreProductIssue(sp.getId(), sp.getProduct_id(), sp.getQnt(), 5L, new Date()));
+      storeProductIssueService.register(new StoreProductIssue(sp.getId(), sp.getQnt(), 5L, new Date()));
       System.out.println("폐기상품 정보를 등록했습니다.");
     } catch (Exception e) {
       System.out.println("폐기상품 정보 등록에 실패했습니다.");
