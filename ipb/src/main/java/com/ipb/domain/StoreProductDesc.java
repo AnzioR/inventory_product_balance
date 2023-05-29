@@ -8,7 +8,7 @@ import lombok.*;
 @Setter
 @Getter
 @ToString
-public class SaleDesc {
+public class StoreProductDesc {
     private Long id;
     private String name;
 }

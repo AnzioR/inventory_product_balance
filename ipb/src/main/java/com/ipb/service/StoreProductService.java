@@ -4,13 +4,21 @@ package com.ipb.service;
 import com.ipb.domain.*;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StoreAutoOrdersMapper;
+import com.ipb.mapper.StoreProductIssueMapper;
 import com.ipb.mapper.StoreProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.time.LocalDate.now;
 
 @Service
 @RequiredArgsConstructor
@@ -25,6 +33,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   @Autowired
   StoreAutoOrdersMapper storeAutoOrdersMapper;
 
+  @Autowired
+  StoreProductIssueMapper storeProductIssueMapper;
+
   //  store product 등록
   @Override
   public void register(StoreProduct storeProduct) throws Exception {
@@ -37,6 +48,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public void modify(StoreProduct storeProduct) throws Exception {
     storeProductMapper.update(storeProduct);
   }
+
   //  store product 삭제
   @Override
   public void remove(Long id) throws Exception {
@@ -82,6 +94,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
+
   //today 기준으로 날짜별 상품 확인 (D-3,D-4..)
   public List<StockInfo> selectexpAndExpiringSoon(String categoryname, Long store_id, int days) throws Exception {
     HashMap<String, Object> map = new HashMap<String, Object>();
@@ -93,12 +106,14 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
-//재고 전체보기
-    public List<StoreProduct> selectall()throws Exception {
+
+  //재고 전체보기
+  public List<StoreProduct> selectall() throws Exception {
     return storeProductMapper.selectall();
 
   }
-////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
+
+  ////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
 ////    StoreProduct storeProduct = storeProductMapper.select(id);
 ////    storeProduct.changeQuantity(newQuantity);
 ////    storeProductMapper.update(storeProduct);
@@ -112,7 +127,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   }
 
   //store id 로 각각의 점포의 재고를 조회 할 수 있음
-  public List<StoreProduct> selectstoreproduct(Long store_id)throws Exception {
+  public List<StoreProduct> selectstoreproduct(Long store_id) throws Exception {
     return storeProductMapper.selectstoreproduct(store_id);
   }
 
@@ -134,6 +149,18 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     sp.set_auto(true);
     storeProductMapper.update(sp);
   }
+
+  //상품의 폐기를 누르면 상품을 점포보유상품 이슈테이블에 추가한다.
+  public void addIssue(StoreProductIssue spi) throws Exception {
+    storeProductIssueMapper.insert(spi);
+
+    //폐기한 상품의 수량을 0으로 바꾼다.
+    StoreProduct storeProduct = new StoreProduct();
+    storeProductMapper.qntZero(storeProduct);
+  }
+
+}
+
 
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
@@ -159,5 +186,5 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 //    }
 //  }
 
-}
+
 

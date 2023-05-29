@@ -117,13 +117,14 @@ public class OrdersService implements MyService<Long, Orders> {
   }
 
   //매장에서 발주하기, 발주할 때 상품 수량도 변경함(안씀 오류 코드)
-  public void orders(Orders orders, Product product) throws Exception {
-    ordersMapper.insert(orders);
-    productMapper.updateQnt(product);
-  }
+//  public void orders(Orders orders, Product product) throws Exception {
+//    ordersMapper.insert(orders);
+//    productMapper.updateQnt(product);
+//  }
+
 
   //발주카트에 담긴 상품들을 리스트로 처리해서 발주로 이동시킴
-  //(카트:상품번호,수량,발주매장번호에 추가로 배송상태, 발주일을 더해서 Orders로 보낸다.)
+  //(카트: 상품번호,수량,발주매장번호에 추가로 배송상태, 발주일을 더해서 Orders로 보낸다.)
   public List<OrdersCart> addOrder(Long store_id) throws Exception {
     // 장바구니 목록(상품번호, 수량, 점포번호)에서 발주를 진행한다.
     // 본사에 충분한 재고가 있는지 고려해야하고, (주문가능한 것만 조회)
