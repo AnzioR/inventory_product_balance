@@ -30,22 +30,18 @@ public class StoreAutoOrdersService {
   @Autowired
   OrdersMapper ordersMapper;
 
-
   @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
   //@Scheduled(fixedDelay = 1000*60*60)
   public void checkStock() throws IOException {
-
     try {
       // 매일 자동발주 리스트를 가져와서
       List<StoreAutoOrders> autoOrdersList = storeAutoOrdersMapper.getAutoList();
-
 
       System.out.println("======= 자동발주 리스트 =========");
       for(StoreAutoOrders autoOrders : autoOrdersList) {
         System.out.println(autoOrders);
       }
       System.out.println("==============================");
-
 
       // 점포 내 자동발주 상품의 재고를 확인
       for (StoreAutoOrders autoOrder : autoOrdersList) {
@@ -72,7 +68,7 @@ public class StoreAutoOrdersService {
 
         // 현재 수량이 최소 수량보다 작으면, 즉 자동발주가 필요한 상황이라면
         if (currentQnt < minQnt) {
-          System.out.println("자동발주가 필요합니다. 진행하겠습ㄴ디ㅏ");
+          System.out.println("자동발주가 필요합니다. 진행하겠습니다");
           // 자동발주 필요 수량을 구한다.
           int autoOrderQnt = standardQnt - currentQnt;
           
