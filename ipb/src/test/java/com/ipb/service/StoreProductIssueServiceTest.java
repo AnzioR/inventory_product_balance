@@ -1,7 +1,6 @@
 package com.ipb.service;
 
-import com.ipb.domain.OrdersIssue;
-import com.ipb.domain.SalesIssue;
+import com.ipb.domain.StoreProductIssue;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,18 +10,18 @@ import java.util.Date;
 import java.util.List;
 
 @SpringBootTest
-class SalesIssueServiceTest {
+class StoreProductIssueServiceTest {
 
   @Autowired
-  SalesIssueService salesIssueService;
+  StoreProductIssueService storeProductIssueService;
 
   //  salesIssue에 store_product_id, qnt, sales_desc_id, dispossal_date 을 써서 판매 이슈가 발생한 상품을 등록 할 수 있다.
   @Test
   void register() {
     try {
-      SalesIssue salesIssue = new SalesIssue(null, 1L, 20, 2L, new Date());
-      salesIssueService.register(salesIssue);
-      System.out.println(salesIssue);
+      StoreProductIssue storeProductIssue = new StoreProductIssue(null, 1L, 20, 2L, new Date());
+      storeProductIssueService.register(storeProductIssue);
+      System.out.println(storeProductIssue);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -31,9 +30,9 @@ class SalesIssueServiceTest {
 //  수정 되는 부분은 qnt,disposal 부분만 업데이트 할 수 있도록 만들었다
   @Test
   void modify() {
-    SalesIssue salesIssue = new SalesIssue(16L, 1L, 12, 2L, new Date());
+    StoreProductIssue storeProductIssue = new StoreProductIssue(16L, 1L, 12, 2L, new Date());
     try {
-      salesIssueService.modify(salesIssue);
+      storeProductIssueService.modify(storeProductIssue);
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("수정 오류가 발생했습니다.");
@@ -43,7 +42,7 @@ class SalesIssueServiceTest {
   @Test
   void remove() {
     try {
-      salesIssueService.remove(16L);
+      storeProductIssueService.remove(16L);
     } catch (Exception e) {
       e.printStackTrace();
       System.out.println("삭제 오류가 발생했습니다.");
@@ -53,8 +52,8 @@ class SalesIssueServiceTest {
   @Test
   void get() {
     try {
-      SalesIssue salesIssue = salesIssueService.get(1L);
-      System.out.println(salesIssue);
+      StoreProductIssue storeProductIssue = storeProductIssueService.get(1L);
+      System.out.println(storeProductIssue);
     } catch (Exception e) {
       throw new RuntimeException(e);
     }
@@ -65,11 +64,11 @@ class SalesIssueServiceTest {
   @Test
   @DisplayName("Sales issue test")
   void salesissuealllist() {
-    List<SalesIssue> list = null;
+    List<StoreProductIssue> list = null;
     try {
-      list = salesIssueService.salesissuealllist();
+      list = storeProductIssueService.salesissuealllist();
       System.out.println(list.size());
-      for (SalesIssue salesIssue : list) {
+      for (StoreProductIssue salesIssue : list) {
         System.out.println(salesIssue);
       }
     } catch (Exception e) {
@@ -83,8 +82,8 @@ class SalesIssueServiceTest {
   @Test
   void salesissuestore() {
     try {
-      List<SalesIssue> salesissuestore = salesIssueService.salesissuestore(2L);
-      for (SalesIssue o : salesissuestore){
+      List<StoreProductIssue> salesissuestore = storeProductIssueService.salesissuestore(2L);
+      for (StoreProductIssue o : salesissuestore){
         System.out.println(o);
       }
     } catch(Exception e) {
@@ -98,8 +97,8 @@ class SalesIssueServiceTest {
   @Test
   void ordersissuedesc() {
     try {
-      List<SalesIssue> salesissuedesc = salesIssueService.salesissuedesc(3L);
-      for (SalesIssue o : salesissuedesc){
+      List<StoreProductIssue> salesissuedesc = storeProductIssueService.salesissuedesc(3L);
+      for (StoreProductIssue o : salesissuedesc){
         System.out.println(o);
       }
     } catch(Exception e) {
