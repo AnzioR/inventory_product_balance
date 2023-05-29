@@ -15,7 +15,7 @@ public class EventAutoOrdersController {
     @Autowired
     EventAutoOrdersService eventAutoOrdersService;
 
-
+//
     @GetMapping("eventAutoOrders/{store_id}")
     public List<EventAutoOrders> getListOfEventAutoOrders(@PathVariable Long store_id) {
         try {
