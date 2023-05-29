@@ -2,7 +2,7 @@ package com.ipb.domain;
 
 import lombok.*;
 
-import java.util.Date;
+import java.sql.Date;
 
 @Data
 @AllArgsConstructor

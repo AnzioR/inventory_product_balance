@@ -142,7 +142,16 @@ public class StoreProductController {
     }
   }
 
-
+  @PutMapping("/qntzero")
+  public StoreProduct qntZero(Long id, @RequestBody StoreProduct storeProduct) {
+    try {
+      storeProductService.qntZero(storeProduct);
+      return storeProduct;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
 }
 
 
