@@ -6,7 +6,7 @@
 
     <!-- 이슈 등록 -->
     <insert id="insert" parameterType="StoreProductIssue">
-        INSERT INTO store_product_issue VALUES (NULL, #{store_product_id}, #{qnt}, #{store_product_desc_id}, #{disposal_date})
+        INSERT INTO store_product_issue VALUES (NULL, #{store_product_id}, #{qnt}, #{store_product_desc_id}, now())
     </insert>
 
     <!-- 이슈 수정 : 요구사항에는 없는데 본사에서 필요할까봐 -->
@@ -39,7 +39,6 @@ x
         INNER JOIN product p on p.id = sp.product_id
         INNER JOIN product_info pi on pi.product_code = p.product_info_id
         INNER JOIN category c on c.id = pi.category_id
-
     </select>
 
 

@@ -150,14 +150,6 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     storeProductMapper.update(sp);
   }
 
-  ////////////////////////////////만드는중
-  //점포보유상품에서 폐기를 누르면 폐기 리스트에 상품의 정보를 등록한다.
-  public void issueRegister(StoreProduct storeProduct) throws Exception {
-    storeProductIssueMapper.insert(new StoreProductIssue(storeProduct.getId(), storeProduct.getProduct_id(), storeProduct.getQnt(), 5L, new Date()));
-  }
-//////////////////////////////////////
-
-
   //상품의 폐기를 누르면 상품수량=0, is_using=0 으로 변경한다.
   public void qntZero(StoreProduct storeProduct) {
     try {
