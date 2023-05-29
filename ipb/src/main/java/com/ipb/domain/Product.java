@@ -26,6 +26,7 @@ public class Product {
     private String storage;
     private String brand;
     private String store_qnt;
+
     public Product(Long id, int qnt, int price, int cost, String exp, Long product_info_id) {
         this.id = id;
         this.qnt = qnt;
