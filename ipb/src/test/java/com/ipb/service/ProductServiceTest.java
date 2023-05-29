@@ -81,6 +81,20 @@ class ProductServiceTest {
       System.out.println("전체검색 오류 발생!!");
     }
   }
+  @Test
+  void testSelectCategoryName() {
+    String categoryName = "과자";
+    List<Product> list = null;
+    try {
+      list = productService.selectcategoryname(categoryName);
+      for(Product product : list) {
+        System.out.println(product);
+      }
+    } catch(Exception e) {
+      e.printStackTrace();
+      System.out.println("카테고리 검색 오류 발생!!");
+    }
+  }
 
   //발주할 때, 수량을 변경해줌
   @Test
