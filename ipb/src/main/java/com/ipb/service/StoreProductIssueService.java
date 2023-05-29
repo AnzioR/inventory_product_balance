@@ -63,34 +63,6 @@ public class StoreProductIssueService implements MyService<Long, StoreProductIss
   }
 
 
-  //상품 폐기 버튼을 클릭하면 유통기한을 확인하고 폐기(점포보유상품 이슈)로 등록한다.
-  @Scheduled(fixedDelay = 60 * 60 * 1000)
-  public void checkExp() throws Exception {
-    try {
-      LocalDate todayLocalDate = now();
-      LocalDate lastDate = todayLocalDate.minusDays(1);
-      System.out.println("어제날짜 = " + lastDate);
-
-      DateTimeFormatter dateForm = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-      String dateString = lastDate.format(dateForm);
-      System.out.println("날짜형식 수정 = " + dateString);
-
-      StoreProduct sp = new StoreProduct();
-
-      //id가 null이 아니고 유통기한이 마감일자와 같다면 점포보유상품 이슈 테이블에 등록한다.
-      if(sp.getId() != null && sp.getExp().equals(dateString)) {
-        /////////////////////////////////////////////////////왜 store_product_id가 안나오지..?
-        storeProductIssueMapper.insert(new StoreProductIssue(sp.getStore_id(), sp.getQnt(), 5L, new Date()));
-
-      }
-
-    } catch (Exception e) {
-      System.out.println("상품 폐기를 실패했습니다.");
-      e.printStackTrace();
-    }
-  }
-
-
 //  @Scheduled(fixedDelay = 60 * 60 * 1000)
 //  public void checkDate() throws Exception {
 //    //오늘 날짜를 구하고 D-1 날짜를 가져온다.

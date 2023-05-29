@@ -24,7 +24,9 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
 
   //매장별 상세 발주 조회
   public Orders selectDetailStoreOrders(Long id) throws Exception;
-  public List<Orders> selectStoreOrdersByStoreId(Long store_id) throws Exception;
+
+  //store_id와 날짜로 조회
+  public List<Orders> selectStoreOrdersByStoreId(Orders orders) throws Exception;
 
   //매장별 발주 수정
   public void updateStoreOrders(Orders orders) throws Exception;
@@ -37,4 +39,7 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
 
   //발주된 상품의 배송상태 변경하기
   public void updateDeliveryStatus(Orders orders) throws Exception;
+
+  //발주일자별 주문리스트
+  public List<Orders> selectListByDate(Long store_id) throws Exception;
 }

@@ -19,20 +19,17 @@
     <!--    </select>-->
     <select id="selectall" resultType="Product">
         SELECT p.*, pi.product_code, pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt, pi.storage,pi.brand,sp.qnt as store_qnt
+
         FROM product p
         INNER JOIN product_info pi ON p.product_info_id = pi.product_code
         INNER JOIN category c ON pi.category_id = c.id
         INNER JOIN store_product sp ON sp.product_id = p.id
     </select>
     <select id="selectcategoryname" parameterType="String" resultType="Product">
-        SELECT p.id,
-               p.qnt,
-               p.price,
-               p.cost,
-               c.name as category_name,
-               p.exp
+        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name , pi.storage,pi.category_id
         FROM product p
-                 INNER JOIN category c ON p.category_id = c.id
+        INNER JOIN product_info pi ON p.product_info_id = pi.product_code
+        INNER JOIN category c ON pi.category_id = c.id
         WHERE c.name = #{category_name};
     </select>
     <!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
@@ -50,6 +47,7 @@
     <update id="update" parameterType="Product">
         UPDATE product SET qnt=#{qnt}, price=#{price}, cost=#{cost} WHERE id = #{id}
     </update>
+    <!--    상품은 너무 많이 묶여 있어서 삭제를 진행하면 안돼-->
     <delete id="delete" parameterType="Long">
         DELETE
         FROM product
@@ -69,11 +67,12 @@
     </update>
 
     <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다. -->
-    <update id="updateQntAll" parameterType="java.util.List">
-        <foreach collection="orderableList" item="item" index="index" separator=";" close=";">
-            UPDATE product SET qnt=qnt-#{item.qnt} WHERE id=#{item.product_id}
-        </foreach>
-    </update>
+<!--    발주할 때, 수량을 변경해줌, 처음에 발주를 하면 무조건 상품에서 수량을 뺐는데 배송 준비 중 일때는 수량이 변경 되면 안되니까 ,사용하지 않는 기능 (민-란)-->
+<!--    <update id="updateQntAll" parameterType="java.util.List">-->
+<!--        <foreach collection="orderableList" item="item" index="index" separator=";" close=";">-->
+<!--            UPDATE product SET qnt=qnt-#{item.qnt} WHERE id=#{item.product_id}-->
+<!--        </foreach>-->
+<!--    </update>-->
 
     <!-- 상품을 유통기한이 빠른 순서대로 정렬해서 리스트로 가져온다. -->
     <select id="getProductListByProductCode" parameterType="Long" resultType="Product">

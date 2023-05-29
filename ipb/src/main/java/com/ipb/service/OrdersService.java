@@ -107,8 +107,8 @@ public class OrdersService implements MyService<Long, Orders> {
    return ordersMapper.selectDetailStoreOrders(id);
   }
 
-  public List<Orders> selectStoreOrdersByStoreId(Long store_id) throws Exception {
-    return ordersMapper.selectStoreOrdersByStoreId(store_id);
+  public List<Orders> selectStoreOrdersByStoreId(Orders orders) throws Exception {
+    return ordersMapper.selectStoreOrdersByStoreId(orders);
   };
 
   //매장별 발주 수정(본사에서 사용함)
@@ -207,6 +207,11 @@ public class OrdersService implements MyService<Long, Orders> {
     //값을 리턴한다.
     return orders;
   }
+
+  //발주를 일자별 리스트로 보여준다.
+  public List<Orders> selectListByDate(Long store_id) throws Exception {
+    return ordersMapper.selectListByDate(store_id);
+  };
 
 }
 

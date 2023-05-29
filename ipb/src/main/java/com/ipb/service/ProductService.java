@@ -46,6 +46,8 @@ public class ProductService implements MyService <Long, Product> {
   public List<Product> selectcategoryname(String categoryname) throws Exception {
     return productMapper.selectcategoryname(categoryname);
   }
+
+//  본사 상품을 검색하여 조회한다
   public List<Product> search(String search) throws Exception {
     return productMapper.search(search);
   }
@@ -55,9 +57,14 @@ public class ProductService implements MyService <Long, Product> {
     productMapper.updateQnt(product);
   }
 
+//  자동 발주 할때 해당 상품코드와 동일한 상품목록을 가져온다. (본사에서 _ 유통기간이 얼마 안남은게 처음에 온다.)
   public List<Product> getProductListByProductCode(Long productCode) throws Exception {
     return productMapper.getProductListByProductCode(productCode);
   }
+
+//  ex) 상품코드가 같은 경우 수량 전체를 가져옴 ex)사과가 5/23일꺼 5/24일꺼 100개 씩 있으면 총200개로 들고옴
+//  자동 발주가 될 때 본사에 등록되어있는 사과가 있는데 100개가 5/2 ,100개가 5/3 있으면 총 갯수 가져오고 본사에서 선입선출하는 느낌으로
+//  자동 발주가 이루어질 때 발주되는 qnt 만큼의 상품을 가져오기 위해 본사에서 보유한 상품의 상품코드를 통해 상품 전체 수량을 계산함
   public int getProductQntByProductCode(Long productCode) throws Exception {
     List<Product> productList = getProductListByProductCode(productCode);
     int productQnt = 0;

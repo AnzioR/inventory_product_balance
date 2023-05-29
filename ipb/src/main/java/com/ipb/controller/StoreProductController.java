@@ -142,7 +142,18 @@ public class StoreProductController {
     }
   }
 
-
+  //상품의 폐기를 누르면 상품수량=0, is_using=0 으로 변경한다.
+  @PutMapping("/qntzero")
+  public StoreProduct qntZero(Long id, @RequestBody StoreProduct storeProduct) {
+    try {
+      storeProductService.qntZero(storeProduct);
+      return storeProduct;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+  
 }
 
 
