@@ -1,5 +1,6 @@
 package com.ipb.controller;
 
+import com.ipb.domain.StoreProduct;
 import com.ipb.domain.StoreProductIssue;
 import com.ipb.service.StoreProductIssueService;
 import com.ipb.service.StoreProductService;
@@ -9,6 +10,8 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.Date;
 
 @RestController
 @RequiredArgsConstructor
@@ -31,6 +34,10 @@ public class StoreProductIssueController {
       e.printStackTrace();
       return null;
     }
+  }
+
+  private void registerIssue(StoreProduct sp) throws Exception {
+    storeProductIssueService.register(new StoreProductIssue(sp.getId(),sp.getProduct_id(),  sp.getQnt() ,5L, new Date()));
   }
 
 }
