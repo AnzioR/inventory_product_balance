@@ -17,7 +17,6 @@ public class ProductInfo {
     private Long category_id;
     private String category_name;
     private int box_qnt;
-
     private String storage;
 
   public ProductInfo(Long product_code, String name, String brand, String detail, String imgname, Long category_id, int box_qnt, String storage) {

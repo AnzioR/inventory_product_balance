@@ -3,13 +3,22 @@ package com.ipb.service;
 
 import com.ipb.domain.*;
 import com.ipb.frame.MyService;
+import com.ipb.mapper.StoreAutoOrdersMapper;
+import com.ipb.mapper.StoreProductIssueMapper;
 import com.ipb.mapper.StoreProductMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
+
+import static java.time.LocalDate.now;
 
 @Service
 @RequiredArgsConstructor
@@ -20,6 +29,12 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   @Autowired
   SalesService salesService;
+
+  @Autowired
+  StoreAutoOrdersMapper storeAutoOrdersMapper;
+
+  @Autowired
+  StoreProductIssueMapper storeProductIssueMapper;
 
   //  store product 등록
   @Override
@@ -33,6 +48,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public void modify(StoreProduct storeProduct) throws Exception {
     storeProductMapper.update(storeProduct);
   }
+
   //  store product 삭제
   @Override
   public void remove(Long id) throws Exception {
@@ -78,6 +94,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
+
   //today 기준으로 날짜별 상품 확인 (D-3,D-4..)
   public List<StockInfo> selectexpAndExpiringSoon(String categoryname, Long store_id, int days) throws Exception {
     HashMap<String, Object> map = new HashMap<String, Object>();
@@ -89,12 +106,14 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
     return storeProducts;
   }
-//재고 전체보기
-    public List<StoreProduct> selectall()throws Exception {
+
+  //재고 전체보기
+  public List<StoreProduct> selectall() throws Exception {
     return storeProductMapper.selectall();
 
   }
-////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
+
+  ////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
 ////    StoreProduct storeProduct = storeProductMapper.select(id);
 ////    storeProduct.changeQuantity(newQuantity);
 ////    storeProductMapper.update(storeProduct);
@@ -108,7 +127,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   }
 
   //store id 로 각각의 점포의 재고를 조회 할 수 있음
-  public List<StoreProduct> selectstoreproduct(Long store_id)throws Exception {
+  public List<StoreProduct> selectstoreproduct(Long store_id) throws Exception {
     return storeProductMapper.selectstoreproduct(store_id);
   }
 
@@ -122,6 +141,38 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     StoreProduct st = storeProductMapper.getStoreProductFromStoreIdAndProductId(storeProduct);
     return st;
   }
+
+  //자동발주를 신청하면 자동주문상태를 변경하고 자동발주 리스트에 추가해준다.
+  public void autoOrderRequest(StoreAutoOrders sao) throws Exception {
+    storeAutoOrdersMapper.insert(sao);
+    StoreProduct sp = storeProductMapper.select(sao.getStore_product_id());
+    sp.set_auto(true);
+    storeProductMapper.update(sp);
+  }
+
+  ////////////////////////////////만드는중
+  //점포보유상품에서 폐기를 누르면 폐기 리스트에 상품의 정보를 등록한다.
+  public void issueRegister(StoreProduct storeProduct) throws Exception {
+    storeProductIssueMapper.insert(new StoreProductIssue(storeProduct.getId(), storeProduct.getProduct_id(), storeProduct.getQnt(), 5L, new Date()));
+  }
+//////////////////////////////////////
+
+
+  //상품의 폐기를 누르면 상품수량=0, is_using=0 으로 변경한다.
+  public void qntZero(StoreProduct storeProduct) {
+    try {
+      storeProductMapper.qntZero(storeProduct);
+      System.out.println("상품폐기로 상품수량이 0개로 변경되었습니다.");
+    } catch (Exception e) {
+      System.out.println("폐기로 인한 수량 변경을 실패했습니다.");
+      e.printStackTrace();
+    }
+  }
+
+
+}
+
+
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
   // //----> 배송상태가 변경되었을 때 재고 증가 + store_price, event_rate 등록으로 변경
@@ -147,15 +198,4 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 //  }
 
 
-  //배송상태가 변경되었을 때, 점포보유상품의 재고를 증가시키는 기능 ing...
-//  public StoreProduct storeupdateqnt(Orders orders) throws Exception {
-//    if()
-//    //store_id와 product_id 조회를 이용하여 발주된 상품을 찾아서 해당 재고 수량을 변경해준다.
-//    StoreProduct sp = storeProductMapper.getstoreproductfromstoreidandproductid(orders.getProduct_id(), orders.getStore_id());
-//    storeProductMapper.storeupdateqnt(storeProduct);
-//    return sp;
-//  }
-
-
-}
 

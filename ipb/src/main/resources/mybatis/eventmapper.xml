@@ -25,7 +25,7 @@
         SELECT ev.*, et.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id
-        WHERE ev.name = #{name};
+        WHERE ev.name LIKE CONCAT('%', #{txt}, '%')
     </select>
 
     <!-- 이벤트 상세 조회하기 (이벤트 아이디로 상세조회) -->

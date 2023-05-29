@@ -14,7 +14,7 @@ import org.springframework.stereotype.Service;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -102,10 +102,14 @@ public class OrdersService implements MyService<Long, Orders> {
     return ordersMapper.selectStore(id);
   }
 
-  //매장별 상세 발주 조회(본사에서 사용함)
-  public List<Orders> selectDetailStoreOrders(Long id) throws Exception {
+  //매장의 상세 발주 조회(본사에서 사용함)
+  public Orders selectDetailStoreOrders(Long id) throws Exception {
    return ordersMapper.selectDetailStoreOrders(id);
   }
+
+  public List<Orders> selectStoreOrdersByStoreId(Orders orders) throws Exception {
+    return ordersMapper.selectStoreOrdersByStoreId(orders);
+  };
 
   //매장별 발주 수정(본사에서 사용함)
   public void updateStoreOrders(Orders orders) throws Exception {
@@ -113,13 +117,14 @@ public class OrdersService implements MyService<Long, Orders> {
   }
 
   //매장에서 발주하기, 발주할 때 상품 수량도 변경함(안씀 오류 코드)
-  public void orders(Orders orders, Product product) throws Exception {
-    ordersMapper.insert(orders);
-    productMapper.updateQnt(product);
-  }
+//  public void orders(Orders orders, Product product) throws Exception {
+//    ordersMapper.insert(orders);
+//    productMapper.updateQnt(product);
+//  }
+
 
   //발주카트에 담긴 상품들을 리스트로 처리해서 발주로 이동시킴
-  //(카트:상품번호,수량,발주매장번호에 추가로 배송상태, 발주일을 더해서 Orders로 보낸다.)
+  //(카트: 상품번호,수량,발주매장번호에 추가로 배송상태, 발주일을 더해서 Orders로 보낸다.)
   public List<OrdersCart> addOrder(Long store_id) throws Exception {
     // 장바구니 목록(상품번호, 수량, 점포번호)에서 발주를 진행한다.
     // 본사에 충분한 재고가 있는지 고려해야하고, (주문가능한 것만 조회)
@@ -176,10 +181,8 @@ public class OrdersService implements MyService<Long, Orders> {
     if(orders.getDelivery_id() == 2) {//배송중인 경우, 본사의 재고 수량 감소
 
       int orders_qnt = orders.getQnt(); //발주 수량을 가져온다.
-      System.out.println("전 - "+product);
       product.setQnt(product.getQnt()-orders_qnt); //발주가능상품의 재고를 기존 수량에서 발주수량만큼 감소시킨다.
       productMapper.updateQnt(product); //발주가능상품의 재고수량을 업데이트 해준다.
-      System.out.println("후 - "+product);
 
     } else if (orders.getDelivery_id() == 3) {//배송완료인 경우, 점포의 재고 수량 증가
         //점포에 처음 들어오는 상품이거나 들어왔던 상품이겠찌? -> product_id와 store_id로 store_product를 조회한다.
@@ -204,6 +207,11 @@ public class OrdersService implements MyService<Long, Orders> {
     //값을 리턴한다.
     return orders;
   }
+
+  //발주를 일자별 리스트로 보여준다.
+  public List<Orders> selectListByDate(Long store_id) throws Exception {
+    return ordersMapper.selectListByDate(store_id);
+  };
 
 }
 

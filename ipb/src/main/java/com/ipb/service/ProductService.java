@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 @Service
 @RequiredArgsConstructor
@@ -52,6 +53,18 @@ public class ProductService implements MyService <Long, Product> {
   //발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경
   public void updateQnt(Product product) throws Exception {
     productMapper.updateQnt(product);
+  }
+
+  public List<Product> getProductListByProductCode(Long productCode) throws Exception {
+    return productMapper.getProductListByProductCode(productCode);
+  }
+  public int getProductQntByProductCode(Long productCode) throws Exception {
+    List<Product> productList = getProductListByProductCode(productCode);
+    int productQnt = 0;
+    for (Product product : productList) {
+      productQnt += product.getQnt();
+    }
+    return productQnt;
   }
 }
 

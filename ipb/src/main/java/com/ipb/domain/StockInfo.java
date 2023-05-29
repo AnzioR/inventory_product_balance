@@ -22,6 +22,8 @@ public class StockInfo {
   private String imgname;
   private String storage;
   private int days;
+  private int store_price;
+  private Double event_rate;
 }
 
 

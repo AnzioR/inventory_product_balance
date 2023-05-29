@@ -18,6 +18,7 @@ public class Event {
 
   private String event_name;
   private String type_name;
+ private  String category_name;
 
   public Event(Long id, String name, Long event_type_id, String imgname, String start_date, String end_date) {
     this.id = id;

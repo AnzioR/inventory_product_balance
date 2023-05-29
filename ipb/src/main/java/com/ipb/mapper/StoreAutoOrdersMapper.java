@@ -10,7 +10,10 @@ import java.util.List;
 
 @Mapper
 @Repository
-public interface StoreAutoOrdersMapper extends MyMapper<Long, StoreAutoOrdersMapper> {
+public interface StoreAutoOrdersMapper extends MyMapper<Long, StoreAutoOrders> {
   //store_product_id로 store_auto_orders 전체를 가져옴
   public StoreAutoOrders selectBySpi(Long store_product_id) throws Exception;
+
+  //
+  public List<StoreAutoOrders> getAutoList() throws Exception;
 }
