@@ -100,7 +100,7 @@ class OrdersServiceTest {
     List<Orders> ordersList = null;
     try {
       Date nowDate = new Date();
-      ordersList = ordersService.searchDate(nowDate);
+      ordersList = ordersService.searchDate((java.sql.Date) nowDate);
       for(Orders orders : ordersList) {
         System.out.println(orders);
       }
