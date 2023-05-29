@@ -150,14 +150,25 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     storeProductMapper.update(sp);
   }
 
-  //상품의 폐기를 누르면 상품을 점포보유상품 이슈테이블에 추가한다.
-  public void addIssue(StoreProductIssue spi) throws Exception {
-    storeProductIssueMapper.insert(spi);
-
-    //폐기한 상품의 수량을 0으로 바꾼다.
-    StoreProduct storeProduct = new StoreProduct();
-    storeProductMapper.qntZero(storeProduct);
+  ////////////////////////////////만드는중
+  //점포보유상품에서 폐기를 누르면 폐기 리스트에 상품의 정보를 등록한다.
+  public void issueRegister(StoreProduct storeProduct) throws Exception {
+    storeProductIssueMapper.insert(new StoreProductIssue(storeProduct.getId(), storeProduct.getProduct_id(), storeProduct.getQnt(), 5L, new Date()));
   }
+//////////////////////////////////////
+
+
+  //상품의 폐기를 누르면 상품수량=0, is_using=0 으로 변경한다.
+  public void qntZero(StoreProduct storeProduct) {
+    try {
+      storeProductMapper.qntZero(storeProduct);
+      System.out.println("상품폐기로 상품수량이 0개로 변경되었습니다.");
+    } catch (Exception e) {
+      System.out.println("폐기로 인한 수량 변경을 실패했습니다.");
+      e.printStackTrace();
+    }
+  }
+
 
 }
 

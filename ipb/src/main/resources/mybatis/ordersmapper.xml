@@ -101,8 +101,8 @@
         WHERE o.id=#{id}
     </select>
 
-    <!-- 검색한 store_id의 발주와 관련된 상세정보를 리스트로 볼 수 있다. -->
-    <select id="selectStoreOrdersByStoreId" parameterType="Long" resultType="Orders">
+    <!-- store_id와 날짜로 조회해서 발주와 관련된 상세정보를 리스트로 볼 수 있다. -->
+    <select id="selectStoreOrdersByStoreId" parameterType="Orders" resultType="Orders">
         SELECT o.*, s.*, pi.*, d.*, p.*,
                s.name as store_name,
                pi.name as product_name,
@@ -117,7 +117,8 @@
                  INNER JOIN product p on p.id = o.product_id
                  INNER JOIN product_info pi on p.product_info_id = pi.product_code
                  INNER JOIN store s on s.id = o.store_id
-        WHERE o.store_id=#{store_id}
+        WHERE o.store_id=#{store_id} AND o.orders_date=#{orders_date}
+
     </select>
 
     <!-- 매장별 발주 수정 : 수량과 배송상태를 본사에서 임의로 변경할 수 있음, 주문목록에서 수정과 삭제 버튼을 누른다고 가정하고 작성함 -->
@@ -140,4 +141,12 @@
     <update id="updateDeliveryStatus" parameterType="Orders">
         UPDATE orders SET delivery_id=#{delivery_id} WHERE id= #{id}
     </update>
+
+    <!-- 발주일자별 리스트 출력 : 단, 같은 날짜에 여러 주문이 있더라도 배송상태가 앞선 id의 값으로 출력됨 -->
+    <select id="selectListByDate" parameterType="Long" resultType="Orders">
+        SELECT row_number() over(order by o.id desc) as id, o.orders_date, d.status as orders_status
+        FROM orders o
+        JOIN delivery d on d.id = o.delivery_id
+        where store_id=#{store_id} group by orders_date
+    </select>
 </mapper>

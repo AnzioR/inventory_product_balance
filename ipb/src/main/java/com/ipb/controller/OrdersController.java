@@ -10,7 +10,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Date;
+import java.sql.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -161,11 +161,12 @@ public class OrdersController {
     }
   }
 
-  //검색한 store_id의 발주와 관련된 상세정보를 리스트로 보여줌 o
-  @GetMapping("/store-orders-detail-list/{store_id}")
-  public List<Orders> selectStoreOrdersByStoreId(@PathVariable Long store_id) {
+  //검색한 store_id의 발주와 관련된 상세정보를 리스트로 보여줌 o -------> 날짜도 조회하는거로 수정 ---sql.Date로 형식변경
+  @GetMapping("/store-orders-detail-list")
+  public List<Orders> selectStoreOrdersByStoreId(@RequestBody Orders orders) {
     try {
-      return ordersService.selectStoreOrdersByStoreId(store_id);
+      System.out.println(orders);
+      return ordersService.selectStoreOrdersByStoreId(orders);
     } catch(Exception e) {
       System.out.println("매장별 상세정보 발주 조회를 실패했습니다.");
       e.printStackTrace();
@@ -195,6 +196,18 @@ public class OrdersController {
       return ordersService.updateDeliveryStatus(orders);
     } catch(Exception e) {
       System.out.println("배송상태 변경에 실패했습니다.");
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+  //발주리스트를 날짜로 묶어서 보여줌 o
+  @GetMapping("/store-orders-date/{store_id}")
+  public List<Orders> selectListByDate(@PathVariable Long store_id) {
+    try {
+      return ordersService.selectListByDate(store_id);
+    } catch(Exception e) {
+      System.out.println("매장별 상세정보 발주 조회를 실패했습니다.");
       e.printStackTrace();
       return null;
     }
