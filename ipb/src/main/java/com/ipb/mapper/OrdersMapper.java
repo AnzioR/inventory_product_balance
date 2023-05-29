@@ -13,8 +13,7 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
   //발주 취소
   public void ordersCancel(Orders orders) throws Exception;
 
-  //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회(util.Date일때만 나옴)
-  // -------------> 안됨! 이거 살리면 selectStoreOrdersByStoreId가 죽어요ㅠㅠ
+  //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회
   public List<Orders> searchDate(String orders_date) throws Exception;
 
   //발주한 상품의 배송 상태를 조회
@@ -26,7 +25,7 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
   //매장별 상세 발주 조회
   public Orders selectDetailStoreOrders(Long id) throws Exception;
 
-  //store_id와 날짜로 조회(sql.Date형식)
+  //store_id와 날짜로 조회
   public List<Orders> selectStoreOrdersByStoreId(Orders orders) throws Exception;
 
   //매장별 발주 수정
