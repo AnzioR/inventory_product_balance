@@ -43,11 +43,18 @@
                  INNER JOIN event e on e.id = ep.event_id
         WHERE eao.store_id = #{store_id}
     </select>
+
+
     <!-- 이벤트 삭제 -->
     <delete id="delete" parameterType="Long">
         DELETE FROM event_auto_orders WHERE id = #{id}
     </delete>
+
     <update id="updateQnt" parameterType="EventAutoOrders" >
         UPDATE event_auto_orders SET qnt=#{qnt} WHERE id= #{id}
     </update>
+    <update id="updateQntByEvent">
+        UPDATE event_auto_orders SET qnt = #{ceil} WHERE event_product_id = #{id} AND store_id = #{storeId}
+    </update>
+
 </mapper>

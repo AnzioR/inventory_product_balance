@@ -43,4 +43,18 @@
     <delete id="salesdelete" parameterType="Long">
         DELETE FROM sales WHERE id = #{id}
     </delete>
+    <select id="getTotalQntByEventIdAndProdCode" resultType="EventAutoOrders">
+        SELECT
+        sum(s.qnt) AS qnt,
+        sp.store_id
+        FROM sales s
+        LEFT JOIN store_product sp ON sp.id = s.store_product_id
+        LEFT JOIN product p ON p.id = sp.product_id
+        LEFT JOIN product_info pi ON p.product_info_id = pi.product_code
+        LEFT JOIN event e ON e.id = #{previousEventId}
+        WHERE
+            s.sales_date &gt;= e.start_date AND s.sales_date &lt;= e.end_date AND
+        p.product_info_id = #{productCode}
+        GROUP BY sp.store_id, p.product_info_id
+    </select>
 </mapper>

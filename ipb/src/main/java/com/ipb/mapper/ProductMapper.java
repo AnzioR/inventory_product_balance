@@ -23,4 +23,6 @@ public interface ProductMapper extends MyMapper<Long, Product> {
   public void updateQntAll(List<OrdersCart> orderableList) throws Exception;
 
   List<Product> getProductListByProductCode(Long productCode) throws Exception;
+
+  public Boolean findProductCodeByEventIdAndCompareProdCode(Long previousEventId, Long productCode) throws Exception;
 }
