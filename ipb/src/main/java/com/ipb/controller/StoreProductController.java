@@ -1,9 +1,6 @@
 package com.ipb.controller;
 
-import com.ipb.domain.Product;
-import com.ipb.domain.StockInfo;
-import com.ipb.domain.StoreAutoOrders;
-import com.ipb.domain.StoreProduct;
+import com.ipb.domain.*;
 import com.ipb.service.ProductService;
 import com.ipb.service.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -144,6 +141,8 @@ public class StoreProductController {
       return ResponseEntity.notFound().build();
     }
   }
+
+
 }
 
 
