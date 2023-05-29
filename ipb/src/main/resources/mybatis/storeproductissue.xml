@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StoreProductIssueMapper">
+
+    <!-- 이슈 등록 -->
+    <insert id="insert" parameterType="StoreProductIssue">
+        INSERT INTO store_product_issue VALUES (NULL, #{store_product_id}, #{qnt}, #{store_product_desc_id}, #{disposal_date})
+    </insert>
+
+    <!-- 이슈 수정 : 요구사항에는 없는데 본사에서 필요할까봐 -->
+    <update id="update" parameterType="StoreProductIssue">
+        UPDATE store_product_issue SET qnt=#{qnt}, disposal_date=#{disposal_date} WHERE id = #{id}
+    </update>
+
+    <!-- 이슈 삭제 : 요구사항에는 없는데 본사에서 필요할까봐 -->
+    <delete id="delete" parameterType="Long">
+        DELETE FROM store_product_issue WHERE id = #{id}
+    </delete>
+
+   <!--이슈 아이디로 상세 조회하기-->
+    <select id="select" parameterType="Long" resultType="StoreProductIssue">
+        SELECT * FROM store_product_issue WHERE id = #{id}
+    </select>
+
+    <!-- 이슈 전체 조회 :  본사에서 필요할까봐 (이슈 상세 조회) -->
+    <select id="selectall" resultType="StoreProductIssue">
+        SELECT id, orders_id, qnt, orders_desc_id, disposal_date FROM orders_issue
+x
+    </select>
+
+    <!-- 전체 이슈 조회 : 전체 이슈 조회(이슈 ,이슈 상품이름,판매가격,수량, 등록일,유통기한,카테고리,점포아이디)  -->
+    <select id="salesissuealllist" resultType="StoreProductIssue">
+        SELECT si.id, si.store_product_id, si.store_product_desc_id, sd.name as store_product_issue, pi.name as product_name, p.price, si.qnt, si.disposal_date, p.exp, c.name as category_name, sp.store_id , p.cost
+        FROM store_product_issue si
+        INNER JOIN store_product_desc sd on sd. id = si.store_product_desc_id
+        INNER JOIN store_product sp on sp.id = si.store_product_id
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c on c.id = pi.category_id
+
+    </select>
+
+
+<!--각 점포의 판매 이슈 리스트 조회  -->
+    <select id="salesissuestore" parameterType="Long" resultType="StoreProductIssue">
+        SELECT si.id, si.store_product_id, si.store_product_desc_id, sd.name as store_product_issue, pi.name as product_name, p.price, si.qnt, si.disposal_date, p.exp, c.name as category_name, p.cost
+        FROM store_product_issue si
+        INNER JOIN store_product_desc sd on sd. id = si.store_product_desc_id
+        INNER JOIN store_product sp on sp.id = si.store_product_id
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c on c.id = pi.category_id
+        WHERE store_id = #{store_id};
+    </select>
+
+<!--   판매 이슈에 따라 조회 -->
+    <select id="salesissuedesc" parameterType="Long" resultType="StoreProductIssue">
+        SELECT si.id, si.store_product_id,si.store_product_desc_id, sd.name as store_product_issue, pi.name as product_name, p.price, si.qnt, si.disposal_date, p.exp, c.name as category_name, p.cost
+        FROM store_product_issue si
+        INNER JOIN store_product_desc sd on sd. id = si.store_product_desc_id
+        INNER JOIN store_product sp on sp.id = si.store_product_id
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c on c.id = pi.category_id
+    WHERE si.store_product_desc_id = #{store_product_desc_id};
+    </select>
+
+
+</mapper>
+
+

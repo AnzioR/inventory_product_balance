@@ -29,14 +29,23 @@
         SELECT * FROM orders WHERE id = #{id}
     </select>
 
-    <!-- 발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회할 수 있음 -->
+    <!-- 발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회
+     orders 테이블의 정보만 가져오기 때문에 store_name, product_name, orders_status, product_exp는 null -->
     <select id="selectall" resultType="Orders">
         SELECT * FROM orders
     </select>
 
     <!-- 본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 : 발주번호, 발주상품명, 발주수량, 입수, 발주점포명, 배송상태, 배송일 보여줌  -->
     <select id="searchDate" parameterType="String" resultType="Orders">
-        SELECT o.*, pi.*, s.*, d.*
+        SELECT o.*, pi.*, s.*, d.*,
+               s.name as store_name,
+               pi.name as product_name,
+               d.status as orders_status,
+               p.exp as product_exp,
+               pi.brand as product_info_brand,
+               pi.detail as product_info_detail,
+               pi.imgname as product_info_imgname,
+               pi.storage as product_info_storage
         FROM orders o
                  INNER JOIN delivery d on d.id = o.delivery_id
                  INNER JOIN product p on p.id = o.product_id
@@ -45,24 +54,64 @@
         WHERE o.orders_date = #{orders_date}
     </select>
 
-    <!-- 발주한 상품의 배송 상태를 조회한다 : 일단 발주 id로 조회할 수 있도록 만들었음 -->
+    <!-- 발주한 상품의 배송 상태를 조회한다 : 발주 id로 조회, 조인된 다른 값들도 전부 넘겨주도록 함.
+        혹시 배송상태만 필요하다면 알려주세요! 다시 변경하겠습니다.
+     -->
     <select id="searchDeliveryStatus" parameterType="Long" resultType="Orders">
-        SELECT o.id, pi.name as product_name, d.status as orders_status
+        SELECT o.*, pi.*, d.*, s.*,
+            s.name as store_name,
+            pi.name as product_name,
+            d.status as orders_status,
+            p.exp as product_exp,
+            pi.brand as product_info_brand,
+            pi.detail as product_info_detail,
+            pi.imgname as product_info_imgname,
+            pi.storage as product_info_storage
         FROM orders o
                  INNER JOIN delivery d on d.id = o.delivery_id
                  INNER JOIN product p on p.id = o.product_id
                  INNER JOIN product_info pi on p.product_info_id = pi.product_code
+                 INNER JOIN store s on s.id = o.store_id
         WHERE o.id = #{id}
     </select>
 
-    <!-- 매장별 전체 발주 조회 : 해당되는 매장의 발주정보 목록 전체 출력함 -->
+    <!-- 매장별 전체 발주 조회 : 해당되는 매장의 발주정보 목록 전체 출력함
+        리스트 목록이 필요한 부분이라 생각되어 다른 값들은 처리하지 않았는데 혹시 수정이 필요하면 말씀해주세요.
+    -->
     <select id="selectStore" parameterType="Long" resultType="Orders">
         SELECT * FROM orders WHERE store_id=#{store_id};
     </select>
 
-    <!-- 매장별 상세 발주 조회 : 본사에서 점포번호로 조회하면 발주번호, 발주일, 발주점포명, 상품명, 발주수량, 상품입수, 배송상태, 본사재고수량, 유통기한 을 조회할 수 있다. -->
+    <!-- 상세 발주 조회 : 발주번호를 조회하면 발주에 관한 상세정보를 보여준다. -->
     <select id="selectDetailStoreOrders" parameterType="Long" resultType="Orders">
-        SELECT o.*, s.*, pi.*, d.*, p.*
+        SELECT o.*, s.*, pi.*, d.*, p.*,
+               s.name as store_name,
+               pi.name as product_name,
+               d.status as orders_status,
+               p.exp as product_exp,
+               pi.brand as product_info_brand,
+               pi.detail as product_info_detail,
+               pi.imgname as product_info_imgname,
+               pi.storage as product_info_storage
+        FROM orders o
+                 INNER JOIN delivery d on d.id = o.delivery_id
+                 INNER JOIN product p on p.id = o.product_id
+                 INNER JOIN product_info pi on p.product_info_id = pi.product_code
+                 INNER JOIN store s on s.id = o.store_id
+        WHERE o.id=#{id}
+    </select>
+
+    <!-- 검색한 store_id의 발주와 관련된 상세정보를 리스트로 볼 수 있다. -->
+    <select id="selectStoreOrdersByStoreId" parameterType="Long" resultType="Orders">
+        SELECT o.*, s.*, pi.*, d.*, p.*,
+               s.name as store_name,
+               pi.name as product_name,
+               d.status as orders_status,
+               p.exp as product_exp,
+               pi.brand as product_info_brand,
+               pi.detail as product_info_detail,
+               pi.imgname as product_info_imgname,
+               pi.storage as product_info_storage
         FROM orders o
                  INNER JOIN delivery d on d.id = o.delivery_id
                  INNER JOIN product p on p.id = o.product_id
@@ -87,7 +136,7 @@
         <foreach collection="orderList" item="item" separator=","> (NULL, #{item.qnt}, #{item.product_id}, #{item.store_id}, #{item.delivery_id}, now(), #{item.orders_type_id}) </foreach>
     </insert>
 
-    <!-- 발주된 상품의 배송상태 변경하기 -->
+    <!-- 발주된 상품의 배송상태 변경하기 : 발주한 수량만큼 본사 또는 점포의 재고 수량이 변경된다. -->
     <update id="updateDeliveryStatus" parameterType="Orders">
         UPDATE orders SET delivery_id=#{delivery_id} WHERE id= #{id}
     </update>

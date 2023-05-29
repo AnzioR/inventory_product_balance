@@ -126,17 +126,18 @@
         SET qnt=#{qnt},
         is_using=#{is_using},
         store_price= #{store_price},
-        event_rate= #{event_rate}
+        event_rate= #{event_rate},
+        is_auto = #{is_auto}
         WHERE id = #{id}
     </update>
 
-    <!--    StoreProduct 삭제 기능대신 재고를 0으로 만들어줌-->
-    <delete id="delete" parameterType="StoreProduct">
+    <!-- StoreProduct 삭제 기능대신 재고를 0으로 만들어줌 -->
+    <update id="qntZero" parameterType="StoreProduct">
         UPDATE store_product
-        SET qnt=0,
-        is_using=0
+        SET
+            qnt=0, is_using=0
         WHERE id = #{id}
-    </delete>
+    </update>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
     <update id="updateqnt" parameterType="StoreProduct">
@@ -150,27 +151,8 @@
 
     <!-- 해당상품을 상세 조회 -->
     <select id="select" parameterType="Long" resultType="StoreProduct">
-        SELECT sp.id,
-               sp.qnt,
-               sp.product_id,
-               sp.store_id,
-               sp.store_price,
-               sp.event_rate,
-               pi.name as product_name,
-               p.price,
-               pi.box_qnt,
-               pi.imgname,
-               sp.is_using,
-               p.exp,
-               pi.brand,
-               c.name  as category_name,
-               pi.detail,
-               pi.product_code,
-               pi.storage
+        SELECT *
         FROM store_product sp
-                 INNER JOIN product p on p.id = sp.product_id
-                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
-                 INNER JOIN category c ON pi.category_id = c.id
         WHERE sp.id = #{id}
     </select>
 
@@ -186,12 +168,30 @@
     </select>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다
-    위의 getstoreproductfromstoreidandproductid가 실행되면 해당되는 store_product의 id의 qnt를 발주 수량만큼 변화시킴
+    위의 getStoreProductFromStoreIdAndProductId가 실행되면 해당되는 store_product의 id의 qnt를 발주 수량만큼 변화시킴
     -->
     <update id="storeUpdateQnt" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt}
         WHERE id = #{id}
     </update>
+
+    <!-- 상세페이지에서 자동발주를 신청하면 신청한 정보를 자동발주로 보내준다. -->
+    <select id="registerAuto" parameterType="StoreProduct">
+        SELECT * FROM
+    </select>
+
+    <select id="getStoreProdListByProdCodeAndStoreId" parameterType="Long" resultType="StoreProduct">
+        SELECT * FROM store_product WHERE product_code = #{productCode} AND store_id = #{storeId}
+    </select>
+
+    <!--  동일한 product_id, product_code 있는지 확인하는 쿼리  -->
+    <select id="findProductIdAndProductCode" resultType="StoreProduct">
+        SELECT sp.*, p.*, pi.*
+        FROM store_product sp
+                 JOIN product p on p.id = sp.product_id
+                 JOIN product_info pi on pi.product_code = p.product_info_id
+    </select>
+
 
 </mapper>

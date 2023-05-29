@@ -68,11 +68,16 @@
         UPDATE product SET qnt=#{qnt} WHERE id=#{id};
     </update>
 
-    <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
+    <!-- 발주를 했을 때 PRODUCT 테이블의 상품재고 수량을 변경시킨다. -->
     <update id="updateQntAll" parameterType="java.util.List">
         <foreach collection="orderableList" item="item" index="index" separator=";" close=";">
             UPDATE product SET qnt=qnt-#{item.qnt} WHERE id=#{item.product_id}
         </foreach>
     </update>
+
+    <!-- 상품을 유통기한이 빠른 순서대로 정렬해서 리스트로 가져온다. -->
+    <select id="getProductListByProductCode" parameterType="Long" resultType="Product">
+        SELECT * FROM product WHERE product_info_id = #{productCode} and exp > now() order by exp
+    </select>
 
 </mapper>

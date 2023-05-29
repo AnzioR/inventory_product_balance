@@ -1,11 +1,10 @@
 package com.ipb.controller;
 
-import com.ipb.domain.Product;
-import com.ipb.domain.StockInfo;
-import com.ipb.domain.StoreProduct;
+import com.ipb.domain.*;
 import com.ipb.service.ProductService;
 import com.ipb.service.StoreProductService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
@@ -128,18 +127,22 @@ public class StoreProductController {
     }
   }
 
+  //상품을 자동발주 신청하기
+  @PostMapping("/auto-order")
+  public ResponseEntity<?> autoOrderRequest(@RequestBody StoreAutoOrders sao) {
+    try {
+      if (sao.getQnt() < sao.getMin_qnt()) {
+        return ResponseEntity.status(300).build();
+      }
+      storeProductService.autoOrderRequest(sao);
+      return ResponseEntity.ok().build();
+    } catch (Exception e) {
+      e.printStackTrace();
+      return ResponseEntity.notFound().build();
+    }
+  }
 
-  //store_id에 해당하는 점포의 재고 수량과 자동발주에 등록된 최소재고수량을 가져오는 기능
-//  @GetMapping("/checkqnt")
-//  public StoreProduct checkqnt(Long id) {
-//    try {
-//      return storeProductService.checkqnt(id);
-//    } catch(Exception e) {
-//      System.out.println("점포id에 해당하는 재고 조회가 실패했습니다.");
-//      e.printStackTrace();
-//      return null;
-//    }
-//  }
+
 }
 
 
