@@ -78,5 +78,8 @@
     <select id="getProductListByProductCode" parameterType="Long" resultType="Product">
         SELECT * FROM product WHERE product_info_id = #{productCode} and exp > now() order by exp
     </select>
+    <select id="findProductCodeByEventIdAndCompareProdCode" parameterType="Long" resultType="Boolean">
+        SELECT * FROM product WHERE id IN (SELECT product_id FROM event_product WHERE event_id = #{previousEventId}) and product_info_id = #{productCode} limit 1;
+    </select>
 
 </mapper>

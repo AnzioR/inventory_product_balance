@@ -20,12 +20,17 @@
 
     <select id="searcheventproductbystartdate"  parameterType="String" resultType="EventProduct">
         SELECT ep.id,e.name, pi.imgname as product_imgname, pi.name as product_name, p.qnt, p.price,p.id as product_id,
-               e.imgname as event_imgname, e.start_date, e.end_date
+               e.imgname as event_imgname, e.start_date, e.end_date , p.product_info_id,pi.product_code
         FROM event_product ep
                  INNER JOIN product p on p.id = ep.product_id
                  INNER JOIN event e on e.id = ep.event_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
         WHERE e.start_date = #{start_date}
     </select>
+
+    <select id="CompareSameEvent" parameterType="Long" resultType="Product">
+        SELECT * FROM product WHERE id IN (SELECT product_id FROM event_product WHERE event_id = #{event_id}) and product_info_id = #{product_code};
+    </select>
+
 
 </mapper>
