@@ -38,6 +38,10 @@ public class Orders {
     private String product_info_storage;
 
 
+    public Orders(Long store_id, Date orders_date){
+        this.store_id = store_id;
+        this.orders_date = orders_date;
+    }
     public Orders(Long id, Integer qnt, Long product_id, Long store_id, Long delivery_id, Date orders_date) {
         this.id = id;
         this.qnt = qnt;
