@@ -11,7 +11,7 @@
 
     <!-- 점포 등록 -->
     <insert id="insert" parameterType="Store">
-        INSERT INTO store VALUES (NULL, #{name}, #{location}, #{number}, #{imgname}, #{area})
+        INSERT INTO store VALUES (NULL, #{name}, #{location}, #{number}, #{imgname}, #{area},#{lat},#{lon})
     </insert>
 
     <!-- 점포 수정 : 요구사항에는 없는데 있으면 편리하다고 생각되어서 점포이름, 전화번호, 사진을 변경할 수 있도록 작성함 -->

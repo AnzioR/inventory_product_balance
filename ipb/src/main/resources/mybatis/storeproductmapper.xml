@@ -167,6 +167,14 @@
           AND product_id = #{product_id}
     </select>
 
+    <select id="getStoreProductQntByStoreIdAndProductCode" parameterType="Long" resultType="Integer">
+        SELECT sum(qnt)
+        FROM store_product
+        WHERE store_id = #{store_id}
+          AND product_code = #{product_code}
+          And is_using = 1;
+    </select>
+
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다
     위의 getStoreProductFromStoreIdAndProductId가 실행되면 해당되는 store_product의 id의 qnt를 발주 수량만큼 변화시킴
     -->

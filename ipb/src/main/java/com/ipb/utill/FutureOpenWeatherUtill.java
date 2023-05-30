@@ -2,6 +2,7 @@ package com.ipb.utill;
 
 
 
+import com.ipb.domain.Store;
 import com.ipb.domain.Weather;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -16,15 +17,15 @@ import java.net.URL;
 
 
 public class FutureOpenWeatherUtill {
-  //parse 디펜던시
-  public static String getFutureWeather() throws IOException, ParseException {
 
-    StringBuilder urlBuilder = new StringBuilder("http://api.openweathermap.org/data/2.5/forecast?lat=37&lon=127&appid=bb12b4c410743f76108847dd974e4a61"); /*URL*/
+  //parse 디펜던시
+  public static String getFutureWeather(Store store) throws IOException, ParseException {
+
+    StringBuilder urlBuilder = new StringBuilder("http://api.openweathermap.org/data/2.5/forecast?lat="+store.getLat()+"&lon="+store.getLon()+"&appid=bb12b4c410743f76108847dd974e4a61"); /*URL*/
     URL url = new URL(urlBuilder.toString());
     HttpURLConnection conn = (HttpURLConnection) url.openConnection();
     conn.setRequestMethod("GET");
     conn.setRequestProperty("Content-type", "application/json");
-    System.out.println("Response code: " + conn.getResponseCode());
     BufferedReader rd;
     if (conn.getResponseCode() >= 200 && conn.getResponseCode() <= 300) {
       rd = new BufferedReader(new InputStreamReader(conn.getInputStream()));
