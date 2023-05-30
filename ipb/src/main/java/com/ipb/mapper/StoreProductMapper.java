@@ -28,8 +28,10 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   //발주할 때, store_id 와 product_id 를 같이 조회함
   public StoreProduct getStoreProductFromStoreIdAndProductId(StoreProduct st) throws Exception;
 
-  public List<StoreProduct> getStoreProdListByProdCodeAndStoreId(Long productCode, Long storeId) throws Exception;
+  public List<StoreProduct> getStoreProdListByProdCodeAndStoreId(Long product_code, Long store_id) throws Exception;
 
   //폐기했을 때 상품의 qnt=0으로 변경
   public void qntZero(StoreProduct storeProduct) throws Exception;
+
+  Integer getStoreProductQntByStoreIdAndProductCode(Long store_id, Long product_code);
 }

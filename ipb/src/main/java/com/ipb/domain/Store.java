@@ -15,5 +15,7 @@ public class Store {
   private String number;
   private String imgname;
   private String area;
+  private Integer lat;
+  private Integer lon;
 
 }

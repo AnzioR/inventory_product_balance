@@ -5,8 +5,10 @@ import com.ipb.domain.Weather;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.WeatherMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import java.io.IOException;
 import java.util.List;
 
 @Service

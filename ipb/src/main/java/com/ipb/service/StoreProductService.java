@@ -162,6 +162,15 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   }
 
 
+  public Integer getStoreProductQntByStoreIdAndProductCode(Long storeId, Long product_code) throws Exception {
+
+    Integer storeProductQntByStoreIdAndProductCode = storeProductMapper.getStoreProductQntByStoreIdAndProductCode(storeId, product_code);
+    if (storeProductQntByStoreIdAndProductCode != null) {
+      return storeProductQntByStoreIdAndProductCode;
+    } else {
+      return 0;
+    }
+  }
 }
 
 

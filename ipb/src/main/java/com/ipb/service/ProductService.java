@@ -77,5 +77,11 @@ public class ProductService implements MyService <Long, Product> {
   public boolean findProductCodeByEventIdAndCompareProdCode(Long previousEventId, Long productCode) throws Exception {
     return productMapper.findProductCodeByEventIdAndCompareProdCode(previousEventId, productCode) != null;
   }
+  public List<Product> findProductByCode (Long product_code) throws Exception {
+    return productMapper.getProductListByProductInfoQnt(product_code);
+  }
+  public List<Product> getAvailableProductListByProductInfo (Long product_info_id) throws Exception {
+    return productMapper.getAvailableProductListByProductInfo(product_info_id);
+  }
 }
 
