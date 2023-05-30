@@ -2,10 +2,7 @@ package com.ipb.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ipb.domain.Message;
-import com.ipb.domain.SmsRequest;
-import com.ipb.domain.SmsResponse;
-import com.ipb.domain.Store;
+import com.ipb.domain.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -87,12 +84,8 @@ public class SmsService {
       headers.set("x-ncp-iam-access-key", accessKey);
       headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
 
-      String content = sendContent();
-      message.setTo("01049922047");
-      message.setContent(content);
-
       List<Message> messages = new ArrayList<>();
-      messages.add(message);
+      messages.add(message); // API 문서를 봐야알겠지만 이게 왜 배열로 담기는지 ..?이렇게 가져오라고 되어있어서...........사이트 공유해주세요
 
       SmsRequest request = SmsRequest.builder()
           .type("SMS")
@@ -116,11 +109,5 @@ public class SmsService {
 
       return response;
     }
-
-    public String sendContent() {
-      String content = "발주가 완료되었습니다.";
-      return content;
-    }
-
 }
 

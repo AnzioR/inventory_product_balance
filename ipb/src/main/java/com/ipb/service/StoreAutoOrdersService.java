@@ -1,9 +1,6 @@
 package com.ipb.service;
 
-import com.ipb.domain.Orders;
-import com.ipb.domain.Product;
-import com.ipb.domain.StoreAutoOrders;
-import com.ipb.domain.StoreProduct;
+import com.ipb.domain.*;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersMapper;
 import com.ipb.mapper.ProductMapper;
@@ -12,6 +9,7 @@ import com.ipb.mapper.StoreProductMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
 import java.util.List;
@@ -30,8 +28,11 @@ public class StoreAutoOrdersService {
   @Autowired
   OrdersMapper ordersMapper;
 
-  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-  //@Scheduled(fixedDelay = 1000*60*60)
+  @Autowired
+  SmsService smsService;
+
+  //@Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
+  @Scheduled(fixedDelay = 1000*60*60)
   public void checkStock() throws IOException {
     try {
       // 매일 자동발주 리스트를 가져와서
@@ -81,6 +82,12 @@ public class StoreAutoOrdersService {
 
           // 그리고 반복문을 통해 각각 주문을 진행한다.
           System.out.println("상품 주문합니다.");
+
+          ////////////////////////////////////////여기에서 문자를 보내주려고 합니다...//////////////////////////////// 문자가 왔습니다!!! 그럼 수고하세요~!감사합니다
+          // 여기서 보내면 좋겠어요
+          // 누구한테 보내나요저요... 이제 smsService만 잘 만들면 돼요
+          Message msg = new Message("01049010828", "자동발주가 진행됩니다. 사이트에서 확인하세요");
+          smsService.sendSms(msg);
           for (Product product : productList) {
             int realOrderQnt = product.getQnt();
             if (autoOrderQnt < product.getQnt()) {
@@ -101,6 +108,19 @@ public class StoreAutoOrdersService {
       System.out.println("자동발주를 실패했습니다.");
       e.printStackTrace();
     }
+  }
+
+
+
+
+
+
+
+
+  public Message message(String content) {
+    Message message = new Message();
+    message.setContent(content);
+    return message;
   }
 
 }
