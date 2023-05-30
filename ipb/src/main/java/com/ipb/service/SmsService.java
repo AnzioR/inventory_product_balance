@@ -85,7 +85,7 @@ public class SmsService {
       headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
 
       List<Message> messages = new ArrayList<>();
-      messages.add(message); // API 문서를 봐야알겠지만 이게 왜 배열로 담기는지 ..?이렇게 가져오라고 되어있어서...........사이트 공유해주세요
+      messages.add(message);
 
       SmsRequest request = SmsRequest.builder()
           .type("SMS")

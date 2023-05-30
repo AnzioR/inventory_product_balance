@@ -8,5 +8,5 @@ import org.springframework.stereotype.Repository;
 @Mapper
 @Repository
 public interface StoreMapper extends MyMapper<Long, Store> {
-
+  public String selectNumber(Long id) throws Exception;
 }

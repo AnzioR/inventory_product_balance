@@ -12,6 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.IOException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 @Service
@@ -31,9 +34,12 @@ public class StoreAutoOrdersService {
   @Autowired
   SmsService smsService;
 
+  @Autowired
+  StoreService storeService;
+
   //@Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
   @Scheduled(fixedDelay = 1000*60*60)
-  public void checkStock() throws IOException {
+  public void checkStock() throws Exception {
     try {
       // 매일 자동발주 리스트를 가져와서
       List<StoreAutoOrders> autoOrdersList = storeAutoOrdersMapper.getAutoList();
@@ -83,11 +89,6 @@ public class StoreAutoOrdersService {
           // 그리고 반복문을 통해 각각 주문을 진행한다.
           System.out.println("상품 주문합니다.");
 
-          ////////////////////////////////////////여기에서 문자를 보내주려고 합니다...//////////////////////////////// 문자가 왔습니다!!! 그럼 수고하세요~!감사합니다
-          // 여기서 보내면 좋겠어요
-          // 누구한테 보내나요저요... 이제 smsService만 잘 만들면 돼요
-          Message msg = new Message("01049010828", "자동발주가 진행됩니다. 사이트에서 확인하세요");
-          smsService.sendSms(msg);
           for (Product product : productList) {
             int realOrderQnt = product.getQnt();
             if (autoOrderQnt < product.getQnt()) {
@@ -102,25 +103,31 @@ public class StoreAutoOrdersService {
               break;
             }
           }
+
+          // 자동발주를 신청하는 점포관리자의 연락처를 찾는다.
+          Long storeId = autoOrder.getStore_id(); // 우리가 가진 정보는 storeId
+
+          // storeId로 전화번호를 가져오는 서비스를 이용하자! 전화번호는 문자열이니까 Store로 안가져와도 된다!
+          String num = storeService.selectNumber(storeId);
+          System.out.println("확인] " + num);
+
+          //전화번호를 받아오는 형식을 변경한다.
+          String formattedNum = num.replaceAll("-", "");
+
+          //점포관리자에게 자동발주되었음을 문자로 알려준다.
+          Message msg = new Message(formattedNum, "자동발주가 진행됩니다. 사이트에서 확인하세요");
+          // 전화번호 가져와 지니까 문자 가겠죠~ 끝!
+          smsService.sendSms(msg);
+
         }
+
       }
     } catch (Exception e) {
-      System.out.println("자동발주를 실패했습니다.");
+      //점포관리자에게 자동발주가 실패했음을 문자로 알려준다.
+      Message errMsg = new Message("01049010828", "자동발주를 실패했습니다. 다시 확인해주세요.");
+      smsService.sendSms(errMsg);
       e.printStackTrace();
     }
-  }
-
-
-
-
-
-
-
-
-  public Message message(String content) {
-    Message message = new Message();
-    message.setContent(content);
-    return message;
   }
 
 }
