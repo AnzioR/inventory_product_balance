@@ -4,8 +4,10 @@ package com.ipb.mapper;
 import com.ipb.domain.*;
 import com.ipb.frame.MyMapper;
 import org.apache.ibatis.annotations.Mapper;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.List;
 
@@ -32,4 +34,10 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
 
   //폐기했을 때 상품의 qnt=0으로 변경
   public void qntZero(StoreProduct storeProduct) throws Exception;
+
+
+
+  List<StoreProduct> getProductsExpiringInThreeDays(Long storeProduct);
+  List<StoreProduct> findExpiringProducts(@Param("expiryDate") LocalDate expiryDate);
+  List<StoreProduct> findExpiringStoreProductByStoreId(@Param("storeId") Long storeId, @Param("days") int days);
 }
