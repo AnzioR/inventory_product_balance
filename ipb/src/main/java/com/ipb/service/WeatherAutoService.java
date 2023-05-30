@@ -33,27 +33,21 @@ public class WeatherAutoService {
         List<Product> availableProductListByProductInfo = productService.getAvailableProductListByProductInfo(10L);
 
         for (Store store : rainStore) { // 비오는 점포 리스트에서 하나씩 꺼내서 주문하기
-            // 점포마다 비가 오는 경우, 특정 상품의 보유권장량이 30개이다.잠시만요
+            // 점포마다 비가 오는 경우, 특정 상품의 보유권장량이 30개이다
             // 만약 점포에 30개 미만이 있다면 그 차이만큼을 주문하고, 30개 이상이라면 주문하지 않는다.
-            System.out.println(store.getId());
             int thisStoreProductQnt = storeProductService.getStoreProductQntByStoreIdAndProductCode(store.getId(), 10L);
             int orderQnt = 30 - thisStoreProductQnt;
-
-            System.out.println(store.getName() + "은 " + thisStoreProductQnt +"개 보유하고 있기 때문에 30개를 채우기 위해" + orderQnt + "개를 주문할겁니다.");
-
             if (orderQnt > 0) { // 점포에 30개 미만이 있는 경우 주문을 진행한다. 30개 이상이라면 주문하지 않는다.
                 for (Product product : availableProductListByProductInfo) { // 상품리스트에서 하나씩 꺼내서 주문하기
                     int headQnt = product.getQnt(); // 본사에서 보유한 상품 수량
 
                     while (orderQnt != 0 && headQnt != 0) { // 본사에서 보유한 상품 수량이 0이 될 때까지 주문을 진행한다.
                         if (orderQnt >= headQnt) { // 주문량이 본사에서 보유한 상품 수량보다 많은 경우
-                            System.out.println(store.getName() + "은 " + headQnt +"개를 주문합니다.");
                             Orders orders = new Orders(headQnt, product.getId(), store.getId(), 1L, 3L);
                             ordersService.register(orders);
                             orderQnt -= headQnt; // 주문량에서 본사에서 보유한 상품 수량을 빼준다.
                             headQnt = 0; // 본사에서 보유한 상품 수량을 0으로 만든다. [다음 유통기한 상품으로 넘어가기 위함]
                         } else { // 주문량이 본사에서 보유한 상품 수량보다 적은 경우
-                            System.out.println(store.getName() + "은 " + orderQnt +"개를 주문합니다.");
                             Orders orders = new Orders(orderQnt, product.getId(), store.getId(), 1L, 3L);
                             ordersService.register(orders);
                             orderQnt = 0; // 주문량을 0으로 만든다. [주문을 완료했기 때문]
