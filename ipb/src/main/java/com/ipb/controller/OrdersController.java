@@ -1,9 +1,12 @@
 package com.ipb.controller;
 
+import com.ipb.domain.Message;
 import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
+import com.ipb.domain.SmsResponse;
 import com.ipb.service.OrdersCartService;
 import com.ipb.service.OrdersService;
+import com.ipb.service.SmsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -28,10 +31,13 @@ public class OrdersController {
   @Autowired
   OrdersCartService ordersCartService;
 
+  @Autowired
+  SmsService smsService;
+
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우) o
   @PostMapping("/addorder")
   @ApiOperation(value = "발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우)")
-  public ResponseEntity<?> addOrder(@RequestBody Map<String, Long> requestBody) {
+  public ResponseEntity<?> addOrder(@RequestBody Map<String, Long> requestBody, @RequestBody Message message) {
     // 특정 점포에 있는 카트 상품들을 주문
     try {
       Long store_id = requestBody.get("store_id");
@@ -40,6 +46,7 @@ public class OrdersController {
       if (addorder != null && addorder.size() > 0) {
         // 일부가 주문되지 않은 경우
         return ResponseEntity.ok(addorder);
+        smsService.sendSms(message);
       } else {
         // 에러 없이 잘 주문된 경우
         return ResponseEntity.ok("성공");

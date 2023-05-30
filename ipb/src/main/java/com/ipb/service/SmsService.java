@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.ipb.domain.Message;
 import com.ipb.domain.SmsRequest;
 import com.ipb.domain.SmsResponse;
+import com.ipb.domain.Store;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -86,6 +87,10 @@ public class SmsService {
       headers.set("x-ncp-iam-access-key", accessKey);
       headers.set("x-ncp-apigw-signature-v2", makeSignature(time));
 
+      String content = sendContent();
+      message.setTo("01049922047");
+      message.setContent(content);
+
       List<Message> messages = new ArrayList<>();
       messages.add(message);
 
@@ -112,5 +117,10 @@ public class SmsService {
       return response;
     }
 
-  }
+    public String sendContent() {
+      String content = "발주가 완료되었습니다.";
+      return content;
+    }
+
+}
 
