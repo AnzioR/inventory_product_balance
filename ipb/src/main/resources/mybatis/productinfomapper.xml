@@ -6,7 +6,12 @@
 
 
     <select id="select" parameterType="Long" resultType="ProductInfo">
-        SELECT * FROM product_info WHERE product_code=#{product_code}
+        SELECT p.product_code, p.name , p.brand, p.detail, c.name as category_name, p.imgname,p.category_id,
+        p.box_qnt,p.storage
+        FROM product_info p
+        INNER JOIN category c ON p.category_id = c.id
+        WHERE product_code=#{product_code}
+
     </select>
     <select id="selectname" parameterType="String" resultType="ProductInfo">
         SELECT * FROM product_info WHERE name=#{name}
