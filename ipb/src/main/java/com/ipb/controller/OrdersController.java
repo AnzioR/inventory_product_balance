@@ -4,6 +4,8 @@ import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
 import com.ipb.service.OrdersCartService;
 import com.ipb.service.OrdersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -18,6 +20,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/orders")
 @ResponseBody
+@Api(tags = {"발주 관련 컨트롤러"})
 public class OrdersController {
   @Autowired
   OrdersService ordersService;
@@ -27,6 +30,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우) o
   @PostMapping("/addorder")
+  @ApiOperation(value = "발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우)")
   public ResponseEntity<?> addOrder(@RequestBody Map<String, Long> requestBody) {
     // 특정 점포에 있는 카트 상품들을 주문
     try {
@@ -48,6 +52,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우) o
   @PostMapping("/maxorder")
+  @ApiOperation(value = "발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우)")
   public ResponseEntity<?> maxOrder(@RequestBody List<OrdersCart> unOrderableList) {
     try {
       ordersService.maxOrder(unOrderableList);
@@ -84,6 +89,7 @@ public class OrdersController {
 
   //발주내역 삭제 : 점포에서 주문한 발주내역을 삭제
   @DeleteMapping("/orderdetail/delete/{id}")
+  @ApiOperation(value = "발주내역 삭제 : 점포에서 주문한 발주내역을 삭제")
   public void deleteEvent(@PathVariable Long id) {
     try {
       ordersService.remove(id);
@@ -96,6 +102,7 @@ public class OrdersController {
 
   //발주 조회 : 점포에서 주문한 발주내역 중 발주번호에 해당하는 내역 조회 o
   @GetMapping("/search/{id}")
+  @ApiOperation(value = "발주 조회 : 점포에서 주문한 발주내역 중 발주번호에 해당하는 내역 조회")
   public Orders ordersDetail(@PathVariable Long id) {
     try {
       return ordersService.get(id);
@@ -106,6 +113,7 @@ public class OrdersController {
 
   //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회 o
   @GetMapping("/all")
+  @ApiOperation(value = "발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회")
   public List<Orders> cartAll() {
     try {
       return ordersService.get();
@@ -116,6 +124,7 @@ public class OrdersController {
 
   //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 o
   @GetMapping("/searchdate/{date}")
+  @ApiOperation(value = "본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회")
   public List<Orders> searchDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
     try {
       return ordersService.searchDate(date);
@@ -126,6 +135,7 @@ public class OrdersController {
 
   //발주한 상품의 배송 상태를 조회 o
   @GetMapping("/delivery/{id}")
+  @ApiOperation(value = "발주한 상품의 배송 상태를 조회")
   public Orders searchDeliveryStatus(@PathVariable Long id) {
     try {
       return ordersService.searchDeliveryStatus(id);
@@ -138,6 +148,7 @@ public class OrdersController {
 
   //store_id로 해당 매장의 전체 발주내역 조회 o
   @GetMapping("/select-store-orders/{id}")
+  @ApiOperation(value = "store_id로 해당 매장의 전체 발주내역 조회")
   public List<Orders> selectStore(@PathVariable Long id) {
     try {
       return ordersService.selectStore(id);
@@ -151,6 +162,7 @@ public class OrdersController {
 
   //매장의 상세 발주내역을 발주번호로 조회 : 해당 정보 한개만 상세하게 보여줌 o
   @GetMapping("/store-orders-details/{id}")
+  @ApiOperation(value = "매장의 상세 발주내역을 발주번호로 조회 : 해당 정보 한개만 상세하게 보여줌")
   public Orders selectDetailStoreOrders(@PathVariable Long id) {
     try {
       return ordersService.selectDetailStoreOrders(id);
@@ -161,10 +173,13 @@ public class OrdersController {
     }
   }
 
-  //검색한 store_id의 발주와 관련된 상세정보를 리스트로 보여줌 o -------> 날짜도 조회하는거로 수정 ---sql.Date로 형식변경
+  //검색한 store_id와 날짜를 조회하여 발주와 관련 상세정보를 리스트로 보여줌 o
   @GetMapping("/store-orders-detail-list")
-  public List<Orders> selectStoreOrdersByStoreId(@RequestBody Orders orders) {
+  @ApiOperation(value = "검색한 store_id의 발주와 관련 상세정보를 리스트로 보여줌")
+  public List<Orders> selectStoreOrdersByStoreId(String orderDate, Long storeId) {
     try {
+      java.sql.Date od = java.sql.Date.valueOf(orderDate);
+      Orders orders = new Orders(storeId, od);
       System.out.println(orders);
       return ordersService.selectStoreOrdersByStoreId(orders);
     } catch(Exception e) {
@@ -176,6 +191,7 @@ public class OrdersController {
 
   //매장별 발주 수정 o
   @PutMapping("/update-orders")
+  @ApiOperation(value = "매장별 발주 수정")
   public void updateStoreOrders(Long id, @RequestBody Orders orders) {
     try {
       ordersService.updateStoreOrders(orders);
@@ -191,6 +207,7 @@ public class OrdersController {
   //발주한 상품의 배송상태를 변경 o
   // -> 상태를 변경해주면 바뀐 배송상태에 따라 발주가능상품 재고수량 또는 점포보유상품 재고수량이 변경된다.
   @PutMapping("/update-delivery")
+  @ApiOperation(value = "발주한 상품의 배송상태를 변경")
   public Orders updateDeliveryStatus(@RequestBody Orders orders) {
     try {
       return ordersService.updateDeliveryStatus(orders);
@@ -203,6 +220,7 @@ public class OrdersController {
 
   //발주리스트를 날짜로 묶어서 보여줌 o
   @GetMapping("/store-orders-date/{store_id}")
+  @ApiOperation(value = "발주리스트를 날짜로 묶어서 보여줌")
   public List<Orders> selectListByDate(@PathVariable Long store_id) {
     try {
       return ordersService.selectListByDate(store_id);
