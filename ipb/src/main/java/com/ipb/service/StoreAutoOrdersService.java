@@ -109,23 +109,22 @@ public class StoreAutoOrdersService {
 
           // storeId로 전화번호를 가져오는 서비스를 이용하자! 전화번호는 문자열이니까 Store로 안가져와도 된다!
           String num = storeService.selectNumber(storeId);
-          System.out.println("확인] " + num);
 
           //전화번호를 받아오는 형식을 변경한다.
           String formattedNum = num.replaceAll("-", "");
 
           //점포관리자에게 자동발주되었음을 문자로 알려준다.
           Message msg = new Message(formattedNum, "자동발주가 진행됩니다. 사이트에서 확인하세요");
-          // 전화번호 가져와 지니까 문자 가겠죠~ 끝!
-          smsService.sendSms(msg);
+
+          //확인했으므로 일단 문자보내는 부분 주석처리함!
+          //smsService.sendSms(msg);
 
         }
-
       }
     } catch (Exception e) {
       //점포관리자에게 자동발주가 실패했음을 문자로 알려준다.
       Message errMsg = new Message("01049010828", "자동발주를 실패했습니다. 다시 확인해주세요.");
-      smsService.sendSms(errMsg);
+      //smsService.sendSms(errMsg);
       e.printStackTrace();
     }
   }
