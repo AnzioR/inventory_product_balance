@@ -1,9 +1,12 @@
 package com.ipb.controller;
 
+import com.ipb.domain.Message;
 import com.ipb.domain.Orders;
 import com.ipb.domain.OrdersCart;
+import com.ipb.domain.SmsResponse;
 import com.ipb.service.OrdersCartService;
 import com.ipb.service.OrdersService;
+import com.ipb.service.SmsService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
@@ -27,6 +30,9 @@ public class OrdersController {
 
   @Autowired
   OrdersCartService ordersCartService;
+
+  @Autowired
+  SmsService smsService;
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우) o
   @PostMapping("/addorder")

@@ -40,4 +40,8 @@ public class StoreService implements MyService<Long, Store> {
   public List<Store> get() throws Exception {
     return storeMapper.selectall();
   }
+
+  public String selectNumber(Long id) throws Exception {
+    return storeMapper.selectNumber(id);
+  }
 }

@@ -34,5 +34,9 @@
         SELECT * FROM store
     </select>
 
+    <!-- 점포의 연락처를 가져온다. -->
+    <select id="selectNumber" parameterType="Long" resultType="String">
+        SELECT number FROM store WHERE id = #{id}
+    </select>
 
 </mapper>

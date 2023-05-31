@@ -2,9 +2,7 @@ package com.ipb.service;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.ipb.domain.Message;
-import com.ipb.domain.SmsRequest;
-import com.ipb.domain.SmsResponse;
+import com.ipb.domain.*;
 import lombok.*;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.tomcat.util.codec.binary.Base64;
@@ -111,6 +109,5 @@ public class SmsService {
 
       return response;
     }
-
-  }
+}
 
