@@ -13,7 +13,7 @@
                sp.qnt,
                sp.is_using,
                pi.box_qnt,
-               sp.is_using,
+
                sp.event_rate,
                p.exp,
                pi.brand,
@@ -226,7 +226,6 @@
         WHERE
         sp.store_id = #{store_id}
         AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
-        AND p.exp > CURDATE()
-
+        AND sp.qnt > 0;
     </select>
 </mapper>

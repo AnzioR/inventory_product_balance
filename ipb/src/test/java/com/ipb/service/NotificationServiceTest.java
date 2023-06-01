@@ -38,8 +38,7 @@ class NotificationServiceTest {
       // getProductExpirationNotifications 메서드 테스트
       Flux<ServerSentEvent<String>> notifications = notificationService.getProductExpirationNotifications(storeId);
 
-      // 원하는 동작을 확인하는 코드 작성
-      // ...
+      // 원하는 동작을 확인하는 코드 작성해야함
 
       // Mapper의 getProductsExpiringInThreeDays 메서드가 호출되는지 검증
       verify(storeProductMapper, times(1)).getProductsExpiringInThreeDays(storeId);

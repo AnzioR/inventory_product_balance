@@ -37,7 +37,7 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
 
 
 
-  List<StoreProduct> getProductsExpiringInThreeDays(Long storeProduct);
+  List<StoreProduct> getProductsExpiringInThreeDays(Long storeId);
   List<StoreProduct> findExpiringProducts(@Param("expiryDate") LocalDate expiryDate);
   List<StoreProduct> findExpiringStoreProductByStoreId(@Param("storeId") Long storeId, @Param("days") int days);
 }
