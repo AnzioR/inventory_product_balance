@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org/DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.ipb.mapper.StoreProductMapper">
+    <insert id="saveStoreProduct" parameterType="StoreProduct">
+        INSERT INTO store_product (name, expiration_date)
+        VALUES (#{name}, #{expirationDate})
+    </insert>
+
+    <select id="findProductsExpiringSoon" resultType="StoreProduct">
+        SELECT * FROM store_product
+        WHERE expiration_date &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
+    </select>
+</mapper>

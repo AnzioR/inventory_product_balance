@@ -2,6 +2,8 @@ package com.ipb.domain;
 
 import lombok.*;
 
+import java.time.LocalDate;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -23,6 +25,7 @@ public class StoreProduct {
     private String detail;
     private Integer store_price;
     private Double event_rate;
+    private LocalDate expirationDate;
 
     private String storage;
     private boolean is_auto;
@@ -71,6 +74,10 @@ public class StoreProduct {
 
     public void changeQuantity(Integer newQuantity) {
         this.qnt = newQuantity;
+    }
+
+    public void product_name() {
+        this.product_name = product_name;
     }
 
 }
