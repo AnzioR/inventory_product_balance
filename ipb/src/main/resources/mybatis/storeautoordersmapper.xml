@@ -19,6 +19,7 @@
         SELECT sao.*, sp.*
         FROM store_auto_orders sao
                  INNER JOIN store_product sp on sp.id = sao.store_product_id
+        ORDER BY sp.store_id
     </select>
 
 </mapper>
