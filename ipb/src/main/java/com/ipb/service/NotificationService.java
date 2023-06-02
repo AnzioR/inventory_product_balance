@@ -1,6 +1,8 @@
 package com.ipb.service;
 
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.ipb.domain.Message;
 import com.ipb.domain.Product;
 import com.ipb.domain.ProductInfo;
 import com.ipb.domain.StoreProduct;
@@ -17,6 +19,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestParam;
 import reactor.core.publisher.Flux;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URISyntaxException;
+import java.security.InvalidKeyException;
+import java.security.NoSuchAlgorithmException;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -25,12 +31,19 @@ import java.util.List;
 @Service
 public class NotificationService {
 
+  @Autowired
+  StoreService storeService;
+
+  @Autowired
+  SmsService smsService;
+
   private final StoreProductMapper storeProductMapper;
   private final ProductInfoMapper productInfoMapper;
 
-  public NotificationService(StoreProductMapper storeProductMapper, ProductInfoMapper productInfoMapper) {
+  public NotificationService(StoreProductMapper storeProductMapper, ProductInfoMapper productInfoMapper, SmsService smsService) {
     this.storeProductMapper = storeProductMapper;
     this.productInfoMapper = productInfoMapper;
+    this.smsService = smsService;
   }
 
   public Flux<ServerSentEvent<String>> getProductExpirationNotifications(Long storeId) {
@@ -42,6 +55,24 @@ public class NotificationService {
 
     String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.: " + expiringProducts;
     System.out.println(expirationMessage); // 유통기한 알림 메시지 출력
+
+    //문자메세지 발송
+    String num = null;
+    try {
+      num = storeService.selectNumber(storeId);
+    } catch (Exception e) {
+      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
+      e.printStackTrace();
+    }
+    String formattedNum = num.replaceAll("-", "");
+    Message message = new Message(formattedNum, "유통기한이 3일이하로 남은 상품이 있습니다.");
+    try {
+      smsService.sendSms(message);
+    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
+             UnsupportedEncodingException e) {
+      System.out.println("오류가 발생했습니다.");
+      e.printStackTrace();
+    }
 
     return Flux.just(ServerSentEvent.<String>builder()
             .event("expirationNotification")
@@ -73,6 +104,24 @@ public class NotificationService {
     String lowInventoryMessage = "재고 임박 상품이 있습니다.: " + lowInventoryProducts;
     System.out.println(lowInventoryMessage); // 재고 알림 메시지 출력
 
+    //문자메세지 발송
+    String num = null;
+    try {
+      num = storeService.selectNumber(storeId);
+    } catch (Exception e) {
+      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
+      e.printStackTrace();
+    }
+    String formattedNum = num.replaceAll("-", "");
+    Message message = new Message(formattedNum, "재고 소진이 임박한 상품이 있습니다. 확인해주세요!");
+    try {
+      smsService.sendSms(message);
+    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
+             UnsupportedEncodingException e) {
+      System.out.println("오류가 발생했습니다.");
+      e.printStackTrace();
+    }
+
     return Flux.just(ServerSentEvent.<String>builder()
             .event("lowInventoryNotification")
             .data(lowInventoryMessage)
@@ -81,7 +130,7 @@ public class NotificationService {
         .delayElements(Duration.ofSeconds(1))
         .distinctUntilChanged(); // 중복 알림 제거
   }
-  }
+}
 
 //@Service
 //@EnableScheduling
