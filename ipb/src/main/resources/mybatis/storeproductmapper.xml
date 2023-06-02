@@ -285,34 +285,6 @@
           AND store_id = #{store_id} AND pi.safe_qnt is not null AND  pi.safe_qnt != ''
           AND is_using = 1
         ORDER BY p.exp ASC
-
-<!--        SELECT-->
-<!--        sp.id,-->
-<!--        pi.name AS product_name,-->
-<!--        p.price,-->
-<!--        sp.qnt,-->
-<!--        pi.box_qnt,-->
-<!--        pi.imgname,-->
-<!--        sp.is_using,-->
-<!--        sp.is_auto,-->
-<!--        pi.detail,-->
-<!--        p.exp,-->
-<!--        pi.brand,-->
-<!--        pi.product_code,-->
-<!--        pi.storage,-->
-<!--        sp.store_price,-->
-<!--        sp.event_rate,-->
-<!--        c.name AS category_name-->
-<!--        FROM-->
-<!--        store_product sp-->
-<!--        INNER JOIN product p ON p.id = sp.product_id-->
-<!--        INNER JOIN product_info pi ON pi.product_code = p.product_info_id-->
-<!--        INNER JOIN category c ON pi.category_id = c.id-->
-<!--        WHERE-->
-<!--        sp.store_id = #{store_id}-->
-<!--        AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)-->
-<!--        AND sp.qnt > 0;-->
-
     </select>
 
 <!--
