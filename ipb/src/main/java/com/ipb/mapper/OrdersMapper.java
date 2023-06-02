@@ -42,4 +42,8 @@ public interface OrdersMapper extends MyMapper<Long, Orders> {
 
   //발주일자별 주문리스트
   public List<Orders> selectListByDate(Long store_id) throws Exception;
+
+  //본사에서 확인하기 위한 발주일자별 주문리스트
+  public List<Orders> selectListByDateDesc() throws Exception;
+
 }
