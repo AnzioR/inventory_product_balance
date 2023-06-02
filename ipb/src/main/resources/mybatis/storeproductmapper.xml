@@ -13,7 +13,7 @@
                sp.qnt,
                sp.is_using,
                pi.box_qnt,
-
+               sp.is_auto,
                sp.event_rate,
                p.exp,
                pi.brand,
@@ -45,6 +45,7 @@
                sp.qnt,
                pi.detail,
                pi.box_qnt,
+               sp.is_auto,
                sp.is_using,
                p.exp,
                pi.brand,
@@ -71,6 +72,7 @@
         pi.box_qnt,
         pi.detail,
         sp.is_using,
+        sp.is_auto,
         p.exp,
         pi.brand,
         pi.storage,
@@ -98,6 +100,7 @@
         pi.box_qnt,
         pi.imgname,
         sp.is_using,
+        sp.is_auto,
         pi.detail,
         p.exp,
         pi.brand,
@@ -218,6 +221,7 @@
         pi.box_qnt,
         pi.imgname,
         sp.is_using,
+        sp.is_auto,
         pi.detail,
         p.exp,
         pi.brand,
@@ -284,7 +288,7 @@
         INNER JOIN product_info pi ON pi.product_code = p.product_info_id
         INNER JOIN category c ON pi.category_id = c.id
         WHERE
-        sp.store_id = 2
+        sp.store_id = #{store_id}
         AND sp.qnt > 0
         AND pi.safe_qnt IS NOT NULL
         AND pi.safe_qnt > 0
