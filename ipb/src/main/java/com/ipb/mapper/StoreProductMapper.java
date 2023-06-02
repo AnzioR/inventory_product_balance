@@ -36,6 +36,8 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   public void qntZero(StoreProduct storeProduct) throws Exception;
 
   Integer getStoreProductQntByStoreIdAndProductCode(Long store_id, Long product_code);
+  List<StoreProduct> getProductsBetweenExpiring(Long max,Long min,Long store_id);
+  List<StoreProduct> selectallStore();
 
   List<StoreProduct> getProductsExpiringInThreeDays(Long storeId);
 
