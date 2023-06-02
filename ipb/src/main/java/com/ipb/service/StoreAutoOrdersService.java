@@ -106,7 +106,9 @@ public class StoreAutoOrdersService {
       //점포관리자에게 자동발주가 실패했음을 문자로 알려준다.
       // 관리자 뿐만 아니라 자동발주를 신청한 점주도 서버에러나 문제등으로 자동발주가 안되었음을 알면 좋을 것 같은데......
       Message errMsg = new Message("01049010828", "자동발주를 실패했습니다. 다시 확인해주세요.");
-      smsService.sendSms(errMsg);
+
+      //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
+      //smsService.sendSms(errMsg);
       e.printStackTrace();
     }
   }
@@ -119,7 +121,9 @@ public class StoreAutoOrdersService {
     String formattedNum = num.replaceAll("-", "");
     //점포관리자에게 자동발주되었음을 문자로 알려준다.
     Message message = new Message(formattedNum, msg);
-    smsService.sendSms(message);
+
+    //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
+    //smsService.sendSms(message);
   }
   
   
