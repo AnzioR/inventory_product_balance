@@ -91,7 +91,8 @@ public class StoreAutoOrdersService {
               realOrderQnt = autoOrderQnt;
             }
             System.out.println("[주문] " + realOrderQnt + "개");
-            Orders order = new Orders(realOrderQnt, product.getId(), autoOrder.getStore_id(), 1L, 2L);
+            //코드관련주석!
+            Orders order = new Orders(realOrderQnt, product.getId(), autoOrder.getStore_id(), 1L, 2L); //상수로 분류해서 관리!!!!!!!!!!!!
             ordersMapper.insert(order);
             autoOrderQnt -= realOrderQnt;
             if (autoOrderQnt == 0) {
@@ -120,4 +121,7 @@ public class StoreAutoOrdersService {
     Message message = new Message(formattedNum, msg);
     smsService.sendSms(message);
   }
+  
+  
+  //자동발주 여러개가 다 들어갔을때 수량체크 되는 부분이 있으면 좋겠지만, 일정관계상 어려움이 있었다....ㅜㅜ
 }
