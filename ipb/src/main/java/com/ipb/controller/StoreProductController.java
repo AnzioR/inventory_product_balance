@@ -156,27 +156,27 @@ public class StoreProductController {
     }
   }
 
-  @PostMapping("/messages")
-  public ResponseEntity<String> createStoreProduct(@RequestBody StoreProduct storeProduct) {
-    Long storeId = storeProduct.getStore_id();
-    // Store ID를 사용하여 상품 생성 로직을 구현
-    // ...
-
-    // MyBatis의 Mapper를 사용하여 상품 저장
-    // productMapper.saveProduct(product);
-
-    return ResponseEntity.ok("StoreProduct created successfully.");
-  }
-    @GetMapping("/expiring")
-    public ResponseEntity<List<StoreProduct>> getExpiringStoreProduct() {
-      // 유통기한이 임박한 상품 조회 로직을 구현
-      // ...
-      // MyBatis의 Mapper를 사용하여 유통기한이 임박한 상품 조회
-      // List<StoreProduct> expiringStoreProduct = StoreproductMapper.findExpiringStoreProduct(days);
-
-      List<StoreProduct> expiringStoreProduct = null;
-      return ResponseEntity.ok(null);
-    }
+//  @PostMapping("/messages")
+//  public ResponseEntity<String> createStoreProduct(@RequestBody StoreProduct storeProduct) {
+//    Long storeId = storeProduct.getStore_id();
+//    // Store ID를 사용하여 상품 생성 로직을 구현
+//    // ...
+//
+//    // MyBatis의 Mapper를 사용하여 상품 저장
+//    // productMapper.saveProduct(product);
+//
+//    return ResponseEntity.ok("StoreProduct created successfully.");
+//  }
+//    @GetMapping("/expiring")
+//    public ResponseEntity<List<StoreProduct>> getExpiringStoreProduct() {
+//      // 유통기한이 임박한 상품 조회 로직을 구현
+//      // ...
+//      // MyBatis의 Mapper를 사용하여 유통기한이 임박한 상품 조회
+//      // List<StoreProduct> expiringStoreProduct = StoreproductMapper.findExpiringStoreProduct(days);
+//
+//      List<StoreProduct> expiringStoreProduct = null;
+//      return ResponseEntity.ok(null);
+//    }
 
     // 다른 API 메서드들도 추가해야합니다.
   }
