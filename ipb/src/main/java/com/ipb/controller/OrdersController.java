@@ -237,4 +237,18 @@ public class OrdersController {
     }
   }
 
+  //본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌
+  @GetMapping("/store-orders-date-desc")
+  @ApiOperation(value = "발본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌")
+  public List<Orders> selectListByDateDesc() {
+    try {
+      return ordersService.selectListByDateDesc();
+    } catch(Exception e) {
+      System.out.println("날짜별 발주 조회를 실패했습니다.");
+      e.printStackTrace();
+      return null;
+    }
+  }
+
+
 }

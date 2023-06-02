@@ -149,4 +149,12 @@
         JOIN delivery d on d.id = o.delivery_id
         where store_id=#{store_id} group by orders_date
     </select>
+
+    <!-- 본사에서 발주일자별로 리스트 출력 : 최신 날짜가 위로 올라옴 -->
+    <select id="selectListByDateDesc" resultType="Orders">
+        SELECT row_number() over(order by o.id desc) as id, o.orders_date, d.status as orders_status
+        FROM orders o
+        JOIN delivery d on d.id = o.delivery_id
+        group by orders_date order by orders_date desc
+    </select>
 </mapper>
