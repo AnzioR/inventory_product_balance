@@ -28,7 +28,7 @@ public class NotificationService {
   }
 
 //  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행
-  @Scheduled(fixedDelay = 1000*60*60)
+//  @Scheduled(fixedDelay = 1000*60*60)
   public void sendProductExpirationNotifications() {
     Long storeId = 2L; // 예시로 1번 매장을 기준으로 알림을 보냄, 이부분은 test 느낌으로 쓰고있음 나중에 전체 주석해도
     Flux<ServerSentEvent<String>> notifications = getProductExpirationNotifications(storeId);

@@ -23,7 +23,7 @@ public class WeatherAutoService {
     StoreService storeService;
     @Autowired
     OrdersService ordersService;
-
+// 자동 발주별로 cross check가 필요 할거같다. 안만들어도 이유를 ? 만들어보자
  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
 //    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void checkWeather() throws Exception {

@@ -26,6 +26,7 @@ public class StoreProduct {
     private Integer store_price;
     private Double event_rate;
     private LocalDate expirationDate;
+    private Integer safe_qnt;
 
     private String storage;
     private boolean is_auto;
@@ -70,6 +71,18 @@ public class StoreProduct {
         this.is_using = is_using;
         this.store_price = store_price;
         this.event_rate = event_rate;
+    }
+
+    public StoreProduct(Long id, Integer qnt, Long product_id, Long store_id, boolean is_using, Integer store_price, Double event_rate, boolean is_auto, Long product_code) {
+        this.id = id;
+        this.qnt = qnt;
+        this.product_id = product_id;
+        this.store_id = store_id;
+        this.is_using = is_using;
+        this.store_price = store_price;
+        this.event_rate = event_rate;
+        this.is_auto = is_auto;
+        this.product_code = product_code;
     }
 
     public void changeQuantity(Integer newQuantity) {

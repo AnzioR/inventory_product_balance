@@ -10,8 +10,6 @@
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
-
-
         WHERE p.id = #{id};
     </select>
     <!--    <select id="selectname" parameterType="String" resultType="Product">-->
@@ -87,5 +85,4 @@
     <select id="getAvailableProductListByProductInfo" parameterType="Long" resultType="Product">
         SELECT * FROM product WHERE product_info_id = #{product_info_id} and (exp > now() or exp = '' or exp is null) and qnt > 0 order by exp is null asc;
     </select>
-
 </mapper>

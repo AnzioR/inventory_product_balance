@@ -26,6 +26,8 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   @Autowired
   StoreProductMapper storeProductMapper;
+  @Autowired
+  StoreService storeService;
 
   @Autowired
   SalesService salesService;
@@ -112,6 +114,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     return storeProductMapper.selectall();
 
   }
+  public void update(StoreProduct storeProduct) throws Exception {
+    storeProductMapper.update(storeProduct);
+  }
 
   ////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
 ////    StoreProduct storeProduct = storeProductMapper.select(id);
@@ -171,9 +176,48 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
       return 0;
     }
   }
+  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
+//    @Scheduled(fixedDelay = 1000 * 60 * 60)
+  public void expiring() throws Exception {
+    //전체 매장 불러오기 전체 매장 아이디 넣기
+      List<Store> stores = storeService.get();
+      for (Store store : stores) {
+        //유통기안이 max~min 사이에 있을시 그에 해당하는 재고가 이상이면 넣어주고 아니면 그냥 그대로 둔다
+        List<StoreProduct> firstProductsBetweenExpiring = getProductsBetweenExpiring(7L, 5L, store.getId());
+        for (StoreProduct sp : firstProductsBetweenExpiring){
+          if(sp.getQnt()>(sp.getSafe_qnt()*3)){
+            StoreProduct storeProduct = new StoreProduct(sp.getId(),sp.getQnt(),sp.getProduct_id(),sp.getStore_id(),sp.is_using(),(int)(sp.getPrice()*0.9),0.9,sp.is_auto(),sp.getProduct_code() );
+            update(storeProduct);
+          }else{
+          }
+        }
+        List<StoreProduct> secondProductsBetweenExpiring = getProductsBetweenExpiring(5L, 3L, store.getId());
+        for (StoreProduct sp : secondProductsBetweenExpiring){
+          if(sp.getQnt()>(sp.getSafe_qnt()*2)){
+            StoreProduct storeProduct = new StoreProduct(sp.getId(),sp.getQnt(),sp.getProduct_id(),sp.getStore_id(),sp.is_using(),(int)(sp.getPrice()*0.7),0.7,sp.is_auto(),sp.getProduct_code() );
+            update(storeProduct);
+          }else{
+          }
+        }
+        List<StoreProduct> finalProductsBetweenExpiring = getProductsBetweenExpiring(3L, -1L, store.getId());
+        for (StoreProduct sp : finalProductsBetweenExpiring){
+          if(sp.getQnt()>(sp.getSafe_qnt()*1)){
+            StoreProduct storeProduct = new StoreProduct(sp.getId(),sp.getQnt(),sp.getProduct_id(),sp.getStore_id(),sp.is_using(),(int)(sp.getPrice()*0.5),0.5,sp.is_auto(),sp.getProduct_code() );
+            update(storeProduct);
+          }else{
+          }
+        }
+      }
+    }
+
+    public List<StoreProduct>getProductsBetweenExpiring(Long max,Long min,Long store_id){
+    return storeProductMapper.getProductsBetweenExpiring(max, min, store_id);
+    }
+
+    public List<StoreProduct> all(){
+    return storeProductMapper.selectallStore();
+    }
 }
-
-
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
   // //----> 배송상태가 변경되었을 때 재고 증가 + store_price, event_rate 등록으로 변경

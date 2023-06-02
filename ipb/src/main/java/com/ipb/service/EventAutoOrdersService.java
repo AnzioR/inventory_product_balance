@@ -57,13 +57,14 @@ public class EventAutoOrdersService {
         // 5일 뒤 + 1년 전 이벤트 정보 가져오기
         Event previousEvent = eventMapper.findPreviousEvent(dateString);
 
-        // 50개씩 주문 넣기
+        // 50개씩 주문 넣기 이벤트가 없었을수도 있고 점포가 이번년도에 새로 생긴 점포 일수 있기 때문에 일괄적으로 50 개씩 넣고 밑의 로직을 진행
         for (EventProduct ep : eventProducts) {
             eventAutoOrdersMapper.inserteventorder(ep.getId());
         }
 
         if (previousEvent != null) {
             for (EventProduct ep : eventProducts) {
+                //지난 이벤트찾기 보안
                 if (productService.findProductCodeByEventIdAndCompareProdCode(previousEvent.getId(), ep.getProduct_code())) {
                     System.out.println(ep.getProduct_code() + "번 상품은 지난 이벤트에도 있던 상품");
                     // 지난 이벤트 기간 중 ep.getProduct_code()번 상품의 매장별 판매량 조회
@@ -84,7 +85,7 @@ public class EventAutoOrdersService {
     public void AutoEventProductSecond() throws Exception {
 // 현재 날짜 가져오기
         LocalDate currentDateSec = LocalDate.now();
-
+//날짜 date 로 바꾸기
 // 3일 추가
         LocalDate afterDateSec = currentDateSec.plusDays(3);
 
