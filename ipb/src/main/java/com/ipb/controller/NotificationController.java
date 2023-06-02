@@ -21,10 +21,11 @@ import reactor.core.publisher.Flux;
 import java.util.HashMap;
 import java.util.List;
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/notifications")
 public class NotificationController {
-
-  private final NotificationService notificationService;
+  @Autowired
+ NotificationService notificationService;
 
   public NotificationController(NotificationService notificationService) {
     this.notificationService = notificationService;
