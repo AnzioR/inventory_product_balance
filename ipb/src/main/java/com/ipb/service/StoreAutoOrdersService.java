@@ -82,7 +82,7 @@ public class StoreAutoOrdersService {
           if (storeIdForMsg != autoOrder.getStore_id()) {
             storeIdForMsg = autoOrder.getStore_id();
             String msg = "자동발주가 진행됩니다. 사이트에서 확인하세요";
-            sendMsg(storeIdForMsg, msg);
+//            sendMsg(storeIdForMsg, msg);
           }
 
           for (Product product : productList) {
