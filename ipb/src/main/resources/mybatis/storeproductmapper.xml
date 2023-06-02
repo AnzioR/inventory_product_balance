@@ -283,6 +283,7 @@
           AND store_id = #{store_id} AND pi.safe_qnt is not null AND  pi.safe_qnt != ''
           AND is_using = 1
         ORDER BY p.exp ASC
+    </select>
 
 <!--
         SELECT sp.id ,pi.name as product_name, p.price,
