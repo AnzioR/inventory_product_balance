@@ -25,7 +25,9 @@
                  INNER JOIN product p on p.id = sp.product_id
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
                  INNER JOIN category c ON pi.category_id = c.id
-        WHERE sp.store_id = #{store_id} AND sp.qnt > 0 ORDER BY p.exp ASC
+        WHERE sp.store_id = #{store_id}
+          AND sp.qnt > 0
+        ORDER BY p.exp ASC
     </select>
 
     <!-- 이 부분은 추후 자동발주 또는 점포보유상품을 불러오는 과정에서 바뀔수 있으니 서로 공유 해줘야합니다!!!
@@ -33,14 +35,23 @@
         -->
     <!-- 전체 상품을 store_id로 다 조회하지만 재고가 0인 상품은 조회 x (유통기한 기준으로 오름차순) -->
     <select id="selectall" resultType="StoreProduct">
-        SELECT sp.*, p.* FROM store_product sp
-        INNER JOIN product p on p.id = sp.product_id
-        WHERE p.qnt > 0 AND store_id=#{store_id} ORDER BY p.exp ASC
+        SELECT sp.*, p.*
+        FROM store_product sp
+                 INNER JOIN product p on p.id = sp.product_id
+        WHERE p.qnt > 0
+          AND store_id = #{store_id}
+        ORDER BY p.exp ASC
+    </select>
+    <select id="selectallStore" resultType="StoreProduct">
+        SELECT sp.*
+        FROM store_product sp
     </select>
 
     <!-- 요구사항에 없지만 필요하겠지?  점포 재고에서 카테고리로 가져오기  (재고 0인 상품은 조회 x, 유통기한 기준으로 오름차순 ) -->
     <select id="selectcategoryname" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price,
+        SELECT sp.id,
+               pi.name as product_name,
+               p.price,
                pi.imgname,
                sp.qnt,
                pi.detail,
@@ -49,7 +60,7 @@
                p.exp,
                pi.brand,
                pi.storage,
-               c.name as category_name,
+               c.name  as category_name,
                sp.store_price,
                sp.event_rate,
                pi.storage,
@@ -59,59 +70,66 @@
                  INNER JOIN product_info pi on pi.product_code = p.product_info_id
                  INNER JOIN category c ON pi.category_id = c.id
         WHERE c.name = #{category_name}
-          and store_id = #{store_id} AND sp.qnt > 0
+          and store_id = #{store_id}
+          AND sp.qnt > 0
         ORDER BY p.exp ASC
     </select>
 
-<!--  (유통기한 날짜 별 조회) store아이디로 카테고리, 날짜를 검색하면 today 기준으로 원하는 그 날짜의 이하 상품이 조회된다-->
+    <!--  (유통기한 날짜 별 조회) store아이디로 카테고리, 날짜를 검색하면 today 기준으로 원하는 그 날짜의 이하 상품이 조회된다-->
     <select id="selectexpAndExpiringSoon" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price,
-        pi.imgname,
-        sp.qnt,
-        pi.box_qnt,
-        pi.detail,
-        sp.is_using,
-        p.exp,
-        pi.brand,
-        pi.storage,
-        c.name as category_name,
-        pi.product_code,
-        sp.store_price,
-        sp.event_rate,
-        pi.storage
+        SELECT sp.id,
+               pi.name as product_name,
+               p.price,
+               pi.imgname,
+               sp.qnt,
+               pi.box_qnt,
+               pi.detail,
+               sp.is_using,
+               p.exp,
+               pi.brand,
+               pi.storage,
+               c.name  as category_name,
+               pi.product_code,
+               sp.store_price,
+               sp.event_rate,
+               pi.storage
         FROM store_product sp
-        INNER JOIN product p on p.id = sp.product_id
-        INNER JOIN product_info pi on pi.product_code = p.product_info_id
-        INNER JOIN category c ON pi.category_id = c.id
+                 INNER JOIN product p on p.id = sp.product_id
+                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
+                 INNER JOIN category c ON pi.category_id = c.id
         WHERE c.name = #{category_name}
-        and p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
-        AND store_id = #{store_id} AND sp.qnt > 0
+          and p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
+          AND store_id = #{store_id}
+          AND sp.qnt > 0
         ORDER BY p.exp ASC
     </select>
 
 
-
-<!-- 요구사항에 없지만 필요하겠지? store_id 와 상품으로 검색하면 재고가 0인 상품 제외하고 검색 상품이 조회됨(유통기한 기준으로 오름차순) -->
+    <!-- 요구사항에 없지만 필요하겠지? store_id 와 상품으로 검색하면 재고가 0인 상품 제외하고 검색 상품이 조회됨(유통기한 기준으로 오름차순) -->
     <select id="searchstoreproduct" parameterType="Hashmap" resultType="StockInfo">
-        SELECT sp.id ,pi.name as product_name, p.price,
-        sp.qnt,
-        pi.box_qnt,
-        pi.imgname,
-        sp.is_using,
-        pi.detail,
-        p.exp,
-        pi.brand,
-        pi.product_code,
-        pi.storage,
-        sp.store_price,
-        sp.event_rate,
-        c.name as category_name
+        SELECT sp.id,
+               pi.name as product_name,
+               p.price,
+               sp.qnt,
+               pi.box_qnt,
+               pi.imgname,
+               sp.is_using,
+               pi.detail,
+               p.exp,
+               pi.brand,
+               pi.product_code,
+               pi.storage,
+               sp.store_price,
+               sp.event_rate,
+               c.name  as category_name
         FROM store_product sp
-        INNER JOIN product p on p.id = sp.product_id
-        INNER JOIN product_info pi on pi.product_code = p.product_info_id
-        INNER JOIN category c ON pi.category_id = c.id
+                 INNER JOIN product p on p.id = sp.product_id
+                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
+                 INNER JOIN category c ON pi.category_id = c.id
         WHERE pi.name LIKE CONCAT('%', #{txt}, '%')
-        and store_id = #{store_id} AND sp.qnt > 0 ORDER BY p.exp ASC
+          and store_id = #{store_id}
+          AND sp.qnt > 0
+        ORDER BY p.exp ASC
     </select>
 
     <!--StoreProduct 추가 -->
@@ -124,26 +142,25 @@
     <update id="update" parameterType="StoreProduct">
         UPDATE store_product
         SET qnt=#{qnt},
-        is_using=#{is_using},
-        store_price= #{store_price},
-        event_rate= #{event_rate},
-        is_auto = #{is_auto}
+            is_using=#{is_using},
+            store_price= #{store_price},
+            event_rate= #{event_rate},
+            is_auto = #{is_auto}
         WHERE id = #{id}
     </update>
 
     <!-- StoreProduct 삭제 기능대신 재고를 0으로 만들어줌 -->
     <update id="qntZero" parameterType="StoreProduct">
         UPDATE store_product
-        SET
-            qnt=0, is_using=0
+        SET qnt=0,
+            is_using=0
         WHERE id = #{id}
     </update>
 
     <!-- 발주를 했을 때 STORE_PRODUCT 테이블의 상품재고 수량을 변경시킨다 -->
     <update id="updateqnt" parameterType="StoreProduct">
         UPDATE store_product
-        SET
-            qnt=#{qnt},
+        SET qnt=#{qnt},
             store_price=#{store_price},
             event_rate=#{event_rate}
         WHERE id = #{id}
@@ -186,11 +203,15 @@
 
     <!-- 상세페이지에서 자동발주를 신청하면 신청한 정보를 자동발주로 보내준다. -->
     <select id="registerAuto" parameterType="StoreProduct">
-        SELECT * FROM
+        SELECT *
+        FROM
     </select>
 
     <select id="getStoreProdListByProdCodeAndStoreId" parameterType="Long" resultType="StoreProduct">
-        SELECT * FROM store_product WHERE product_code = #{productCode} AND store_id = #{storeId}
+        SELECT *
+        FROM store_product
+        WHERE product_code = #{productCode}
+          AND store_id = #{storeId}
     </select>
 
     <!--  동일한 product_id, product_code 있는지 확인하는 쿼리  -->
@@ -203,39 +224,65 @@
 
 
     <select id="findExpiringProducts" resultType="StoreProduct">
-        SELECT * FROM store_product WHERE expiry_date = #{expiryDate}
+        SELECT *
+        FROM store_product
+        WHERE expiry_date = #{expiryDate}
     </select>
-<!--    <select id="getProductsExpiringInThreeDays" resultType="com.example.domain.StoreProduct">-->
-<!--        SELECT * FROM store_product-->
-<!--        WHERE expiration_date = #{expirationDate}-->
-<!--    </select>-->
+    <!--    <select id="getProductsExpiringInThreeDays" resultType="com.example.domain.StoreProduct">-->
+    <!--        SELECT * FROM store_product-->
+    <!--        WHERE expiration_date = #{expirationDate}-->
+    <!--    </select>-->
     <select id="getProductsExpiringInThreeDays" resultType="StoreProduct">
-        SELECT
-        sp.id,
-        pi.name AS product_name,
-        p.price,
-        sp.qnt,
-        pi.box_qnt,
-        pi.imgname,
-        sp.is_using,
-        pi.detail,
-        p.exp,
-        pi.brand,
-        pi.product_code,
-        pi.storage,
-        sp.store_price,
-        sp.event_rate,
-        c.name AS category_name
-        FROM
-        store_product sp
-        INNER JOIN product p ON p.id = sp.product_id
-        INNER JOIN product_info pi ON pi.product_code = p.product_info_id
-        INNER JOIN category c ON pi.category_id = c.id
-        WHERE
-        sp.store_id = #{store_id}
-        AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
-        AND sp.qnt > 0;
+        SELECT sp.id,
+               pi.name AS product_name,
+               p.price,
+               sp.qnt,
+               pi.box_qnt,
+               pi.imgname,
+               sp.is_using,
+               pi.detail,
+               p.exp,
+               pi.brand,
+               pi.product_code,
+               pi.storage,
+               sp.store_price,
+               sp.event_rate,
+               c.name  AS category_name
+        FROM store_product sp
+                 INNER JOIN product p ON p.id = sp.product_id
+                 INNER JOIN product_info pi ON pi.product_code = p.product_info_id
+                 INNER JOIN category c ON pi.category_id = c.id
+        WHERE sp.store_id = #{store_id}
+          AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+          AND sp.qnt > 0;
     </select>
+    <select id="getProductsBetweenExpiring" parameterType="Long" resultType="StoreProduct">
+        SELECT sp.id,
+               pi.name as product_name,
+               sp.store_id,pi.safe_qnt,
+               p.price,
+               pi.imgname,
+               sp.qnt,
+               pi.box_qnt,
+               pi.detail,
+               sp.is_using,
+               p.exp,
+               pi.brand,
+               sp.product_code,
+               pi.storage,
+               c.name  as category_name,
+               sp.store_price,
+               sp.event_rate,
+               pi.storage
+        FROM store_product sp
+                 INNER JOIN product p on p.id = sp.product_id
+                 INNER JOIN product_info pi on pi.product_code = p.product_info_id
+                 INNER JOIN category c ON pi.category_id = c.id
+        WHERE DATE_ADD(now(), INTERVAL #{max} DAY) >= p.exp
+          AND p.exp > DATE_ADD(now(), INTERVAL #{min} DAY)
+          AND store_id = #{store_id} AND pi.safe_qnt is not null AND  pi.safe_qnt != ''
+          AND is_using = 1
+        ORDER BY p.exp ASC
 
 <!--
         SELECT sp.id ,pi.name as product_name, p.price,
