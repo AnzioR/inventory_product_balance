@@ -18,6 +18,7 @@ public class ProductInfo {
     private String category_name;
     private int box_qnt;
     private String storage;
+    private int safe_qnt;
 
   public ProductInfo(Long product_code, String name, String brand, String detail, String imgname, Long category_id, int box_qnt, String storage) {
     this.product_code = product_code;
