@@ -236,4 +236,37 @@
         AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
         AND sp.qnt > 0;
     </select>
+    <select id="getLowInventoryProducts" resultType="StoreProduct">
+        SELECT
+        sp.id,
+        pi.name AS product_name,
+        p.price,
+        sp.qnt,
+        pi.box_qnt,
+        pi.imgname,
+        sp.is_using,
+        pi.detail,
+        sp.is_auto,
+        p.exp,
+        pi.brand,
+        pi.product_code,
+        pi.storage,
+        sp.store_price,
+        sp.event_rate,
+        c.name AS category_name,
+        pi.safe_qnt
+        FROM
+        store_product sp
+        INNER JOIN product p ON p.id = sp.product_id
+        INNER JOIN product_info pi ON pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
+        WHERE
+        sp.store_id = 2
+        AND sp.qnt > 0
+        AND pi.safe_qnt IS NOT NULL
+        AND pi.safe_qnt > 0
+        AND sp.is_auto &lt; 1
+        AND sp.qnt &lt; pi.safe_qnt;
+    </select>
+
 </mapper>

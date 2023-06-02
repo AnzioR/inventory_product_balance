@@ -13,4 +13,5 @@ import java.util.List;
 @Repository
 public interface ProductInfoMapper extends MyMapper<Long, ProductInfo> {
   public List<ProductInfo> selectcategoryname(String categoryname) throws Exception;
+  ProductInfo getProductInfoByProductId(Long productId);
 }
