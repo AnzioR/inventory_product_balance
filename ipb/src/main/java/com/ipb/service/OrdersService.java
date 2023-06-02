@@ -213,5 +213,10 @@ public class OrdersService implements MyService<Long, Orders> {
     return ordersMapper.selectListByDate(store_id);
   };
 
+  //본사에서 발주 내역을 확인할 때, 발주를 일자별 리스트로 보여준다.
+  public List<Orders> selectListByDateDesc() throws Exception {
+    return ordersMapper.selectListByDateDesc();
+  }
+
 }
 
