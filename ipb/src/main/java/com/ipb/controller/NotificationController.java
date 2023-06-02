@@ -22,6 +22,7 @@ import java.util.HashMap;
 import java.util.List;
 @RestController
 @RequiredArgsConstructor
+@CrossOrigin(origins = "http://localhost:3000")
 @RequestMapping("/notifications")
 public class NotificationController {
   @Autowired
@@ -31,12 +32,15 @@ public class NotificationController {
     this.notificationService = notificationService;
   }
 
-  @GetMapping("/expiration/{storeId}")
+
+  //  @GetMapping("/expiration/{storeId}")
+  @GetMapping(value = "/expiration/{storeId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Flux<ServerSentEvent<String>> getProductExpirationNotifications(@PathVariable Long storeId) {
     return notificationService.getProductExpirationNotifications(storeId);
   }
 
-  @GetMapping("/low-inventory/{storeId}")
+//  @GetMapping("/low-inventory/{storeId}")
+  @GetMapping(value = "/low-inventory/{storeId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public Flux<ServerSentEvent<String>> getLowInventoryNotifications(@PathVariable Long storeId) {
     return notificationService.getLowInventoryNotifications(storeId);
   }
