@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auto")
-@Api(tags = {"발주 관련 컨트롤러"})
+@Api(tags = {"자동발주 컨트롤러"})
 public class StoreAutoOrdersController {
 
   @Autowired
