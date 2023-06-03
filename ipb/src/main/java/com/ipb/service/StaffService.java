@@ -5,6 +5,9 @@ import com.ipb.domain.Staff;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -67,5 +70,11 @@ public class StaffService implements MyService<Long, Staff> {
         }
         return result;
     }
+
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        Long id = Long.parseLong(username);
+//        return staffMapper.select(id).orElseThrow();
+//    }
 }
 
