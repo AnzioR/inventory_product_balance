@@ -56,23 +56,6 @@ public class NotificationService {
     String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.: " + expiringProducts;
     System.out.println(expirationMessage); // 유통기한 알림 메시지 출력
 
-    //문자메세지 발송
-    String num = null;
-    try {
-      num = storeService.selectNumber(storeId);
-    } catch (Exception e) {
-      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
-      e.printStackTrace();
-    }
-    String formattedNum = num.replaceAll("-", "");
-    Message message = new Message(formattedNum, "유통기한이 3일이하로 남은 상품이 있습니다.");
-    try {
-      smsService.sendSms(message);
-    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
-             UnsupportedEncodingException e) {
-      System.out.println("오류가 발생했습니다.");
-      e.printStackTrace();
-    }
 
     return Flux.just(ServerSentEvent.<String>builder()
             .event("expirationNotification")
@@ -104,23 +87,7 @@ public class NotificationService {
     String lowInventoryMessage = "재고 임박 상품이 있습니다.: " + lowInventoryProducts;
     System.out.println(lowInventoryMessage); // 재고 알림 메시지 출력
 
-    //문자메세지 발송
-    String num = null;
-    try {
-      num = storeService.selectNumber(storeId);
-    } catch (Exception e) {
-      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
-      e.printStackTrace();
-    }
-    String formattedNum = num.replaceAll("-", "");
-    Message message = new Message(formattedNum, "재고 소진이 임박한 상품이 있습니다. 확인해주세요!");
-    try {
-      smsService.sendSms(message);
-    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
-             UnsupportedEncodingException e) {
-      System.out.println("오류가 발생했습니다.");
-      e.printStackTrace();
-    }
+
 
     return Flux.just(ServerSentEvent.<String>builder()
             .event("lowInventoryNotification")
@@ -130,6 +97,15 @@ public class NotificationService {
         .delayElements(Duration.ofSeconds(1))
         .distinctUntilChanged(); // 중복 알림 제거
   }
+
+
+  //유통기한 3일이하인 상품 문자로 알려주는 기능
+  @Scheduled(fixedDelay = 1000*60*60)
+  public void checkExp() throws Exception {
+
+  }
+
+
 }
 
 //@Service

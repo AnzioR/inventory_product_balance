@@ -121,7 +121,22 @@ public class StoreAutoOrdersService {
     Message message = new Message(formattedNum, msg);
     smsService.sendSms(message);
   }
-  
-  
+
   //자동발주 여러개가 다 들어갔을때 수량체크 되는 부분이 있으면 좋겠지만, 일정관계상 어려움이 있었다....ㅜㅜ
+
+  //자동발주 기준재고수량, 최소재고수량 변경기능
+  public void modify(StoreAutoOrders storeAutoOrders) throws Exception {
+    storeAutoOrdersMapper.update(storeAutoOrders);
+  }
+
+  //자동발주 삭제
+  public void remove(Long id) throws Exception {
+    storeAutoOrdersMapper.delete(id);
+  }
+
+  //점포별 자동발주 리스트 불러오기
+  public List<StoreAutoOrders> selectAutoList(Long store_id) throws Exception {
+    return storeAutoOrdersMapper.selectAutoList(store_id);
+  }
+
 }
