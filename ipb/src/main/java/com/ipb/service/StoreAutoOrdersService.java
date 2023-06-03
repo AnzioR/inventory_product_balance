@@ -130,12 +130,12 @@ public class StoreAutoOrdersService {
 
   //자동발주 기준재고수량, 최소재고수량 변경기능
   public void modify(StoreAutoOrders storeAutoOrders) throws Exception {
-    storeAutoOrdersMapper.update(storeAutoOrders);
+    storeAutoOrdersMapper.changeQnt(storeAutoOrders);
   }
 
   //자동발주 삭제
   public void remove(Long id) throws Exception {
-    storeAutoOrdersMapper.delete(id);
+    storeAutoOrdersMapper.deleteAuto(id);
   }
 
   //점포별 자동발주 리스트 불러오기
