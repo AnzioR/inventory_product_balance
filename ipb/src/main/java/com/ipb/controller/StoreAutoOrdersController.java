@@ -27,7 +27,7 @@ public class StoreAutoOrdersController {
   @ApiOperation(value = "자동발주 수량옵션 변경")
   public void updateStoreOrders(Long id, @RequestBody StoreAutoOrders storeAutoOrders) {
     try {
-      storeAutoOrdersService.modify(storeAutoOrders);
+      storeAutoOrdersService.changeQnt(storeAutoOrders);
     } catch(Exception e) {
       System.out.println("수량 변경에 실패했습니다.");
       e.printStackTrace();
@@ -38,7 +38,7 @@ public class StoreAutoOrdersController {
   @DeleteMapping("/delete/{id}")
   public void delete(@PathVariable Long id){
     try {
-      storeAutoOrdersService.remove(id);
+      storeAutoOrdersService.deleteAuto(id);
     } catch (Exception e) {
       System.out.println("자동발주 삭제를 실패했습니다.");
       e.printStackTrace();

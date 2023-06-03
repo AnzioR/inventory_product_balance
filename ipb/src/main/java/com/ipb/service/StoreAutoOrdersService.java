@@ -129,12 +129,12 @@ public class StoreAutoOrdersService {
   //자동발주 여러개가 다 들어갔을때 수량체크 되는 부분이 있으면 좋겠지만, 일정관계상 어려움이 있었다....ㅜㅜ
 
   //자동발주 기준재고수량, 최소재고수량 변경기능
-  public void modify(StoreAutoOrders storeAutoOrders) throws Exception {
+  public void changeQnt(StoreAutoOrders storeAutoOrders) throws Exception {
     storeAutoOrdersMapper.changeQnt(storeAutoOrders);
   }
 
   //자동발주 삭제
-  public void remove(Long id) throws Exception {
+  public void deleteAuto(Long id) throws Exception {
     storeAutoOrdersMapper.deleteAuto(id);
   }
 
