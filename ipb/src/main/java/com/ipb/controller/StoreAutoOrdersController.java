@@ -35,21 +35,22 @@ public class StoreAutoOrdersController {
   }
 
   //자동발주를 삭제한다.
-  @DeleteMapping("/delete")
-  public void delete(Long id){
+  @DeleteMapping("/delete/{id}")
+  public void delete(@PathVariable Long id){
     try {
       storeAutoOrdersService.remove(id);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      System.out.println("자동발주 삭제를 실패했습니다.");
+      e.printStackTrace();
     }
   }
 
   //자동발주 리스트 가져오기
-  @GetMapping("/getList/id")
+  @GetMapping("/getList/{id}")
   @ApiOperation(value = "자동발주 리스트 전체 가져오기")
-  public List<StoreAutoOrders> getAutoList(@PathVariable Long store_id) {
+  public List<StoreAutoOrders> getAutoList(@PathVariable Long id) {
     try {
-      return storeAutoOrdersService.selectAutoList(store_id);
+      return storeAutoOrdersService.selectAutoList(id);
     } catch (Exception e) {
       System.out.println("자동발주 리스트 불러오기를 실패했습니다.");
       e.printStackTrace();

@@ -23,20 +23,25 @@
     </select>
 
     <!-- 등록된 자동발주에서 기준재고수량과 최소재고수량을 변경하기 -->
-    <update id="update" parameterType="StoreAutoOrders">
+    <update id="changeQnt" parameterType="StoreAutoOrders">
         UPDATE store_auto_orders SET qnt=#{qnt}, min_qnt=#{min_qnt} WHERE id = #{id}
     </update>
 
     <!-- 자동발주 삭제하기 -->
-    <delete id="delete" parameterType="Long">
+    <delete id="deleteAuto" parameterType="Long">
         DELETE FROM store_auto_orders WHERE id = #{id}
     </delete>
 
     <!-- 점포별 자동발주 내역 가져오기 -->
     <select id="selectAutoList" parameterType="Long" resultType="StoreAutoOrders">
-        SELECT sao.*, sp.*
+        SELECT sao.*, sp.*, pi.*, p.*,
+                pi.name as product_name,
+                p.price as product_price,
+                p.cost as product_cost
         FROM store_auto_orders sao
-            JOIN store_product sp on sp.id = sao.store_product_id
+                 JOIN store_product sp on sp.id = sao.store_product_id
+                 JOIN product_info pi on pi.product_code = sao.product_code
+                 JOIN product p on p.product_info_id = pi.product_code
         WHERE store_id = #{store_id}
     </select>
 

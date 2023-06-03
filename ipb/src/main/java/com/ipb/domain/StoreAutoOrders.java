@@ -15,5 +15,7 @@ public class StoreAutoOrders {
   private Long product_id;
   private Long product_code;
 
+  private String product_name;
+
   private Long store_id;
 }
