@@ -22,6 +22,7 @@ public class LoginCheckFilter extends GenericFilterBean {
                        ServletResponse response,
                        FilterChain filterChain) throws IOException, ServletException {
     String token = jwtProvider.resolveToken((HttpServletRequest) request);
+    System.out.println("필터토큰"+token);
     if (token != null && jwtProvider.validationToken(token)) {
       Authentication authentication = jwtProvider.getAuthentication(token);
       SecurityContextHolder.getContext().setAuthentication(authentication);

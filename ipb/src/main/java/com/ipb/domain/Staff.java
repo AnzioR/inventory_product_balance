@@ -45,6 +45,7 @@ public class Staff implements UserDetails {
     public String getPassword() {
         return pwd;
     }
+
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Override
     public String getUsername() {

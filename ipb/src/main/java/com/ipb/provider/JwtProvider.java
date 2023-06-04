@@ -6,6 +6,7 @@ import io.jsonwebtoken.Jws;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -25,8 +26,8 @@ public class JwtProvider {
   private String secretKey = "VlwEyVBsYt9V7zq57TejMnVUyzblYcfPQye08f7MGVA9XkHa";
 
   private Long tokenValidMillisecond = 60 * 60 * 1000L; // 토큰 만료 시간
-
-  private final StaffService userDetailsService;
+  @Autowired
+  StaffService userDetailsService;
 
   @PostConstruct
   protected void init() {
@@ -52,13 +53,17 @@ public class JwtProvider {
 
   // Jwt 로 인증정보를 조회
   public Authentication getAuthentication (String token) {
+    System.out.println("token = " + token);
     UserDetails userDetails = userDetailsService.loadUserByUsername(this.getUserPk(token));
+    System.out.println("userDetial"+userDetails);
     return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
   }
 
   // jwt 에서 회원 구분 Pk 추출
   public String getUserPk(String token) {
-    return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    String subject = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+    System.out.println("subject"+subject);
+    return subject;
   }
 
   // HTTP Request 의 Header 에서 Token Parsing -> "X-AUTH-TOKEN: jwt"
@@ -70,6 +75,7 @@ public class JwtProvider {
   public boolean validationToken(String token) {
     try {
       Jws<Claims> claimsJws = Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+      System.out.println("claimsJws = " + claimsJws);
       return !claimsJws.getBody().getExpiration().before(new Date()); // 만료날짜가 현재보다 이전이면 false
     } catch (Exception e) {
       e.printStackTrace();
