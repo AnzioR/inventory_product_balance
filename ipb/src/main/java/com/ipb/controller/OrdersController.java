@@ -239,7 +239,7 @@ public class OrdersController {
 
   //본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌
   @GetMapping("/store-orders-date-desc")
-  @ApiOperation(value = "발본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌")
+  @ApiOperation(value = "본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌")
   public List<Orders> selectListByDateDesc() {
     try {
       return ordersService.selectListByDateDesc();

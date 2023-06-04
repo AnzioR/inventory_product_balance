@@ -32,7 +32,7 @@ public class StoreProduct {
     private boolean is_auto;
     private Long product_code;
 
-
+    private String store_number;
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;

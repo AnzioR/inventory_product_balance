@@ -166,6 +166,10 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     }
   }
 
+  //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
+  public List<StoreProduct> notAutoLessQnt() throws Exception {
+    return storeProductMapper.notAutoLessQnt();
+  }
 
   public Integer getStoreProductQntByStoreIdAndProductCode(Long storeId, Long product_code) throws Exception {
 
@@ -217,6 +221,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     public List<StoreProduct> all(){
     return storeProductMapper.selectallStore();
     }
+
 }
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
