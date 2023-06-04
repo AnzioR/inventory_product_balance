@@ -156,17 +156,6 @@ public class StoreProductController {
     }
   }
 
-  //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
-//  @GetMapping("/not-auto-less-qnt")
-//  public List<StoreProduct> notAutoLessQnt() {
-//    try {
-//      return storeProductService.notAutoLessQnt();
-//    } catch (Exception e) {
-//      System.out.println("안전재고량보다 수량이 적은 상품 리스트 조회를 실패했습니다.");
-//      e.printStackTrace();
-//      return null;
-//    }
-//  }
 
 //  @PostMapping("/messages")
 //  public ResponseEntity<String> createStoreProduct(@RequestBody StoreProduct storeProduct) {

@@ -43,16 +43,12 @@ public class NotificationService {
   @Autowired
   StoreService storeService;
 
-  @Autowired
-  SmsService smsService;
-
   private final StoreProductMapper storeProductMapper;
   private final ProductInfoMapper productInfoMapper;
 
-  public NotificationService(StoreProductMapper storeProductMapper, ProductInfoMapper productInfoMapper, SmsService smsService) {
+  public NotificationService(StoreProductMapper storeProductMapper, ProductInfoMapper productInfoMapper) {
     this.storeProductMapper = storeProductMapper;
     this.productInfoMapper = productInfoMapper;
-    this.smsService = smsService;
   }
 
 //  public Flux<ServerSentEvent<String>> getProductExpirationNotifications(Long storeId) {

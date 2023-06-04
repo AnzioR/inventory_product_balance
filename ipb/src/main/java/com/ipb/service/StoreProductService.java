@@ -181,12 +181,16 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
       String storeManagerNumber = sp.getStore_number();
       String formattedNum = storeManagerNumber.replaceAll("-", "");
 
-      if(safeQnt> storeQnt) {
-        String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. 확인해주세요!";
-
-        //메세지 발송
-        Message message = new Message(formattedNum, msg);
-        smsService.sendSms(message);
+      String num = null;
+      if(safeQnt > storeQnt) {
+        //매장에 문자를 발송하지만, 이미 문자를 받는 점포는 제외함
+        if(num != sp.getStore_number()) {
+          num = sp.getStore_number();
+          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. 확인해주세요~~ 중복x";
+          //메세지 발송
+          Message message = new Message(formattedNum, msg);
+          smsService.sendSms(message);
+        }
       }
     }
   }
