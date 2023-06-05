@@ -83,4 +83,9 @@
         UPDATE orders_cart SET qnt = #{qnt} WHERE id = #{id}
     </update>
 
+    <!-- 동일한 카트가 존재하는지 확인함 -->
+    <select id="exists" parameterType="OrdersCart" resultType="int">
+        SELECT COUNT(*) FROM orders_cart WHERE product_id = #{product_id} AND store_id = #{store_id}
+    </select>
+
 </mapper>

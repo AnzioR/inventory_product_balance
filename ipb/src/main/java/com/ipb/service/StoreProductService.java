@@ -4,6 +4,7 @@ package com.ipb.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.ipb.domain.*;
 import com.ipb.frame.MyService;
+import com.ipb.mapper.OrdersCartMapper;
 import com.ipb.mapper.StoreAutoOrdersMapper;
 import com.ipb.mapper.StoreProductIssueMapper;
 import com.ipb.mapper.StoreProductMapper;
@@ -46,6 +47,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   @Autowired
   SmsService smsService;
 
+
+  @Autowired
+  OrdersCartMapper ordersCartMapper;
 
   //  store product 등록
   @Override
@@ -194,6 +198,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
           String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
           //메세지 발송
           //sendMsg(num, msg);
+
         }
       }
     }

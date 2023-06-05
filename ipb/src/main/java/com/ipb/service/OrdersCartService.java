@@ -72,4 +72,10 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
   public void removeCartList(List<OrdersCart> orderableList) throws Exception {
     ordersCartMapper.removeCartList(orderableList);
   }
+
+  // exists 메서드 구현
+  public boolean exists(OrdersCart ordersCart) {
+    int count = ordersCartMapper.exists(ordersCart);
+    return count > 0;
+  }
 }
