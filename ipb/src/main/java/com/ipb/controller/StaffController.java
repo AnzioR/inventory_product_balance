@@ -3,11 +3,10 @@ package com.ipb.controller;
 import com.ipb.domain.Staff;
 import com.ipb.domain.Weather;
 import com.ipb.domain.WeatherStatus;
-import com.ipb.provider.JwtProvider;
+//import com.ipb.provider.JwtProvider;
 import com.ipb.service.StaffService;
 import com.ipb.service.WeatherService;
 import com.ipb.utill.OpenWeatherUtill;
-import io.jsonwebtoken.Jwt;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -25,8 +24,8 @@ public class StaffController {
     StaffService staffService;
     @Autowired
     WeatherService weatherService;
-    @Autowired
-    JwtProvider jwtProvider;
+//    @Autowired
+//    JwtProvider jwtProvider;
 
     @PostMapping("/add")
     public Staff register(@RequestBody Staff staff) throws Exception {
@@ -43,7 +42,7 @@ public class StaffController {
         return staff;
     }
     @PostMapping("/login")
-    public String login(@RequestBody Staff staff) throws Exception {
+    public Staff login(@RequestBody Staff staff) throws Exception {
         Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
         if (loginStaff ==null){
             return null;
@@ -56,11 +55,10 @@ public class StaffController {
         new_weather.setStore_id(loginStaff.getStore_id());
         //DB에 날씨 데이터 최종 저장하기
         weatherService.register(new_weather);
-        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
-        return token;
+        return loginStaff;
         //원래 대로라면 날씨랑 같이 넣어줘야해
     }
-
+    //        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
     @PostMapping("/weather")
     public WeatherStatus getWeatherInfo(@RequestBody Staff staff) throws Exception {
 
