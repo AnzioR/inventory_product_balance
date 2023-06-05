@@ -339,6 +339,18 @@
         AND pi.safe_qnt IS NOT NULL
         AND pi.safe_qnt > 0
         AND sp.is_auto &lt; 1
-        AND sp.qnt &lt; pi.safe_qnt;
+        AND sp.qnt &lt; pi.safe_qnt
+    </select>
+
+    <!-- 점포가 보유한 상품에서, 자동발주를 신청하지 않은 상품들 중 안전재고량 이하의 수량을 가진 상품들을 찾는다 -->
+    <select id="notAutoLessQnt" resultType="StoreProduct">
+        SELECT s.number as store_number, s.id as store_id, sp.qnt, pi.safe_qnt as safe_qnt
+        FROM store_product sp
+                 JOIN store s on s.id = sp.store_id
+                 JOIN product_info pi on pi.product_code = sp.product_code
+        WHERE sp.is_auto = 0
+        AND pi.safe_qnt IS NOT NULL
+        AND pi.safe_qnt > 0
+        AND sp.qnt &lt; pi.safe_qnt
     </select>
 </mapper>

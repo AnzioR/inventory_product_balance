@@ -37,6 +37,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   @Autowired
   StoreProductIssueMapper storeProductIssueMapper;
+  
+  @Autowired
+  SmsService smsService;
 
   //  store product 등록
   @Override
@@ -167,6 +170,31 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   }
 
 
+  //재고 수량이 부족한 상품들을 가진 점포에게 문자를 보내준다.
+  @Scheduled(fixedDelay = 1000*60*60)
+  public void sendMsgToStore() throws Exception {
+    List<StoreProduct> getList = storeProductMapper.notAutoLessQnt(); //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
+
+    for(StoreProduct sp : getList) {
+      int safeQnt = sp.getSafe_qnt();
+      int storeQnt = sp.getQnt();
+      String storeManagerNumber = sp.getStore_number();
+      String formattedNum = storeManagerNumber.replaceAll("-", "");
+
+      String num = null;
+      if(safeQnt > storeQnt) {
+        //매장에 문자를 발송하지만, 이미 문자를 받는 점포는 제외함
+        if(num != sp.getStore_number()) {
+          num = sp.getStore_number();
+          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. 확인해주세요~~ 중복x";
+          //메세지 발송
+          Message message = new Message(formattedNum, msg);
+          smsService.sendSms(message);
+        }
+      }
+    }
+  }
+
   public Integer getStoreProductQntByStoreIdAndProductCode(Long storeId, Long product_code) throws Exception {
 
     Integer storeProductQntByStoreIdAndProductCode = storeProductMapper.getStoreProductQntByStoreIdAndProductCode(storeId, product_code);
@@ -217,6 +245,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     public List<StoreProduct> all(){
     return storeProductMapper.selectallStore();
     }
+
 }
 
   //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
