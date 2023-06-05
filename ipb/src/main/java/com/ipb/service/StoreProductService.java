@@ -182,7 +182,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
 
   //재고 수량이 부족한 상품들을 가진 점포에게 문자를 보내준다.
-  //@Scheduled(fixedDelay = 1000*60*60)
+  @Scheduled(fixedDelay = 1000*60*60)
   public void sendMsgToStore() throws Exception {
     List<StoreProduct> getList = storeProductMapper.notAutoLessQnt(); //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
 
@@ -197,7 +197,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
           num = sp.getStore_id();
           String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
           //메세지 발송
-          //sendMsg(num, msg);
+          sendMsg(num, msg);
 
         }
       }
