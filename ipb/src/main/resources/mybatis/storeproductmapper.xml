@@ -312,6 +312,8 @@
     <select id="getLowInventoryProducts" resultType="StoreProduct">
         SELECT
         sp.id,
+        s.id as store_id,
+        sp.product_id,
         pi.name AS product_name,
         p.price,
         sp.qnt,
@@ -333,6 +335,7 @@
         INNER JOIN product p ON p.id = sp.product_id
         INNER JOIN product_info pi ON pi.product_code = p.product_info_id
         INNER JOIN category c ON pi.category_id = c.id
+        INNER JOIN store s ON s.id = sp.store_id
         WHERE
         sp.store_id = #{store_id}
         AND sp.qnt > 0

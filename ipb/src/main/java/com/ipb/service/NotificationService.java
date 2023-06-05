@@ -2,10 +2,7 @@ package com.ipb.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
-import com.ipb.domain.Message;
-import com.ipb.domain.Product;
-import com.ipb.domain.ProductInfo;
-import com.ipb.domain.StoreProduct;
+import com.ipb.domain.*;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.EmitterMapper;
 import com.ipb.mapper.ProductInfoMapper;
@@ -42,6 +39,9 @@ public class NotificationService {
 
   @Autowired
   StoreService storeService;
+
+  @Autowired
+  OrdersCartService ordersCartService;
 
   private final StoreProductMapper storeProductMapper;
   private final ProductInfoMapper productInfoMapper;
@@ -172,7 +172,21 @@ public class NotificationService {
 
           if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
             lowInventoryProducts.add(storeProduct);
+            System.out.println(lowInventoryProducts);
           }
+        }
+
+        //현재는 무한반복됨ㅠㅠ
+        //정보가 담긴 low 에서 product_id, store_id, safe_qnt 를 구한다.
+        for(StoreProduct sp : lowInventoryProducts) {
+          Long orderProductId = sp.getProduct_id();
+          Long orderStoreId = sp.getStore_id();
+          Integer orderQnt = sp.getSafe_qnt();
+
+          //해당되는 재고 임박 상품을 발주카트에 담아준다.
+          OrdersCart ordersCart = new OrdersCart(null, orderQnt, orderProductId, orderStoreId);
+          ordersCartService.register(ordersCart);
+          System.out.println(ordersCart);
         }
 
         if (!lowInventoryProducts.isEmpty()) {
@@ -180,11 +194,14 @@ public class NotificationService {
           emitter.send(SseEmitter.event()
               .data(lowInventoryMessage)
               .build());
+
         }
-      } catch (IOException e) {
+
+      } catch (Exception e) {
         emitter.completeWithError(e);
       }
     }, 0, 2, TimeUnit.SECONDS);
+
 
     return emitter;
   }

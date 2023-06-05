@@ -29,4 +29,10 @@ public class OrdersCart {
         this.product_id = product_id;
         this.store_id = store_id;
     }
+
+    public OrdersCart(Integer qnt, Long product_id, Long store_id) {
+        this.qnt = qnt;
+        this.product_id = product_id;
+        this.store_id = store_id;
+    }
 }
