@@ -48,8 +48,10 @@
         WHERE sp.is_auto = 1 AND store_id = #{store_id}
     </select>
 
-    <select id="">
-
+    <select id="getList" parameterType="Long" resultType="StoreAutoOrders">
+        SELECT * FROM store_auto_orders
+        WHERE store_id = #{store_id}
     </select>
 
 </mapper>
+
