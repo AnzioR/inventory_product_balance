@@ -74,11 +74,11 @@ public class StaffService implements MyService<Long, Staff> ,UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username"+username);
-        Long id = Long.parseLong(username);
+
         try {
 
-            System.out.println("id = " + id);
-            return staffMapper.select(id);
+            System.out.println("id = " + username);
+            return staffMapper.selectid(username);
         } catch (Exception e) {
             e.printStackTrace();
             return null;
