@@ -35,6 +35,7 @@
     <!-- 점포별 자동발주 내역 가져오기 -->
     <select id="selectAutoList" parameterType="Long" resultType="StoreAutoOrders">
         SELECT DISTINCT
+            sao.id,
             sao.product_code,
             pi.name as product_name,
             p.price as product_price,
