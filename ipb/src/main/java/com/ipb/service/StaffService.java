@@ -15,7 +15,7 @@ import java.util.List;
 
 @Transactional
 @Service
-public class StaffService implements MyService<Long, Staff> {
+public class StaffService implements MyService<Long, Staff> ,UserDetailsService{
 
     @Autowired
     StaffMapper staffMapper;
@@ -69,6 +69,20 @@ public class StaffService implements MyService<Long, Staff> {
             result = false;
         }
         return result;
+    }
+
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("username"+username);
+        Long id = Long.parseLong(username);
+        try {
+
+            System.out.println("id = " + id);
+            return staffMapper.select(id);
+        } catch (Exception e) {
+            e.printStackTrace();
+            return null;
+        }
     }
 
 //    @Override
