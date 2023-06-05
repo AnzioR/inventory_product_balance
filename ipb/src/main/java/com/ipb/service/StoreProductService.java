@@ -197,7 +197,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
           num = sp.getStore_id();
           String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
           //메세지 발송
-          sendMsg(num, msg);
+          //sendMsg(num, msg);
 
         }
       }
