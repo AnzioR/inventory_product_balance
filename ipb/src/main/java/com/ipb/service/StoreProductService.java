@@ -171,29 +171,40 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
 
   //재고 수량이 부족한 상품들을 가진 점포에게 문자를 보내준다.
-  @Scheduled(fixedDelay = 1000*60*60)
+  //@Scheduled(fixedDelay = 1000*60*60)
   public void sendMsgToStore() throws Exception {
     List<StoreProduct> getList = storeProductMapper.notAutoLessQnt(); //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
 
     for(StoreProduct sp : getList) {
       int safeQnt = sp.getSafe_qnt();
       int storeQnt = sp.getQnt();
-      String storeManagerNumber = sp.getStore_number();
-      String formattedNum = storeManagerNumber.replaceAll("-", "");
 
-      String num = null;
+      Long num = null;
       if(safeQnt > storeQnt) {
         //매장에 문자를 발송하지만, 이미 문자를 받는 점포는 제외함
-        if(num != sp.getStore_number()) {
-          num = sp.getStore_number();
-          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. 확인해주세요~~ 중복x";
+        if(num != sp.getStore_id()) {
+          num = sp.getStore_id();
+          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
           //메세지 발송
-          Message message = new Message(formattedNum, msg);
-          smsService.sendSms(message);
+          //sendMsg(num, msg);
         }
       }
     }
   }
+
+  // 메시지 보내는 메서드
+  public void sendMsg(Long storeId, String msg) throws Exception {
+    // storeId로 전화번호를 가져오는 서비스를 이용하자! 전화번호는 문자열이니까 Store로 안가져와도 된다!
+    String num = storeService.selectNumber(storeId);
+    //전화번호를 받아오는 형식을 변경한다.
+    String formattedNum = num.replaceAll("-", "");
+    //점포관리자에게 자동발주되었음을 문자로 알려준다.
+    Message message = new Message(formattedNum, msg);
+
+    //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
+    //smsService.sendSms(message);
+  }
+
 
   public Integer getStoreProductQntByStoreIdAndProductCode(Long storeId, Long product_code) throws Exception {
 
