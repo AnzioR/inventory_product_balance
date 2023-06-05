@@ -254,7 +254,7 @@
                  INNER JOIN product_info pi ON pi.product_code = p.product_info_id
                  INNER JOIN category c ON pi.category_id = c.id
         WHERE sp.store_id = #{store_id}
-          AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL 3 DAY)
+          AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
           AND sp.qnt > 0;
     </select>
     <select id="getProductsBetweenExpiring" parameterType="Long" resultType="StoreProduct">
@@ -286,47 +286,15 @@
           AND is_using = 1
         ORDER BY p.exp ASC
     </select>
-
-<!--
-        SELECT sp.id ,pi.name as product_name, p.price,
-        pi.imgname,
-        sp.qnt,
-        pi.box_qnt,
-        pi.detail,
-        sp.is_using,
-        p.exp,
-        pi.brand,sp.product_code,
-        pi.storage,
-        c.name as category_name,
-        sp.store_price,
-        sp.event_rate,
-        pi.storage
-        FROM store_product sp
-        INNER JOIN product p on p.id = sp.product_id
-        INNER JOIN product_info pi on pi.product_code = p.product_info_id
-        INNER JOIN category c ON pi.category_id = c.id
-        WHERE  DATE_ADD(CURDATE(), INTERVAL 3 DAY) >= p.exp AND p.exp >= DATE_ADD(CURDATE(), INTERVAL 0 DAY)
-        AND store_id = 2
-        ORDER BY p.exp ASC-->
-
     <select id="getLowInventoryProducts" resultType="StoreProduct">
         SELECT
         sp.id,
+        sp.store_id,
         pi.name AS product_name,
-        p.price,
         sp.qnt,
-        pi.box_qnt,
-        pi.imgname,
         sp.is_using,
-        pi.detail,
         sp.is_auto,
-        p.exp,
-        pi.brand,
         pi.product_code,
-        pi.storage,
-        sp.store_price,
-        sp.event_rate,
-        c.name AS category_name,
         pi.safe_qnt
         FROM
         store_product sp
@@ -352,5 +320,33 @@
         AND pi.safe_qnt IS NOT NULL
         AND pi.safe_qnt > 0
         AND sp.qnt &lt; pi.safe_qnt
+    </select>
+    <select id="getExpiringStoreProductsms" resultType="StoreProduct">
+    SELECT
+        sp.id,
+        sp.store_id,
+        s.number,
+        pi.name AS product_name,
+        p.price,
+        sp.qnt,
+        pi.box_qnt,
+        sp.is_auto,
+        pi.imgname,
+        sp.is_using,
+        pi.detail,
+        p.exp,
+        pi.brand,
+        pi.product_code,
+        pi.storage,
+        sp.store_price,
+        sp.event_rate,
+        c.name  AS category_name
+    FROM store_product sp
+    INNER JOIN product p ON p.id = sp.product_id
+    INNER JOIN product_info pi ON pi.product_code = p.product_info_id
+    INNER JOIN category c ON pi.category_id = c.id
+    INNER JOIN store s ON s.id = sp.store_id
+    WHERE sp.store_id = #{store_id}
+    AND p.exp &lt;= DATE_ADD(CURDATE(), INTERVAL #{days} DAY)
     </select>
 </mapper>
