@@ -27,4 +27,7 @@ public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
 
   void updateQnt(Map<String, Object> params);
 
+  // exists 메서드 추가
+  int exists(OrdersCart ordersCart);
+
 }

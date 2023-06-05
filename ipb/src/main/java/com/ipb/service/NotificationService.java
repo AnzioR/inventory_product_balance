@@ -158,12 +158,13 @@ public class NotificationService {
   //재고알림기능
   public SseEmitter getLowInventoryNotifications(Long storeId) {
     SseEmitter emitter = new SseEmitter();
-
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
+    List<StoreProduct> lowInventoryProducts = new ArrayList<>();
+
     executorService.scheduleAtFixedRate(() -> {
       try {
         List<StoreProduct> storeProducts = storeProductMapper.getLowInventoryProducts(storeId);
-        List<StoreProduct> lowInventoryProducts = new ArrayList<>();
+
 
         // 재고 임박 상품 검사
         for (StoreProduct storeProduct : storeProducts) {
@@ -171,8 +172,10 @@ public class NotificationService {
           ProductInfo productInfo = productInfoMapper.getProductInfoByProductId(productInfoId);
 
           if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
-            lowInventoryProducts.add(storeProduct);
-            System.out.println(lowInventoryProducts);
+            if (!lowInventoryProducts.contains(storeProduct)) { // 중복 체크
+              lowInventoryProducts.add(storeProduct);
+              System.out.println(lowInventoryProducts);
+            }
           }
         }
 
@@ -181,12 +184,14 @@ public class NotificationService {
         for(StoreProduct sp : lowInventoryProducts) {
           Long orderProductId = sp.getProduct_id();
           Long orderStoreId = sp.getStore_id();
-          Integer orderQnt = sp.getSafe_qnt();
 
-          //해당되는 재고 임박 상품을 발주카트에 담아준다.
-          OrdersCart ordersCart = new OrdersCart(null, orderQnt, orderProductId, orderStoreId);
-          ordersCartService.register(ordersCart);
-          System.out.println(ordersCart);
+          //해당되는 재고 임박 상품을 발주카트에 담아준다. qnt는 기본 1개로 담아준다.
+          OrdersCart ordersCart = new OrdersCart(1, orderProductId, orderStoreId);
+
+          if (!ordersCartService.exists(ordersCart)) { // 중복 체크
+            ordersCartService.register(ordersCart);
+            System.out.println(ordersCart);
+          }
         }
 
         if (!lowInventoryProducts.isEmpty()) {
@@ -195,6 +200,7 @@ public class NotificationService {
               .data(lowInventoryMessage)
               .build());
 
+          lowInventoryProducts.clear(); // 모든 상품이 처리되었으므로 리스트를 비움
         }
 
       } catch (Exception e) {
