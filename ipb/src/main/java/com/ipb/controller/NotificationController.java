@@ -28,6 +28,7 @@ public class NotificationController {
   //  @GetMapping("/low-inventory/{storeId}")
   @GetMapping(value = "/low-inventory/{storeId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public SseEmitter getLowInventoryNotifications(@PathVariable Long storeId) {
+
     return notificationService.getLowInventoryNotifications(storeId);
   }
 }
