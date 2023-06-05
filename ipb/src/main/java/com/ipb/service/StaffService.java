@@ -74,10 +74,7 @@ public class StaffService implements MyService<Long, Staff> ,UserDetailsService{
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
         System.out.println("username"+username);
-
         try {
-
-            System.out.println("id = " + username);
             return staffMapper.selectid(username);
         } catch (Exception e) {
             e.printStackTrace();

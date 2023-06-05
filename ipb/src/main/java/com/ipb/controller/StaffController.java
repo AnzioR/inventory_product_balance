@@ -56,7 +56,7 @@ public class StaffController {
         new_weather.setStore_id(loginStaff.getStore_id());
         //DB에 날씨 데이터 최종 저장하기
         weatherService.register(new_weather);
-        String token = jwtProvider.createToken(staff.getLogin_id(), Collections.singletonList("ROLE_USER"));
+        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
         return token;
         //원래 대로라면 날씨랑 같이 넣어줘야해
     }
