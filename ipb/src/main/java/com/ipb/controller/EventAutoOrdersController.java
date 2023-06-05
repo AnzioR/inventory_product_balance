@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
 public class EventAutoOrdersController {
@@ -15,20 +16,20 @@ public class EventAutoOrdersController {
     @Autowired
     EventAutoOrdersService eventAutoOrdersService;
 
-//
-    @GetMapping("eventAutoOrders/{store_id}")
+    //
+    @GetMapping("/eventAutoOrders/{store_id}")
     public List<EventAutoOrders> getListOfEventAutoOrders(@PathVariable Long store_id) {
         try {
             List<EventAutoOrders> list = eventAutoOrdersService.getList(store_id);
             return list;
         } catch (Exception e) {
             e.printStackTrace();
-        return null;
+            return null;
         }
     }
 
-    @PutMapping("eventAutoOrders/update")
-    public void updateQnt(EventAutoOrders eventAutoOrders){
+    @PutMapping("/eventAutoOrders/update")
+    public void updateQnt(@RequestBody EventAutoOrders eventAutoOrders){
         try {
             eventAutoOrdersService.update(eventAutoOrders);
         } catch (Exception e) {
