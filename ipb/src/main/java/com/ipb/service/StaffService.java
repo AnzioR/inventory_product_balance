@@ -5,9 +5,7 @@ import com.ipb.domain.Staff;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.StaffMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
+
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -15,8 +13,8 @@ import java.util.List;
 
 @Transactional
 @Service
-public class StaffService implements MyService<Long, Staff> ,UserDetailsService{
-
+public class StaffService implements MyService<Long, Staff> {
+    //UserDetailService
     @Autowired
     StaffMapper staffMapper;
 
@@ -71,16 +69,16 @@ public class StaffService implements MyService<Long, Staff> ,UserDetailsService{
         return result;
     }
 
-    @Override
-    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        System.out.println("username"+username);
-        try {
-            return staffMapper.selectid(username);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
+//    @Override
+//    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+//        System.out.println("username"+username);
+//        try {
+//            return staffMapper.selectid(username);
+//        } catch (Exception e) {
+//            e.printStackTrace();
+//            return null;
+//        }
+//    }
 
 //    @Override
 //    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
