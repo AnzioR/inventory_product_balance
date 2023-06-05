@@ -2,6 +2,10 @@ package com.ipb.service;
 
 
 import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.JsonNodeFactory;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import com.ipb.domain.Message;
 import com.ipb.domain.Product;
 import com.ipb.domain.ProductInfo;
@@ -55,63 +59,32 @@ public class NotificationService {
     this.smsService = smsService;
   }
 
-//  public Flux<ServerSentEvent<String>> getProductExpirationNotifications(Long storeId) {
-//    List<StoreProduct> expiringProducts = storeProductMapper.getProductsExpiringInThreeDays(storeId);
+//  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행, 유통기한이니까 정각에 확인
+//  public void sendProductExpirationNotifications() {
+//    Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이 부분은 테스트용이므로 나중에 전체 주석 처리 가능
+//    SseEmitter emitter = getProductExpirationNotifications(storeId);
+//    // SseEmitter를 사용하여 알림을 웹으로 전송
+//    emitter.complete();
 //
-//    if (expiringProducts.isEmpty()) {
-//      return Flux.empty(); // 유통기한이 임박한 상품이 없을 경우 빈 Flux 반환
-//    }
-//
-//    String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.: " + expiringProducts;
-//    System.out.println(expirationMessage); // 유통기한 알림 메시지 출력
-//
-//    //문자메세지 발송
-//    String num = null;
-//    try {
-//      num = storeService.selectNumber(storeId);
-//    } catch (Exception e) {
-//      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
-//      e.printStackTrace();
-//    }
-//    String formattedNum = num.replaceAll("-", "");
-//    Message message = new Message(formattedNum, "유통기한이 3일이하로 남은 상품이 있습니다.");
-//    try {
-//      smsService.sendSms(message);
-//    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
-//             UnsupportedEncodingException e) {
-//      System.out.println("오류가 발생했습니다.");
-//      e.printStackTrace();
-//    }
-//
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("expirationNotification")
-//            .data(expirationMessage)
-//            .build())
-//        .repeat()
-//        .delayElements(Duration.ofSeconds(1))
-//        .distinctUntilChanged(); // 중복 알림 제거
+//  }
 
-  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행, 유통기한이니까 정각에 확인
-  public void sendProductExpirationNotifications() {
-    Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이 부분은 테스트용이므로 나중에 전체 주석 처리 가능
-    SseEmitter emitter = getProductExpirationNotifications(storeId);
-    // SseEmitter를 사용하여 알림을 웹으로 전송
-    emitter.complete();
-
-  }
-
+//유통기한 알림
   public SseEmitter getProductExpirationNotifications(Long storeId) {
     SseEmitter emitter = new SseEmitter();
 
-    // 간단한 예시로 2초마다 이벤트 데이터를 생성하여 클라이언트로 전송
+    // 간단한 예시로 2초마다 이벤트 데이터를 생성하여 클라이언트로 전송,(작업을 지정된 시간 간격으로 주기적으로 실행할 수 있도록 지원하는 클래스)
     ScheduledExecutorService executorService = Executors.newSingleThreadScheduledExecutor();
     executorService.scheduleAtFixedRate(() -> {
       try {
         List<StoreProduct> expiringProducts = storeProductMapper.getProductsExpiringInThreeDays(storeId);
 
+//        SSE(Server-Sent Events)를 사용하여 클라이언트로 메시지를 전송
+//        expiringProducts 리스트가 비어있지 않은 경우에만 실행
         if (!expiringProducts.isEmpty()) {
           String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다." ;
+          // 문자와 같이 내용이 가야하는데 체크해보기 (프론트에서 내용까지 다 나오는데...+ expiringProducts)
           emitter.send(SseEmitter.event()
+              //send 메서드 이용하여 sse이벤트 생성 후 믈라이언트로 데이터(내가 보내는 메세지) 전송
               .data(expirationMessage)
               .build());
         }
@@ -119,48 +92,13 @@ public class NotificationService {
         // 에러 처리 로직
         emitter.completeWithError(e);
       }
-    }, 0, 2, TimeUnit.SECONDS);
+    },  0, 2, TimeUnit.SECONDS);
 
-//
-//    if (lowInventoryProducts.isEmpty()) {
-//      return Flux.empty(); // 재고 임박 상품이 없을 경우 빈 Flux 반환
-//    }
-//
-//    String lowInventoryMessage = "재고 임박 상품이 있습니다.: " + lowInventoryProducts;
-//    System.out.println(lowInventoryMessage); // 재고 알림 메시지 출력
-
-    //문자메세지 발송
-    String num = null;
-    try {
-      num = storeService.selectNumber(storeId);
-    } catch (Exception e) {
-      System.out.println("메시지를 보낼 점포아이디 조회에 실패했습니다.");
-      e.printStackTrace();
-    }
-    String formattedNum = num.replaceAll("-", "");
-    Message message = new Message(formattedNum, "재고 소진이 임박한 상품이 있습니다. 확인해주세요!");
-    try {
-      smsService.sendSms(message);
-    } catch (JsonProcessingException | URISyntaxException | InvalidKeyException | NoSuchAlgorithmException |
-             UnsupportedEncodingException e) {
-      System.out.println("오류가 발생했습니다.");
-      e.printStackTrace();
-    }
-
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("lowInventoryNotification")
-//            .data(lowInventoryMessage)
-//            .build())
-//        .repeat()
-//        .delayElements(Duration.ofSeconds(1))
-//        .distinctUntilChanged(); // 중복 알림 제거
-//  }
-//}
-//
     return emitter;
   }
 
 
+  //재고임박 알림
   public SseEmitter getLowInventoryNotifications(Long storeId) {
     SseEmitter emitter = new SseEmitter();
 
@@ -179,11 +117,29 @@ public class NotificationService {
             lowInventoryProducts.add(storeProduct);
           }
         }
-
+// 문자와 같이 내용이 가야하는데 체크해보기 (프론트에서 내용까지 다 나오는데...+ lowInventoryProducts)
         if (!lowInventoryProducts.isEmpty()) {
-          String lowInventoryMessage = "재고 임박 상품이 있습니다." ;
+          // 알림 내용과 lowInventoryProducts를 함께 담는 JSON 객체 생성
+          ObjectNode messageNode = JsonNodeFactory.instance.objectNode();
+          messageNode.put("message", "재고 임박 상품이 있습니다.");
+          ArrayNode productsNode = messageNode.putArray("products");
+          for (StoreProduct storeProduct : lowInventoryProducts) {
+            ObjectNode productNode = productsNode.addObject();
+            productNode.put("id", storeProduct.getId());
+            productNode.put("storeId", storeProduct.getStore_id());
+            productNode.put("store_qnt", storeProduct.getQnt());
+            productNode.put("Safe_qnt", storeProduct.getSafe_qnt());
+            productNode.put("Product_name", storeProduct.getProduct_name());
+            productNode.put("Product_code", storeProduct.getProduct_code());
+          }
+
+          // JSON 객체를 문자열로 변환
+          ObjectMapper objectMapper = new ObjectMapper();
+          String lowInventoryMessage = objectMapper.writeValueAsString(messageNode);
+
           emitter.send(SseEmitter.event()
               .data(lowInventoryMessage)
+              .id("lowInventoryNotification")  // 이벤트 ID 추가
               .build());
         }
       } catch (IOException e) {
@@ -195,173 +151,4 @@ public class NotificationService {
   }
 }
 
-
-
-//@Service
-//public class NotificationService {
-//
-//  private final StoreProductMapper storeProductMapper;
-//  private final ProductInfoMapper productInfoMapper;
-//
-//  public NotificationService(StoreProductMapper storeProductMapper, ProductInfoMapper productInfoMapper) {
-//    this.storeProductMapper = storeProductMapper;
-//    this.productInfoMapper = productInfoMapper;
-//  }
-//  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행 , 유통기한 이니까 정각에 확인
-//  public void sendProductExpirationNotifications() {
-//    Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이부분은 test 느낌으로 쓰고있음 나중에 전체 주석해도, 골격을 미리 만들어놓기
-//    Flux<ServerSentEvent<String>> notifications = getProductExpirationNotifications(storeId);
-//    // 알림이 notifications Flux에 전송되면 해당 알림을 웹으로 전달
-//    notifications.subscribe();
-//  }
-//  public Flux<ServerSentEvent<String>> getProductExpirationNotifications(Long storeId) {
-//    List<StoreProduct> expiringProducts = storeProductMapper.getProductsExpiringInThreeDays(storeId);
-//
-//    if (expiringProducts.isEmpty()) {
-//      return Flux.empty(); // 유통기한이 임박한 상품이 없을 경우 빈 Flux 반환
-//    }
-////날짜 상수처리
-//    String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.: " + expiringProducts;
-//    System.out.println(expirationMessage); // 유통기한 알림 메시지 출력
-//
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("expirationNotification")
-//            .data(expirationMessage)
-//            .build())
-//            .repeat()
-//            .delayElements(Duration.ofSeconds(1))
-//             .distinctUntilChanged(); // 중복 알림 제거
-//  }
-//
-//
-//
-//  @Scheduled(fixedDelay = 1000*60*60)
-//  public void sendgetLowInventoryNotifications() {
-//    Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이부분은 test 느낌으로 쓰고있음 나중에 전체 주석해도
-//    Flux<ServerSentEvent<String>> notifications = getLowInventoryNotifications(storeId);
-//    // 알림이 notifications Flux에 전송되면 해당 알림을 웹으로 전달
-//    notifications.subscribe();
-//  }
-//
-//  public Flux<ServerSentEvent<String>> getLowInventoryNotifications(Long storeId) {
-//    List<StoreProduct> storeProducts = storeProductMapper.getLowInventoryProducts(storeId);
-//
-//    List<StoreProduct> lowInventoryProducts = new ArrayList<>();
-//
-//    // 재고 임박 상품 검사
-//    for (StoreProduct storeProduct : storeProducts) {
-//      Long productInfoId = storeProduct.getProduct_code();
-//      ProductInfo productInfo = productInfoMapper.getProductInfoByProductId(productInfoId);
-//
-//      if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
-//        lowInventoryProducts.add(storeProduct);
-//      }
-//    }
-//
-//    if (lowInventoryProducts.isEmpty()) {
-//      return Flux.empty(); // 재고 임박 상품이 없을 경우 빈 Flux 반환
-//    }
-//    // 재고 알림 메시지 생성
-//    String lowInventoryMessage = "재고 임박 상품이 있습니다.: " + lowInventoryProducts;
-//    System.out.println(lowInventoryMessage); // 재고 알림 메시지 출력
-//
-//    // Server-Sent Event를 생성하여 반환,
-//    // Server-Sent Event 생성: 재고 알림 메시지를 이벤트 데이터로 갖는 Server-Sent Event를 생성하여 반환합니다.
-//    // 반복적으로 전송되며, 1초 간격으로 전송됩니다. 중복 알림은 제거됩니다.
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("lowInventoryNotification")
-//            .data(lowInventoryMessage)
-//            .build())
-//        .repeat()
-//        .delayElements(Duration.ofSeconds(1))
-//        .distinctUntilChanged(); // 중복 알림 제거
-//  }
-//  }
-
-
-//@Service
-//@EnableScheduling
-//public class NotificationService {
-//
-//  private final StoreProductMapper storeProductMapper;
-//
-//  public NotificationService(StoreProductMapper storeProductMapper) {
-//    this.storeProductMapper = storeProductMapper;
-//  }
-//
-////  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행
-//  @Scheduled(fixedDelay = 1000*60*60)
-//  public void sendProductExpirationNotifications() {
-//    Long storeId = 2L; // 예시로 1번 매장을 기준으로 알림을 보냄, 이부분은 test 느낌으로 쓰고있음 나중에 전체 주석해도
-//    Flux<ServerSentEvent<String>> notifications = getProductExpirationNotifications(storeId);
-//
-//    // 웹 소켓 연결 등을 통해 알림을 웹으로 전송하는 로직을 추가해야하는데,, 쓸 꺼면
-//    // 알림이 notifications Flux에 전송되면 해당 알림을 웹으로 전달
-//    notifications.subscribe();
-//  }
-//
-//  //store_id 가 매개변수인데 로그인할떄 store_id로 보내줘
-//  public Flux<ServerSentEvent<String>> getProductExpirationNotifications(Long storeId) {
-//    List<StoreProduct> expiringProducts = storeProductMapper.getProductsExpiringInThreeDays(storeId);
-//
-//    if (expiringProducts.isEmpty()) {
-//      return Flux.empty(); // 상품이 없을 경우 빈 Flux 반환
-//    }
-//
-//    String message = "유통기한이 3일 이하로 남은 상품이 있습니다.: " + expiringProducts;
-//    System.out.println(message); // 알림 메시지 출력
-//
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("notification")
-//            .data(message)
-//            .build())
-//        .repeat()
-//        .delayElements(Duration.ofSeconds(1))
-//        .distinctUntilChanged(); // 중복 알림 제거
-//
-//  }
-//}
-
-//@Service
-//public class NotificationService {
-//  private final SimpMessagingTemplate messagingTemplate;
-//  private final EmitterMapper emitterMapper;
-//  private final StoreProductMapper storeProductMapper;
-//
-//  public NotificationService(SimpMessagingTemplate messagingTemplate, EmitterMapper emitterMapper, StoreProductMapper storeProductMapper) {
-//    this.messagingTemplate = messagingTemplate;
-//    this.emitterMapper = emitterMapper;
-//    this.storeProductMapper = storeProductMapper;
-//  }
-//
-//  @Scheduled(cron = "0 0 8 * * *") // 매일 오전 8시에 실행되도록 설정
-//  public void scheduleExpiryNotifications() {
-//    sendExpiryNotifications();
-//  }
-//
-//  public void sendExpiryNotifications() {
-//    int daysBeforeExpiry = 3;
-//    List<StoreProduct> expiringProducts = emitterMapper.findProductsExpiringSoon(daysBeforeExpiry);
-//
-//    for (StoreProduct storeProduct : expiringProducts) {
-//      // 알림을 보내는 로직을 구현
-//      String message = "유통기한이 임박한 상품이 있습니다: " + storeProduct.getName();
-//      sendNotification(message);
-//    }
-//  }
-//
-//  private void sendNotification(String message) {
-//    // 알림을 보내는 로직을 구현
-//    messagingTemplate.convertAndSend("/topic/notifications", message); // 웹소켓을 통해 클라이언트에게 알림 메시지를 보냄
-//  }
-//
-//  public void checkExpiringProducts() {
-//    LocalDate expiryDate = LocalDate.now().plusDays(3);
-//    List<StoreProduct> expiringProducts = storeProductMapper.findExpiringProducts(expiryDate);
-//
-//    if (!expiringProducts.isEmpty()) {
-//      messagingTemplate.convertAndSend("/topic/notifications", "유통기한이 3일 남은 상품이 있습니다."); // 웹소켓을 통해 클라이언트에게 알림 메시지를 보냄
-//    }
-//  }
-//}
 
