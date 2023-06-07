@@ -150,6 +150,11 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     return storeProductMapper.selectstoreproduct(store_id);
   }
 
+  //store id 로 각각의 점포의 유통기한을 조회 할 수있음
+  public List<StoreProduct> selectallexpStoreProduct(Long store_id) throws Exception {
+    return storeProductMapper.selectallexpStoreProduct(store_id);
+  }
+
   //발주할 때, 점포의 재고수량을 변경
   public void storeUpdateQnt(StoreProduct storeProduct) throws Exception {
     storeProductMapper.storeUpdateQnt(storeProduct);
