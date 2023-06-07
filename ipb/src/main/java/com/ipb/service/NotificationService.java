@@ -107,6 +107,7 @@ public class NotificationService {
               .data(expirationMessage)
               .build());
         }
+        emitter.complete();
       } catch (IOException e) {
         // 에러 처리 로직
         emitter.completeWithError(e);
@@ -181,7 +182,7 @@ public class NotificationService {
 
           lowInventoryProducts.clear(); // 모든 상품이 처리되었으므로 리스트를 비움
         }
-
+        emitter.complete();
       } catch (Exception e) {
         emitter.completeWithError(e);
       }
