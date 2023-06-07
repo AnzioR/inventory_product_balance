@@ -31,6 +31,7 @@
         ORDER BY p.exp ASC
     </select>
 
+    <!-- ADD. SP 유통기한때문에 만들었습니다    -->
     <select id="selectallexpStoreProduct" parameterType="Long" resultType="StoreProduct">
         SELECT sp.id,
         pi.name as product_name,
