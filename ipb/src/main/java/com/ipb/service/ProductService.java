@@ -43,6 +43,7 @@ public class ProductService implements MyService <Long, Product> {
   public List<Product> get() throws Exception {
     return productMapper.selectall();
   }
+
   public List<Product> selectcategoryname(String categoryname) throws Exception {
     return productMapper.selectcategoryname(categoryname);
   }
