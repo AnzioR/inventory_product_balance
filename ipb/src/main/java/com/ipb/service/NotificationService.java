@@ -111,7 +111,7 @@ public class NotificationService {
         // 에러 처리 로직
         emitter.completeWithError(e);
       }
-      },  0, 2, TimeUnit.SECONDS);
+      },  0, 2, TimeUnit.MINUTES);
 
     return emitter;
   }
@@ -135,7 +135,7 @@ public class NotificationService {
           if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
             if (!lowInventoryProducts.contains(storeProduct)) { // 중복 체크
               lowInventoryProducts.add(storeProduct);
-              System.out.println(lowInventoryProducts);
+//              System.out.println(lowInventoryProducts);
             }
           }
         }
@@ -185,7 +185,7 @@ public class NotificationService {
       } catch (Exception e) {
         emitter.completeWithError(e);
       }
-    }, 0, 2, TimeUnit.SECONDS);
+    }, 0, 2, TimeUnit.MINUTES);
 
 
     return emitter;

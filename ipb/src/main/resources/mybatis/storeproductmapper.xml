@@ -31,6 +31,30 @@
         ORDER BY p.exp ASC
     </select>
 
+    <select id="selectallexpStoreProduct" parameterType="Long" resultType="StoreProduct">
+        SELECT sp.id,
+        pi.name as product_name,
+        p.price,
+        pi.imgname,
+        sp.qnt,
+        sp.is_using,
+        pi.box_qnt,
+        sp.is_auto,
+        sp.event_rate,
+        p.exp,
+        pi.brand,
+        c.name  as category_name,
+        pi.detail,
+        pi.storage,
+        pi.product_code
+        FROM store_product sp
+        INNER JOIN product p on p.id = sp.product_id
+        INNER JOIN product_info pi on pi.product_code = p.product_info_id
+        INNER JOIN category c ON pi.category_id = c.id
+        WHERE sp.store_id = #{store_id}
+        AND sp.qnt > 0
+        ORDER BY p.exp ASC
+    </select>
     <!-- 이 부분은 추후 자동발주 또는 점포보유상품을 불러오는 과정에서 바뀔수 있으니 서로 공유 해줘야합니다!!!
         윤민지, 채란 에게 얘기해줘야함!!!!
         -->
