@@ -12,6 +12,7 @@ public class Store {
   private Long id;
   private String name;
   private String location;
+  private String tel;
   private String number;
   private String imgname;
   private String area;

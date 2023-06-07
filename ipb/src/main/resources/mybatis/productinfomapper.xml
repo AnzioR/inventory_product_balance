@@ -7,9 +7,10 @@
 
     <select id="select" parameterType="Long" resultType="ProductInfo">
         SELECT p.product_code, p.name , p.brand, p.detail, c.name as category_name, p.imgname,p.category_id,
-        p.box_qnt,p.storage
+        p.box_qnt, p.storage, pi.safe_qnt
         FROM product_info p
         INNER JOIN category c ON p.category_id = c.id
+        INNER JOIN product_info pi ON pi.product_code = p.product_info_id
         WHERE product_code=#{product_code}
 
     </select>
@@ -21,9 +22,10 @@
     </select>
     <select id="selectcategoryname" parameterType="String" resultType="ProductInfo">
         SELECT p.product_code, p.name , p.brand, p.detail, c.name as category_name, p.imgname,
-        p.box_qnt,p.storage
+        p.box_qnt,p.storage, pi.safe_qnt
         FROM product_info p
         INNER JOIN category c ON p.category_id = c.id
+        INNER JOIN product_info pi ON pi.product_code = p.product_info_id
         WHERE c.name = #{category_name};
     </select>
 <!--    <select id="selectcategorynameall" parameterType="String" resultType="Product">-->
