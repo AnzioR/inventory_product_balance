@@ -40,7 +40,9 @@
         INSERT INTO product_info VALUES (#{product_code},#{name},#{brand},#{detail},#{imgname},#{category_id},#{box_qnt},#{storage})
     </insert>
     <update id="update" parameterType="ProductInfo">
-        UPDATE product_info SET name=#{name},brand=#{brand},detail=#{detail} WHERE product_code=#{product_code}
+        UPDATE product_info SET name=#{name},brand=#{brand},detail=#{detail},
+        box_qnt=#{box_qnt},safe_qnt=#{safe_qnt},imgname=#{imgname}
+        WHERE product_code=#{product_code}
     </update>
     <delete id="delete" parameterType="Long">
         DELETE FROM product_info WHERE product_code=#{product_code}
