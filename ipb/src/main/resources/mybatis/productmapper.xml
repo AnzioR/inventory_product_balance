@@ -6,7 +6,8 @@
 
 
     <select id="select" parameterType="Long" resultType="Product">
-        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name , pi.storage
+        SELECT p.id, p.qnt, p.price, p.cost, p.exp, pi.product_code, pi.name, pi.brand, pi.detail, pi.imgname,
+               c.id,c.name as category_name, pi.storage, pi.safe_qnt
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
                  INNER JOIN category c ON pi.category_id = c.id
@@ -16,15 +17,17 @@
     <!--        SELECT * FROM product WHERE name=#{name}-->
     <!--    </select>-->
     <select id="selectall" resultType="Product">
-        SELECT p.*, pi.product_code, pi.name, p.cost, p.price,pi.imgname,c.name as category_name,pi.box_qnt, pi.storage,pi.brand,sp.qnt as store_qnt
-
+        SELECT p.*, pi.product_code, pi.name, p.cost, p.price, pi.imgname,
+               c.name as category_name, pi.box_qnt, pi.storage, pi.brand, pi.safe_qnt
+               sp.qnt as store_qnt
         FROM product p
         INNER JOIN product_info pi ON p.product_info_id = pi.product_code
         INNER JOIN category c ON pi.category_id = c.id
         INNER JOIN store_product sp ON sp.product_id = p.id
     </select>
     <select id="selectcategoryname" parameterType="String" resultType="Product">
-        SELECT p.id,p.qnt,p.price,p.cost,p.exp, pi.product_code,pi.name,pi.brand,pi.detail,pi.imgname,c.id,c.name as category_name , pi.storage,pi.category_id
+        SELECT p.id, p.qnt, p.price, p.cost, p.exp, pi.product_code, pi.name, pi.brand, pi.detail, pi.imgname,
+               c.id,c.name as category_name, pi.storage, pi.category_id, pi.safe_qnt
         FROM product p
         INNER JOIN product_info pi ON p.product_info_id = pi.product_code
         INNER JOIN category c ON pi.category_id = c.id
@@ -53,7 +56,7 @@
     </delete>
 <!--    상품은 너무 많이 묶여 있어서 삭제를 진행하면 안돼-->
     <select id="search" parameterType="String" resultType="Product">
-        SELECT pi.name, pi.brand, pi.product_code, p.qnt, pi.box_qnt, p.cost, p.price
+        SELECT pi.name, pi.brand, pi.product_code, p.qnt, pi.box_qnt, p.cost, p.price, pi.safe_qnt
         FROM product p
                  INNER JOIN product_info pi ON p.product_info_id = pi.product_code
         WHERE name Like CONCAT('%', #{txt}, '%')
