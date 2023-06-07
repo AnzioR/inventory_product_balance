@@ -117,14 +117,16 @@ public class OrdersController {
     }
   }
 
-  //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회 o
+  //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 점포별로 묶어서 날짜가 최신순으로 조회 o
   @GetMapping("/all")
-  @ApiOperation(value = "발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회")
+  @ApiOperation(value = "발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 점포별로 묶어서 날짜가 최신순으로 조회한다.")
   public List<Orders> cartAll() {
     try {
       return ordersService.get();
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      System.out.println("발주내역 전체 조회를 실패했습니다.");
+      e.printStackTrace();
+      return null;
     }
   }
 
@@ -248,6 +250,7 @@ public class OrdersController {
       e.printStackTrace();
       return null;
     }
+
   }
 
 
