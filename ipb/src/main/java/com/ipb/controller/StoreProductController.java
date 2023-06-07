@@ -85,6 +85,17 @@ public class StoreProductController {
       return null;
     }
   }
+  @GetMapping("/listexp/{store_id}")
+  public List<StoreProduct> allProductExpByStoreId(@PathVariable Long store_id) {
+    try {
+      List<StoreProduct> selectallexpStoreProduct = storeProductService.selectallexpStoreProduct(store_id);
+      return selectallexpStoreProduct;
+    } catch (Exception e) {
+      e.printStackTrace();
+      return null;
+    }
+  }
+
 
 
   //해당 점포보유상품을 카테고리 이름별로 분류
