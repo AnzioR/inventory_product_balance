@@ -33,6 +33,8 @@ public class StoreProduct {
     private Long product_code;
 
     private String store_number;
+    private String imgname;
+
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;

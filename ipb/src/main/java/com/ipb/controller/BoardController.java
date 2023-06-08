@@ -71,7 +71,7 @@ public class BoardController {
   }
 
   @GetMapping("/search")
-  @ApiOperation(value = "게시글 추가")
+  @ApiOperation(value = "게시글 검색")
   public List<Board> boardSearch(String txt){
     try {
       return boardService.searchBoard(txt);
