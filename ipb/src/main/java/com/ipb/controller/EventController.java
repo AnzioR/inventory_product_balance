@@ -41,7 +41,7 @@ public class EventController {
 
   //이벤트 상품 수정 : id 작성안하면 에러 발생하므로 적어줘야 한다 ok
   @PutMapping("/eventdetail/update/{id}")
-  @ApiOperation(value = "이벤트 수정" , notes = "event_id 입력 후 수정한다" )
+  @ApiOperation(value = "이벤트 수정" , notes = "event_id 입력 후 event 정보를 수정한다" )
   public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
     try {
       eventService.modify(event);
@@ -66,7 +66,7 @@ public class EventController {
 
   //이벤트 이름으로 조회하기 ok
   @GetMapping("/event/search/{name}")
-  @ApiOperation(value = "이벤트 검색")
+  @ApiOperation(value = "이벤트 이름으로 검색")
   public Event searchEventName(@PathVariable String name) {
     try {
       return eventService.searchEventName(name);
@@ -78,7 +78,7 @@ public class EventController {
 
   //이벤트 상세 조회하기 ok
   @GetMapping("/eventdetail/{id}")
-  @ApiOperation(value = "이벤트 상세조회",notes = "event_id로 상세조회한다")
+  @ApiOperation(value = "이벤트 상세조회",notes = "event_id로 이벤트 정보를 상세조회 한다")
   public Event eventDetail(@PathVariable Long id) {
     try {
       return eventService.get(id);
@@ -100,7 +100,7 @@ public class EventController {
 
   //이벤트 타입별로 조회하기 ok
   @GetMapping("/selectbytype/{id}")
-  @ApiOperation(value = "이벤트 타입별 조회" ,notes = "event_type_id로 이벤트 타입 조회한다")
+  @ApiOperation(value = "이벤트 타입별 조회" ,notes = "event_type_id로 이벤트 타입을 조회한다")
   public Event selectByType(@PathVariable Long id) {
     try {
       return eventService.selectByType(id);
@@ -111,7 +111,7 @@ public class EventController {
 
   //이벤트가 진행중인 상품 조회 ok
   @GetMapping("/eventproductlist/{name}")
-  @ApiOperation(value = "진행중인 이벤트 조회")
+  @ApiOperation(value = "진행중인 이벤트 상품을 조회")
   public List<EventProduct> searchEventProduct(@PathVariable String name) {
     try {
       return eventProductService.searchEventProduct(name);

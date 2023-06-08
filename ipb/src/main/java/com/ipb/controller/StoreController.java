@@ -21,7 +21,7 @@ public class StoreController {
 
  //점포 전체조회
   @GetMapping("/storelist")
-  @ApiOperation(value = "점포 목록")
+  @ApiOperation(value = "점포 목록 전체조회")
   public List<Store> storeList() {
     try {
       return storeService.get();
