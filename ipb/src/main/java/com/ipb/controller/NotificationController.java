@@ -22,13 +22,13 @@ public class NotificationController {
   public NotificationController(NotificationService notificationService) {
     this.notificationService = notificationService;
   }
-  @ApiOperation(value = "유통기한 알림",notes = "store_id에 따라 유통기한 알림이 간다" )
+  @ApiOperation(value = "유통기한 알림",notes = "store_id가 보유한 상품의 유통기한 알림이 간다" )
     @GetMapping(value ="/expiration/{storeId}",produces = MediaType.TEXT_EVENT_STREAM_VALUE)
     public SseEmitter getProductExpirationNotifications(@PathVariable Long storeId) {
       return notificationService.getProductExpirationNotifications(storeId);
     }
 
-  @ApiOperation(value = "재고임박 알림" ,notes = "store_id에 따라 재고임박 알림이 간다")
+  @ApiOperation(value = "재고임박 알림" ,notes = "store_id가 보유한 상품의 재고임박 알림이 간다")
   @GetMapping(value = "/low-inventory/{storeId}", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
   public SseEmitter getLowInventoryNotifications(@PathVariable Long storeId) {
 

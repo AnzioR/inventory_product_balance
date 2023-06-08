@@ -41,7 +41,7 @@ public class EventController {
 
   //이벤트 상품 수정 : id 작성안하면 에러 발생하므로 적어줘야 한다 ok
   @PutMapping("/eventdetail/update/{id}")
-  @ApiOperation(value = "이벤트 수정" , notes = "event_id 입력 후 event 정보를 수정한다" )
+  @ApiOperation(value = "이벤트 수정" , notes = "event_id로 String name,Long event_type_id,String imgname,String start_date,String end_date 수정 가능하다" )
   public Event updateEvent(@PathVariable Long id, @RequestBody Event event) {
     try {
       eventService.modify(event);

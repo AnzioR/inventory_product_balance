@@ -32,7 +32,7 @@ public class StoreProductIssueController {
 
   //유통기한이 하루 지난 점포보유 상품들을 폐기하면, 점포보유상품 이슈 테이블에 등록한다.
   @PostMapping("/add")
-  @ApiOperation(value = "폐기", notes = "유통기한이 하루 지난 점포보유 상품들을 폐기하면, 점포보유상품 이슈 테이블에 등록한다.")
+  @ApiOperation(value = "폐기", notes = "유통기한이 하루 지난 점포보유 상품들을 폐기하면, 점포보유상품 이슈 테이블에 등록한다")
   public StoreProductIssue register(@RequestBody StoreProduct sp) {
     try {
       storeProductIssueService.register(new StoreProductIssue(sp.getId(), sp.getQnt(), 5L, new Date()));

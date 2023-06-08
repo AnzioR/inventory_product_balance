@@ -46,7 +46,7 @@ public class StoreProductController {
   }
 
   @PutMapping("/update")
-  @ApiOperation(value = "점포 보유 상품 수정" , notes = "store_product_id 로 qnt,is_using,store_price,event_rate,is_auto을 수정한다")
+  @ApiOperation(value = "점포 보유 상품 수정" , notes = "store_product_id로 qnt,is_using,store_price,event_rate,is_auto 수정 가능하다")
   public StoreProduct update(@RequestBody StoreProduct product) {
     try {
       storeProductService.modify(product);
@@ -81,7 +81,7 @@ public class StoreProductController {
   }
 
   @GetMapping("/categoryname/{store_id}")
-  @ApiOperation(value = "카테고리별 조회" , notes = "store_id로 점포 보유 상품을 카테고리 별로 조회한다")
+  @ApiOperation(value = "카테고리별 조회" , notes = "store_id로 점포 보유 상품을 카테고리별로 조회한다")
   public List<StockInfo> getByCategory(String categoryname, @PathVariable Long store_id) {
     try {
       List<StockInfo> selectcategoryname = storeProductService.selectcategoryname(categoryname,store_id);
@@ -126,7 +126,7 @@ public class StoreProductController {
 
   //상품을 자동발주 신청하기
   @PostMapping("/auto-order")
-  @ApiOperation(value = "점포 보유 상품 자동발주" , notes = "점포 보유 상품에서 자동 발주를 신청한다")
+  @ApiOperation(value = "점포 보유 상품 자동발주" , notes = "점포 보유 상품을 자동 발주를 신청한다")
   public ResponseEntity<?> autoOrderRequest(@RequestBody StoreAutoOrders sao) {
     try {
       if (sao.getQnt() < sao.getMin_qnt()) {

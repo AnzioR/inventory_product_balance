@@ -35,7 +35,7 @@ public class OrdersCartController {
   }
 
   //발주카트에서 주문하려는 상품의 수량을 변경하기 ok
-  @ApiOperation(value = "발주카트에 담긴 상품 수량 수정" ,notes = "Integer qnt 변경 가능하다")
+  @ApiOperation(value = "발주카트에 담긴 상품 수량 수정" ,notes = "발주카트에 담은 상품의 수량 변경이 가능하다")
   @PutMapping("/update")
   public OrdersCart updateCart(Long id, @RequestBody OrdersCart ordersCart) {
     try {

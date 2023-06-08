@@ -47,7 +47,7 @@ public class StaffController {
         return staff;
     }
 
-    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 store_id로 날씨 데이터 가져온다")
+    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 store_id로 날씨 데이터를 가져온다")
     @PostMapping("/login")
     public Staff login(@RequestBody Staff staff) throws Exception {
         Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
@@ -138,7 +138,7 @@ public class StaffController {
         }
     }
     @DeleteMapping("/delete")
-    @ApiOperation(value = "직원 삭제", notes = "staff_id로 삭제 한다")
+    @ApiOperation(value = "직원 삭제", notes = "staff_id로 삭제한다")
     public void delete(Long id){
         try {
             staffService.remove(id);

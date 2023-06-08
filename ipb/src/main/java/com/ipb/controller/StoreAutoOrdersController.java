@@ -36,7 +36,7 @@ public class StoreAutoOrdersController {
 
   //자동발주를 삭제한다.
   @DeleteMapping("/delete/{id}")
-  @ApiOperation(value = "자동발주 삭제", notes = "store_auto_orders_id로 삭제가능하다")
+  @ApiOperation(value = "자동발주 삭제", notes = "store_auto_orders_id로 등록된 자동발주를 삭제한다")
   public void delete(@PathVariable Long id){
     try {
       storeAutoOrdersService.deleteAuto(id);
