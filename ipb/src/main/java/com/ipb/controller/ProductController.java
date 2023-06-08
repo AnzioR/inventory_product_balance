@@ -32,7 +32,7 @@ public class ProductController {
   }
 
 //  본사 상품을 등록한다.
-  @ApiOperation(value = "본사 상품 추가", notes = "Long id,Long product_info_id,int qnt,int price,int cost,String exp")
+  @ApiOperation(value = "본사 상품 추가", notes = "등록정보 : Long id,Long product_info_id,int qnt,int price,int cost,String exp")
   @PostMapping("/add")
   public Product register(@RequestBody Product product) {
     try {

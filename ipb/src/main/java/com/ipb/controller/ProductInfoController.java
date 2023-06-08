@@ -69,7 +69,7 @@ public class ProductInfoController {
 
 //  본사 상품 정보를 수정한다
   @PutMapping("/update")
-  @ApiOperation(value = "본사 상품 정보 수정", notes = "product_code로 수정 가능한 값 String name,String brand,String detail")
+  @ApiOperation(value = "본사 상품 정보 수정", notes = "product_code로 String name,String brand,String detail,int box_qnt,int safe_qnt,String imgname 수정 가능하다")
   public ProductInfo update(@RequestBody ProductInfo productInfo) {
     try {
       productInfoService.modify(productInfo);
