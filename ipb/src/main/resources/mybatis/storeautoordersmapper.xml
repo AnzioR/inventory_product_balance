@@ -34,11 +34,11 @@
 
     <!-- 점포별 자동발주 내역 가져오기 -->
     <select id="selectAutoList" parameterType="Long" resultType="StoreAutoOrders">
-        SELECT row_number() over(order by sao.id asc) as id,
-        pi.name as product_name,
-        p.price as product_price,
-        p.cost as product_cost,
-        sao.qnt, sao.min_qnt, sao.product_code
+        SELECT row_number() over(),
+                pi.name as product_name,
+                p.price as product_price,
+                p.cost as product_cost,
+                sao.qnt, sao.min_qnt, sao.product_code, sao.id
         FROM store_auto_orders sao
                  JOIN product_info pi ON pi.product_code = sao.product_code
                  JOIN product p ON p.product_info_id = pi.product_code
