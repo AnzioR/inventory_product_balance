@@ -21,7 +21,7 @@ public class EventAutoOrdersController {
 
     //
     @GetMapping("/eventAutoOrders/{store_id}")
-    @ApiOperation(value = "이벤트 자동발주", notes = "store_id로 삭제한다")
+    @ApiOperation(value = "이벤트 자동발주", notes = "자동발주 리스트를 스토어 별로 불러온다.")
     public List<EventAutoOrders> getListOfEventAutoOrders(@PathVariable Long store_id) {
         try {
             List<EventAutoOrders> list = eventAutoOrdersService.getList(store_id);
@@ -33,7 +33,7 @@ public class EventAutoOrdersController {
     }
 
     @PutMapping("/eventAutoOrders/update")
-    @ApiOperation(value = "이벤트 자동발주 수정")
+    @ApiOperation(value = "이벤트 자동발주 수정" , notes = "해당 상품의 아이디별로 수량을 수정할수있다.")
     public void updateQnt(@RequestBody EventAutoOrders eventAutoOrders){
         try {
             eventAutoOrdersService.update(eventAutoOrders);
