@@ -15,7 +15,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/auto")
-@Api(tags = {"자동발주 컨트롤러"})
+@Api(tags = {"자동발주"})
 public class StoreAutoOrdersController {
 
   @Autowired
@@ -36,6 +36,7 @@ public class StoreAutoOrdersController {
 
   //자동발주를 삭제한다.
   @DeleteMapping("/delete/{id}")
+  @ApiOperation(value = "자동발주 수량옵션 변경", notes = "store_auto_orders_id로 삭제가능하다")
   public void delete(@PathVariable Long id){
     try {
       storeAutoOrdersService.deleteAuto(id);

@@ -7,6 +7,8 @@ import com.ipb.domain.WeatherStatus;
 import com.ipb.service.StaffService;
 import com.ipb.service.WeatherService;
 import com.ipb.utill.OpenWeatherUtill;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"직원"})
 @RequestMapping("/staff")
 public class StaffController {
     @Autowired
@@ -27,6 +31,7 @@ public class StaffController {
 //    @Autowired
 //    JwtProvider jwtProvider;
 
+    @ApiOperation(value = "직원 등록")
     @PostMapping("/add")
     public Staff register(@RequestBody Staff staff) throws Exception {
         try {
@@ -41,6 +46,8 @@ public class StaffController {
         }
         return staff;
     }
+
+    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 store_id로 날씨 데이터 가져온다")
     @PostMapping("/login")
     public Staff login(@RequestBody Staff staff) throws Exception {
         Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
@@ -59,7 +66,9 @@ public class StaffController {
         //원래 대로라면 날씨랑 같이 넣어줘야해
     }
     //        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
+
     @PostMapping("/weather")
+    @ApiOperation(value = "날씨", notes = "직원이 로그인 할 때 날씨를 가져온다")
     public WeatherStatus getWeatherInfo(@RequestBody Staff staff) throws Exception {
 
         // 이건 3시간 단위로 조회할꺼야
@@ -88,6 +97,7 @@ public class StaffController {
 
 
     @GetMapping("/list")
+    @ApiOperation(value = "직원 목록")
     public List<Staff> staffList(){
         try {
             return staffService.get();
@@ -97,6 +107,7 @@ public class StaffController {
         }
     }
     @GetMapping("/listname")
+    @ApiOperation(value = "직원 이름 목록")
     public List<Staff> staffListName(){
         try {
             return staffService.selectallname();
@@ -106,6 +117,7 @@ public class StaffController {
         }
     }
     @GetMapping("/detail")
+    @ApiOperation(value = "직원 상세보기", notes = "staff_id로 상세보기 할 수 있다")
     public Staff staffDetail(Long id){
         try {
             return staffService.get(id);
@@ -115,6 +127,7 @@ public class StaffController {
         }
     }
     @PutMapping("/update")
+    @ApiOperation(value = "직원 수정 ", notes = "직원의 비밀번호를 수정 할 수 있다")
     public Staff staffUpdate(@RequestBody Staff staff){
         try {
             staffService.modify(staff);
@@ -125,6 +138,7 @@ public class StaffController {
         }
     }
     @DeleteMapping("/delete")
+    @ApiOperation(value = "직원 삭제", notes = "staff_id로 삭제 한다")
     public void delete(Long id){
         try {
             staffService.remove(id);
