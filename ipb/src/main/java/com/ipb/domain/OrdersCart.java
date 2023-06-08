@@ -23,6 +23,8 @@ public class OrdersCart {
     private String category_name;
     private int box_qnt;
 
+    private int product_qnt;
+
     public OrdersCart(Long id, Integer qnt, Long product_id, Long store_id) {
         this.id = id;
         this.qnt = qnt;
