@@ -21,7 +21,7 @@ public class OrdersCartController {
   OrdersCartService ordersCartService;
 
   //발주카트에 상품 담기 ok
-  @ApiOperation(value = "발주카트 담기 ")
+  @ApiOperation(value = "발주카트 담기")
   @PostMapping("/add")
   public OrdersCart register(@RequestBody OrdersCart ordersCart) {
     try {
@@ -35,7 +35,7 @@ public class OrdersCartController {
   }
 
   //발주카트에서 주문하려는 상품의 수량을 변경하기 ok
-  @ApiOperation(value = "발주카트에 담긴 상품 수량 수정 " ,notes = "Integer qnt 변경 가능하다")
+  @ApiOperation(value = "발주카트에 담긴 상품 수량 수정" ,notes = "Integer qnt 변경 가능하다")
   @PutMapping("/update")
   public OrdersCart updateCart(Long id, @RequestBody OrdersCart ordersCart) {
     try {
@@ -49,7 +49,7 @@ public class OrdersCartController {
   }
 
   //발주 카트에 담긴 상품 삭제 ok
-  @ApiOperation(value = "발주카트 삭제",notes = " 발주카트에 담긴 상품 자체를 orders_cart_id로 삭제한다")
+  @ApiOperation(value = "발주카트 삭제",notes = "발주카트에 담긴 상품 자체를 orders_cart_id로 삭제한다")
   @DeleteMapping("/delete/{id}")
   public void delete(@PathVariable Long id) {
     try {
@@ -62,7 +62,7 @@ public class OrdersCartController {
   }
 
   //발주 카트 조회 : 점포에서 발주카트에 담은 상품 중 아이디번호에 해당되는 내역을 조회 ok
-  @ApiOperation(value = "발주 카트 조회 " ,notes = "orders_cart_id로 발주카트에 담은 상품내역을 조회한다")
+  @ApiOperation(value = "발주 카트 조회" ,notes = "orders_cart_id로 발주카트에 담은 상품내역을 조회한다")
   @GetMapping("/search/{id}")
   public OrdersCart cartDetail(@PathVariable Long id) {
     try {
@@ -73,7 +73,7 @@ public class OrdersCartController {
   }
 
   // 발주 카트 전체 조회 : 본사에서 모든 점포들이 발주카트에 담은 내역 전체를 조회 ok
-  @ApiOperation(value = "발주 카트 전체 조회 ")
+  @ApiOperation(value = "발주 카트 전체 조회 (본사)")
   @GetMapping("/all")
   public List<OrdersCart> cartAll() {
     try {
@@ -97,7 +97,7 @@ public class OrdersCartController {
   }
 
   //발주카트 비우기 : 발주카트에 담긴 상품을 삭제하는 기능이 아님! 발주카트가 주문으로 넘어갈때 카트 전체가 비워지는 기능 ok
-  @ApiOperation(value = "발주카트 비우기" ,notes = "store_id 사용한다")
+  @ApiOperation(value = "발주카트 비우기" ,notes = "발주가 진행되면 해당 store_id가 담은 발주카트를 비운다")
   @DeleteMapping("/removecart/{id}")
   public void deleteCart(@PathVariable Long id) {
     try {

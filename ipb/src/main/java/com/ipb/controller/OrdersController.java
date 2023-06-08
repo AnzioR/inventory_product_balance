@@ -170,7 +170,7 @@ public class OrdersController {
 
   //매장의 상세 발주내역을 발주번호로 조회 : 해당 정보 한개만 상세하게 보여줌 o
   @GetMapping("/store-orders-details/{id}")
-  @ApiOperation(value = "점포 발주내역 상세보기" , notes="orders_id 로 매장의 상세 발주내역을 해당 정보 한개만 상세하게 보여준다")
+  @ApiOperation(value = "점포 발주내역 상세보기" , notes="orders_id로 매장의 상세 발주내역을 해당 정보 한개만 상세하게 보여준다")
   public Orders selectDetailStoreOrders(@PathVariable Long id) {
     try {
       return ordersService.selectDetailStoreOrders(id);
@@ -241,7 +241,7 @@ public class OrdersController {
 
   //본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌
   @GetMapping("/store-orders-date-desc")
-  @ApiOperation(value = "발주 날짜별 내리차순", notes = "본사에서 발주리스트를 볼 때 날짜로 묶어서 보여준다")
+  @ApiOperation(value = "발주 날짜별 내림차순", notes = "본사에서 발주리스트를 볼 때 날짜로 묶어서 보여준다")
   public List<Orders> selectListByDateDesc() {
     try {
       return ordersService.selectListByDateDesc();
