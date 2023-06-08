@@ -31,7 +31,7 @@ public class StaffController {
 //    @Autowired
 //    JwtProvider jwtProvider;
 
-    @ApiOperation(value = "직원을 등록 같은 아이디가 존재할경우 회원가입이 불가능 하다.")
+    @ApiOperation(value = "직원 추가" , notes ="직원을 등록 같은 아이디가 존재할경우 회원가입이 불가능 하다.")
     @PostMapping("/add")
     public Staff register(@RequestBody Staff staff) throws Exception {
         try {
