@@ -31,7 +31,7 @@ public class StaffController {
 //    @Autowired
 //    JwtProvider jwtProvider;
 
-    @ApiOperation(value = "직원 등록")
+    @ApiOperation(value = "직원을 등록 같은 아이디가 존재할경우 회원가입이 불가능 하다.")
     @PostMapping("/add")
     public Staff register(@RequestBody Staff staff) throws Exception {
         try {
@@ -47,7 +47,7 @@ public class StaffController {
         return staff;
     }
 
-    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 store_id로 날씨 데이터 가져온다")
+    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 area 칼럼으로 날씨 데이터 파싱해서 가져온다.")
     @PostMapping("/login")
     public Staff login(@RequestBody Staff staff) throws Exception {
         Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
@@ -68,7 +68,7 @@ public class StaffController {
     //        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
 
     @PostMapping("/weather")
-    @ApiOperation(value = "날씨", notes = "직원이 로그인 할 때 날씨를 가져온다")
+    @ApiOperation(value = "날씨", notes = "일정시간마다 날씨데이터를 새로 받아와서 화면에 뿌려줘야 하기위함이다.")
     public WeatherStatus getWeatherInfo(@RequestBody Staff staff) throws Exception {
 
         // 이건 3시간 단위로 조회할꺼야
@@ -107,7 +107,7 @@ public class StaffController {
         }
     }
     @GetMapping("/listname")
-    @ApiOperation(value = "직원 이름 목록")
+    @ApiOperation(value = "직원 목록+스토어의 정보")
     public List<Staff> staffListName(){
         try {
             return staffService.selectallname();
