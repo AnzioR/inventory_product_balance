@@ -2,6 +2,8 @@ package com.ipb.controller;
 
 import com.ipb.domain.EventAutoOrders;
 import com.ipb.service.EventAutoOrdersService;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -11,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"이벤트 자동 발주"})
 public class EventAutoOrdersController {
 
     @Autowired
@@ -18,6 +21,7 @@ public class EventAutoOrdersController {
 
     //
     @GetMapping("/eventAutoOrders/{store_id}")
+    @ApiOperation(value = "이벤트 자동발주", notes = "store_id로 삭제한다")
     public List<EventAutoOrders> getListOfEventAutoOrders(@PathVariable Long store_id) {
         try {
             List<EventAutoOrders> list = eventAutoOrdersService.getList(store_id);
@@ -29,6 +33,7 @@ public class EventAutoOrdersController {
     }
 
     @PutMapping("/eventAutoOrders/update")
+    @ApiOperation(value = "이벤트 자동발주 수정")
     public void updateQnt(@RequestBody EventAutoOrders eventAutoOrders){
         try {
             eventAutoOrdersService.update(eventAutoOrders);
