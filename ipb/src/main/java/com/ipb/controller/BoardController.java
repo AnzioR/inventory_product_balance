@@ -17,6 +17,7 @@ import java.util.List;
 public class BoardController {
   @Autowired
   BoardService boardService;
+  //
 
   @PostMapping("/add")
   @ApiOperation(value = "게시글 추가" , notes = "title,body_text,staff_id,imgname 로 등록이 가능하다")
