@@ -213,7 +213,9 @@
         c.name  as category_name,
         pi.detail,
         pi.product_code,
-        pi.storage
+        pi.storage,
+        sp.store_price,
+        pi.safe_qnt
         FROM store_product sp
         INNER JOIN product p on p.id = sp.product_id
         INNER JOIN product_info pi on pi.product_code = p.product_info_id

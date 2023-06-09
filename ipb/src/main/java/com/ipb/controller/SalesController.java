@@ -57,7 +57,7 @@ public class SalesController {
     // 매출을 등록하는 로직 salesmapper 에 자세히 설명이 되어있으며 등록과 동시에 storeproduct가 감소되어야 하기때문에
 //  //storeproductservice를 이용 재고수량 보다 판매량이 많으면 -가 되는게 아닌 판매가 이루어 지지 않게 만듬
     @PostMapping("/add")
-    @ApiOperation(value = "매출 등록")
+    @ApiOperation(value = "매출 등록",notes = "qnt,store_product_id,now() 로 등록을 한다")
     public void add(@RequestBody Sales sales){
         try {
             storeProductService.updateqnt(sales);
