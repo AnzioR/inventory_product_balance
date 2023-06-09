@@ -19,7 +19,7 @@ public class BoardController {
   BoardService boardService;
 
   @PostMapping("/add")
-  @ApiOperation(value = "게시글 추가")
+  @ApiOperation(value = "게시글 추가" , notes = "title,body_text,staff_id,imgname 로 등록이 가능하다")
   public Board add(@RequestBody Board board) {
     try {
       boardService.register(board);
