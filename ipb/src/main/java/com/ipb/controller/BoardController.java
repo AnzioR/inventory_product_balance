@@ -17,6 +17,7 @@ import java.util.List;
 public class BoardController {
   @Autowired
   BoardService boardService;
+  //
 
   @PostMapping("/add")
   @ApiOperation(value = "게시글 추가")
