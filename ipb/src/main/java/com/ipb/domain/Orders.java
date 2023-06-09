@@ -27,11 +27,11 @@ public class Orders {
     private int product_inventory_qnt;
     private String product_exp;
 
-    private int product_info_id;
+    private Long product_info_id;
     private int product_qnt;
     private int product_price;
 
-    private int product_code;
+    private Long product_code;
     private String product_info_brand;
     private String product_info_detail;
     private String product_info_imgname;
