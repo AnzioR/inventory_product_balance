@@ -124,6 +124,8 @@
                pi.name as product_name,
                d.status as orders_status,
                p.exp as product_exp,
+               p.price as product_price,
+               p.cost as product_cost,
                pi.brand as product_info_brand,
                pi.detail as product_info_detail,
                pi.imgname as product_info_imgname,
