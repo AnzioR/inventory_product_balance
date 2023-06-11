@@ -31,6 +31,8 @@ public class Orders {
     private int product_qnt;
     private int product_price;
 
+    private int product_cost;
+
     private Long product_code;
     private String product_info_brand;
     private String product_info_detail;
