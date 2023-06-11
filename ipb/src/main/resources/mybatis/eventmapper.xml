@@ -50,8 +50,18 @@
         SELECT et.*, ev.*
         FROM event ev
                  INNER JOIN event_type et ON ev.event_type_id = et.id
-        WHERE ev.id = #{id};
+        WHERE ev.id = #{id}
     </select>
+<!--    <select id="availablevent" resultType="Event">-->
+<!--        <![CDTA [SELECT * FROM event e where e.end_date > now() and now() > e.start_date]]>-->
+<!--    </select>-->
+<!--    <select id="soonevent" resultType="Event">-->
+<!--        <![CDTA [SELECT * FROM event e where e.start_date > now()]]>-->
+<!--    </select>-->
+<!--    <select id="expirevent" resultType="Event">-->
+<!--        <![CDTA [SELECT * FROM event e where e.end_date < now()]]>-->
+<!--    </select>-->
+
 
 
 </mapper>
