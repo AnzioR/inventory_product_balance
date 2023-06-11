@@ -28,7 +28,7 @@ class StoreProductServiceTest {
 
   @Test
   void modify() {
-    StoreProduct storeProduct = new StoreProduct(270L, 800, 3L, 2L, false,4000,2.0);
+    StoreProduct storeProduct = new StoreProduct(270L, 8, 3L, 2L, false,4000,2.0);
     try {
       storeProductService.modify(storeProduct);
     } catch (Exception e) {
