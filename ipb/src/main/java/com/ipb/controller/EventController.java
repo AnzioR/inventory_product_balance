@@ -97,6 +97,33 @@ public class EventController {
       throw new RuntimeException(e);
     }
   }
+//  @GetMapping("/eventlist/expire")
+//  @ApiOperation(value = "이벤트 종료 조회")
+//  public List<Event> expire() {
+//    try {
+//      return eventService.expire();
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
+//  @GetMapping("/eventlist/available")
+//  @ApiOperation(value = "이벤트 진행중 조회")
+//  public List<Event> available() {
+//    try {
+//      return eventService.available();
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
+//  @GetMapping("/eventlist/soon")
+//  @ApiOperation(value = "이벤트 진행예정 조회")
+//  public List<Event> soon() {
+//    try {
+//      return eventService.soon();
+//    } catch (Exception e) {
+//      throw new RuntimeException(e);
+//    }
+//  }
 
   //이벤트 타입별로 조회하기 ok
   @GetMapping("/selectbytype/{id}")
