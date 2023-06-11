@@ -202,7 +202,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
           num = sp.getStore_id();
           String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
           //메세지 발송
-          sendMsg(num, msg);
+          //sendMsg(num, msg);
 
         }
       }
@@ -219,7 +219,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     Message message = new Message(formattedNum, msg);
 
     //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
-    smsService.sendSms(message);
+    //smsService.sendSms(message);
   }
 
 
@@ -320,7 +320,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
             storeIdForMsg = storeProduct.getStore_id();
 
             String msg = "유통기한이 3일 이하로 남은 상품이 있습니다.";
-            sendMsg(storeIdForMsg, msg);
+            //sendMsg(storeIdForMsg, msg);
             System.out.println("유통기한 3일 이하! " + msg);
           }
         }
