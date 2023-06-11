@@ -82,7 +82,7 @@ public class StoreAutoOrdersService {
           if (storeIdForMsg != autoOrder.getStore_id()) {
             storeIdForMsg = autoOrder.getStore_id();
             String msg = "자동발주가 진행됩니다. 사이트에서 확인하세요";
-//            sendMsg(storeIdForMsg, msg);
+            sendMsg(storeIdForMsg, msg);
           }
 
           for (Product product : productList) {
@@ -108,7 +108,7 @@ public class StoreAutoOrdersService {
       Message errMsg = new Message("01049010828", "자동발주를 실패했습니다. 다시 확인해주세요.");
 
       //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
-      //smsService.sendSms(errMsg);
+      smsService.sendSms(errMsg);
       e.printStackTrace();
     }
   }
@@ -123,7 +123,7 @@ public class StoreAutoOrdersService {
     Message message = new Message(formattedNum, msg);
 
     //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
-    //smsService.sendSms(message);
+    smsService.sendSms(message);
   }
 
   //자동발주 여러개가 다 들어갔을때 수량체크 되는 부분이 있으면 좋겠지만, 일정관계상 어려움이 있었다....ㅜㅜ
