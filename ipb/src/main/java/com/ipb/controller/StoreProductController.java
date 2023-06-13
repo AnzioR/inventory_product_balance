@@ -151,10 +151,9 @@ public class StoreProductController {
   @ApiOperation(value = "폐기시 수량 0" , notes = "상품의 폐기를 누르면 상품수량=0, is_using=0 으로 변경한다")
   public StoreProduct qntZero(Long id, @RequestBody StoreProduct storeProduct) {
     try {
-      storeProductService.qntZero(storeProduct);
-
       //폐기한 상품을 폐기 테이블에 등록해준다.
       storeProductIssueService.register(new StoreProductIssue(storeProduct.getId(), storeProduct.getQnt(), 5L, new Date()));
+      storeProductService.qntZero(storeProduct);
       return storeProduct;
     } catch (Exception e) {
       e.printStackTrace();
