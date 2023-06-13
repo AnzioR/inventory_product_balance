@@ -136,7 +136,7 @@ public class NotificationService {
           if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
             if (!lowInventoryProducts.contains(storeProduct)) { // 중복 체크
               lowInventoryProducts.add(storeProduct);
-//              System.out.println(lowInventoryProducts);
+              //System.out.println(lowInventoryProducts);
             }
           }
         }
@@ -151,7 +151,7 @@ public class NotificationService {
 
           if (!ordersCartService.exists(ordersCart)) { // 중복 체크
             ordersCartService.register(ordersCart);
-            System.out.println(ordersCart);
+            //System.out.println(ordersCart);
           }
         }
 

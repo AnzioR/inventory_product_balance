@@ -86,7 +86,11 @@
 
     <!-- 동일한 카트가 존재하는지 확인함 -->
     <select id="exists" parameterType="OrdersCart" resultType="int">
-        SELECT COUNT(*) FROM orders_cart WHERE product_id = #{product_id} AND store_id = #{store_id}
+        SELECT COUNT(*)
+        FROM orders_cart oc
+            JOIN product p ON p.id = oc.product_id
+            JOIN product_info pi ON pi.product_code = p.product_info_id
+        WHERE product_id = #{product_id} AND store_id = #{store_id}
     </select>
 
 </mapper>

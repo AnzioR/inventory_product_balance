@@ -37,8 +37,8 @@ public class StoreAutoOrdersService {
   @Autowired
   StoreService storeService;
 
-  //@Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-  @Scheduled(fixedDelay = 1000*60*60)
+  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
+  //@Scheduled(fixedDelay = 1000*60*60)
   public void checkStock() throws Exception {
     try {
       // 매일 자동발주 리스트를 가져와서
