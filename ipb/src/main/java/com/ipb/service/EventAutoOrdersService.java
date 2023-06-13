@@ -42,8 +42,10 @@ public class EventAutoOrdersService {
     public void update(EventAutoOrders order) throws Exception {
         eventAutoOrdersMapper.updateQnt(order);
     }
-    //@Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-    @Scheduled(fixedDelay = 60 * 60 * 1000)
+
+
+    @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
+    //@Scheduled(fixedDelay = 60 * 60 * 1000)
     public void AutoEventProductFirst() throws Exception {
 // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
