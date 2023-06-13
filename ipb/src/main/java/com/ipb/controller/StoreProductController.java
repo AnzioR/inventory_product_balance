@@ -3,6 +3,7 @@ package com.ipb.controller;
 import com.ipb.domain.*;
 import com.ipb.service.NotificationService;
 import com.ipb.service.ProductService;
+import com.ipb.service.StoreProductIssueService;
 import com.ipb.service.StoreProductService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
@@ -10,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 
@@ -19,6 +21,10 @@ import java.util.List;
 public class StoreProductController {
   @Autowired
  NotificationService notificationService;
+
+  @Autowired
+  StoreProductIssueService storeProductIssueService;
+
   @Autowired
   StoreProductService storeProductService;
 
@@ -146,6 +152,9 @@ public class StoreProductController {
   public StoreProduct qntZero(Long id, @RequestBody StoreProduct storeProduct) {
     try {
       storeProductService.qntZero(storeProduct);
+
+      //폐기한 상품을 폐기 테이블에 등록해준다.
+      storeProductIssueService.register(new StoreProductIssue(storeProduct.getId(), storeProduct.getQnt(), 5L, new Date()));
       return storeProduct;
     } catch (Exception e) {
       e.printStackTrace();
