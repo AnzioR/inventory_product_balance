@@ -21,13 +21,14 @@ public class ProductController {
 
 //  본사 상품 전체를 list로 뿌려준다.
   @ApiOperation(value = "본사 상품 리스트")
-  @GetMapping("/list")
-  public List<Product> get() {
+  @GetMapping("/list/{store_id}")
+  public List<Product> allProductByStoreId(@PathVariable Long store_id) {
     try {
-      List<Product> list = productService.get();
-      return list;
+      List<Product> orderlistproduct = productService.orderlistproduct(store_id);
+      return orderlistproduct;
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
+      return null;
     }
   }
 
