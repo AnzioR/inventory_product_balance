@@ -200,7 +200,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
         //매장에 문자를 발송하지만, 이미 문자를 받는 점포는 제외함
         if(num != sp.getStore_id()) {
           num = sp.getStore_id();
-          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다. check!";
+          String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다.";
           //메세지 발송
           //sendMsg(num, msg);
 
