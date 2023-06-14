@@ -30,7 +30,7 @@ public class WeatherAutoService {
 
 // 자동 발주별로 cross check가 필요 할거같다. 안만들어도 이유를 ? 만들어보자
  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-    @Scheduled(fixedDelay = 1000 * 60 * 60)
+//    @Scheduled(fixedDelay = 1000 * 60 * 60)
     public void checkWeather() throws Exception {
         List<Store> rainStore = getStoreListAfter3daysWillBeRain();
 
@@ -87,7 +87,7 @@ public class WeatherAutoService {
             String futureWeather = FutureOpenWeatherUtill.getFutureWeather(store);
             String threeDay = FutureOpenWeatherUtill.FutureWeatherInfo(futureWeather);
 
-            System.out.println(threeDay);
+//            System.out.println(threeDay);
             if (threeDay.equals("Rain")) {
                 rainStore.add(store);
             } else if (threeDay.equals("Clouds")) {
