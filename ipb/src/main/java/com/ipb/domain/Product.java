@@ -28,6 +28,7 @@ public class Product {
     private String store_qnt;
     private Integer safe_qnt;
     private Integer total_qnt;
+    private Integer all_qnt;
 
     public Product(Long id, int qnt, int price, int cost, String exp, Long product_info_id) {
         this.id = id;
