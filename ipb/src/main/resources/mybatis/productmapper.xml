@@ -17,7 +17,7 @@
     <!--        SELECT * FROM product WHERE name=#{name}-->
     <!--    </select>-->
     <select id="orderlistproduct" resultType="Product">
-        SELECT p.*, pi.product_code, pi.name, p.cost, p.price, pi.imgname,SUM(sp.qnt) as total_qnt,
+        SELECT p.*, pi.product_code, pi.name, p.cost, p.price, pi.imgname,SUM(sp.qnt) as total_qnt,SUM(p.qnt) as all_qnt,
         c.name as category_name, pi.box_qnt, pi.storage, pi.brand, pi.safe_qnt,
         sp.qnt as store_qnt
         FROM product p

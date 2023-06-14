@@ -7,7 +7,7 @@
     <!-- 전체 상품을 store_id로 다 조회하지만 재고가 0인 상품도 조회고  재고가 0이고 유통기한이 지난 상품은 안보여짐 (유통기한 기준으로 오름차순) -->
     <select id="selectstoreproduct" parameterType="Long" resultType="StoreProduct">
         SELECT sp.id,
-        pi.name as product_name,SUM(sp.qnt) AS total_quantity,
+        pi.name as product_name,SUM(sp.qnt) as sp_qnt,
         p.price,
         pi.imgname,
         sp.qnt,
