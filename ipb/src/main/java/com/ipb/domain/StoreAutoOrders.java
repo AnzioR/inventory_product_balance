@@ -21,4 +21,5 @@ public class StoreAutoOrders {
   private int product_cost;
 
   private Long store_id;
+  private String brand;
 }
