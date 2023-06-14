@@ -129,7 +129,7 @@ public class EventAutoOrdersService {
             List<Orders> orderList = new ArrayList<Orders>();
 //각각 주문 리스트에서 존재하는 리스트들의 값을 가지고 재 값을 넣는다.
             for (EventAutoOrders ea : eventAutoOrders) {
-                orderList.add(new Orders(ea.getQnt(), ea.getProduct_id(), ea.getStore_id(), 1L, 1L));
+                orderList.add(new Orders(ea.getQnt(), ea.getProduct_id(), ea.getStore_id(), 1L, 3L));
             }
 //오더에 해당 값을 넣어준다
             ordersMapper.insertList(orderList);
