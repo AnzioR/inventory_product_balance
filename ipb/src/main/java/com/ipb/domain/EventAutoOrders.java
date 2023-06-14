@@ -24,6 +24,8 @@ public class EventAutoOrders {
     private Long event_id;
     private String start_date;
     private String end_date;
+    private String brand;
+
 
     public EventAutoOrders(Long event_product_id) {
         this.event_product_id = event_product_id;
