@@ -2,6 +2,7 @@ package com.ipb.service;
 
 import com.ipb.domain.*;
 import com.ipb.mapper.*;
+import com.ipb.utill.FutureOpenWeatherUtill;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -43,9 +44,18 @@ public class EventAutoOrdersService {
         eventAutoOrdersMapper.updateQnt(order);
     }
 
+    public ArrayList<EventProduct> subtractUmbrella(ArrayList<EventProduct> list, Long unbrellaID){
+        for(EventProduct product : list){
+            if(product.getProduct_code() == unbrellaID){
+                list.remove(product);
+                break;
+            }
+        }
+        return list;
+    }
 
     @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-    //@Scheduled(fixedDelay = 60 * 60 * 1000)
+//    @Scheduled(fixedDelay = 60 * 60 * 1000)
     public void AutoEventProductFirst() throws Exception {
 // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
@@ -59,13 +69,16 @@ public class EventAutoOrdersService {
 // 문자열로 변환
         String dateString = afterDate.format(formatter);
 
+        List<Store> storeList = storeService.get();
+
 // 결과 출력
         // 해당 날짜에 해당하는 이벤트가 있을시가 5일전에 모든 점포에 담아주는 마술
         List<EventProduct> eventProducts = eventProductMapper.searcheventproductbystartdate(dateString);
+//        ArrayList<EventProduct> eventProducts1 = subtractUmbrella((ArrayList<EventProduct>) eventProducts, 8808739000504L);
+//        System.out.println(eventProducts1);
         // 5일 뒤 + 1년 전 이벤트 정보 가져오기
         Event previousEvent = eventMapper.findPreviousEvent(dateString);
-
-        List<Store> storeList = storeService.get();
+        // 이벤트를 조회를 하는데 3일전에 비가올때와 5일전 이벤트의 상품이 동일할떄는 이벤트 발주를 넣지않는다 (추가)
 
         // 50개씩 주문 넣기 이벤트가 없었을수도 있고 점포가 이번년도에 새로 생긴 점포 일수 있기 때문에 일괄적으로 50 개씩 넣고 밑의 로직을 진행
         for (EventProduct ep : eventProducts) {
@@ -129,7 +142,7 @@ public class EventAutoOrdersService {
             List<Orders> orderList = new ArrayList<Orders>();
 //각각 주문 리스트에서 존재하는 리스트들의 값을 가지고 재 값을 넣는다.
             for (EventAutoOrders ea : eventAutoOrders) {
-                orderList.add(new Orders(ea.getQnt(), ea.getProduct_id(), ea.getStore_id(), 1L, 1L));
+                orderList.add(new Orders(ea.getQnt(), ea.getProduct_id(), ea.getStore_id(), 1L, 3L));
             }
 //오더에 해당 값을 넣어준다
             ordersMapper.insertList(orderList);

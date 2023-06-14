@@ -35,7 +35,7 @@
     <!-- 점포별 자동발주 내역 가져오기 -->
     <select id="selectAutoList" parameterType="Long" resultType="StoreAutoOrders">
         SELECT row_number() over(),
-                pi.name as product_name,
+                pi.name as product_name,pi.brand,
                 p.price as product_price,
                 p.cost as product_cost,
                 sao.qnt, sao.min_qnt, sao.product_code, sao.id
