@@ -34,15 +34,22 @@
 
     <!-- 점포별 자동발주 내역 가져오기 -->
     <select id="selectAutoList" parameterType="Long" resultType="StoreAutoOrders">
-        SELECT sao.*, sp.*, pi.*, p.*,
+        SELECT row_number() over(),
                 pi.name as product_name,
                 p.price as product_price,
-                p.cost as product_cost
+                p.cost as product_cost,
+                sao.qnt, sao.min_qnt, sao.product_code, sao.id
         FROM store_auto_orders sao
-                 JOIN store_product sp on sp.id = sao.store_product_id
-                 JOIN product_info pi on pi.product_code = sao.product_code
-                 JOIN product p on p.product_info_id = pi.product_code
+                 JOIN product_info pi ON pi.product_code = sao.product_code
+                 JOIN product p ON p.product_info_id = pi.product_code
+                 JOIN store_product sp ON sp.id = sao.store_product_id
+        WHERE sp.is_auto = 1 and sp.store_id=#{store_id} group by sao.product_code
+    </select>
+
+    <select id="getList" parameterType="Long" resultType="StoreAutoOrders">
+        SELECT * FROM store_auto_orders
         WHERE store_id = #{store_id}
     </select>
 
 </mapper>
+

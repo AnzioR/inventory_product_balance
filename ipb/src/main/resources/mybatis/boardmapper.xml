@@ -5,9 +5,10 @@
 <mapper namespace="com.ipb.mapper.BoardMapper">
 
     <select id="select" parameterType="Long" resultType="Board">
-        SELECT *
-        FROM board
-        WHERE id = #{id}
+        SELECT b.*, s.name
+        FROM board b
+                 INNER JOIN staff s ON b.staff_id = s.id
+        WHERE b.id = #{id}
     </select>
     <select id="selectall" resultType="Board">
         SELECT board.id, board.title, board.body_text, staff.name, board.imgname, board.write_date

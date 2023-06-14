@@ -27,6 +27,12 @@ public class EventAutoOrdersService {
     @Autowired
     SalesMapper salesMapper;
 
+    @Autowired
+    StoreService storeService;
+
+    @Autowired
+    SmsService smsService;
+
     //매장 id 에 따른 내역리스트 보여주기
     public List<EventAutoOrders> getList(Long store_id) throws Exception {
         return eventAutoOrdersMapper.listByStoreId(store_id);
@@ -36,8 +42,10 @@ public class EventAutoOrdersService {
     public void update(EventAutoOrders order) throws Exception {
         eventAutoOrdersMapper.updateQnt(order);
     }
+
+
     @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
-//    @Scheduled(fixedDelay = 60 * 60 * 1000)
+    //@Scheduled(fixedDelay = 60 * 60 * 1000)
     public void AutoEventProductFirst() throws Exception {
 // 현재 날짜 가져오기
         LocalDate currentDate = LocalDate.now();
@@ -56,6 +64,8 @@ public class EventAutoOrdersService {
         List<EventProduct> eventProducts = eventProductMapper.searcheventproductbystartdate(dateString);
         // 5일 뒤 + 1년 전 이벤트 정보 가져오기
         Event previousEvent = eventMapper.findPreviousEvent(dateString);
+
+        List<Store> storeList = storeService.get();
 
         // 50개씩 주문 넣기 이벤트가 없었을수도 있고 점포가 이번년도에 새로 생긴 점포 일수 있기 때문에 일괄적으로 50 개씩 넣고 밑의 로직을 진행
         for (EventProduct ep : eventProducts) {
@@ -76,6 +86,24 @@ public class EventAutoOrdersService {
                 }
             }
         }
+
+        for(Store s : storeList) {
+            String msg = "이벤트 자동발주가 진행되었습니다. 이벤트 자동발주 리스트를 확인하세요~";
+            //sendMsg(s.getId(), msg);
+        }
+
+    }
+
+    public void sendMsg(Long storeId, String msg) throws Exception {
+        // storeId로 전화번호를 가져오는 서비스를 이용하자! 전화번호는 문자열이니까 Store로 안가져와도 된다!
+        String num = storeService.selectNumber(storeId);
+        //전화번호를 받아오는 형식을 변경한다.
+        String formattedNum = num.replaceAll("-", "");
+        //점포관리자에게 자동발주되었음을 문자로 알려준다.
+        Message message = new Message(formattedNum, msg);
+
+        //문자 발송이 잘 되는 것을 확인했으므로 주석처리함.
+        //smsService.sendSms(message);
     }
 
 

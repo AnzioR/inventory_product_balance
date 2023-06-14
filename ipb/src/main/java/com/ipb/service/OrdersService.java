@@ -146,7 +146,9 @@ public class OrdersService implements MyService<Long, Orders> {
     // 장바구니 목록에 수량을 본사 최대 수량으로 변경
     for (OrdersCart oc : unOrderableList) {
       int maxQnt = productMapper.select(oc.getProduct_id()).getQnt();
-      oc.setQnt(maxQnt);
+      if(oc.getQnt() > maxQnt) {
+        oc.setQnt(maxQnt);
+      }
     }
     // 정상 발주 처리 진행
     normalOrderProcess(unOrderableList);

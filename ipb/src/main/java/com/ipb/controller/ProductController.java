@@ -13,6 +13,7 @@ import java.util.List;
 //@Api(value = "productController v1" ,tags = "본사 상품 API" )
 @RestController
 @RequestMapping("/product")
+@Api(tags = {"본사 상품"})
 public class ProductController {
 
   @Autowired
@@ -20,18 +21,19 @@ public class ProductController {
 
 //  본사 상품 전체를 list로 뿌려준다.
   @ApiOperation(value = "본사 상품 리스트")
-  @GetMapping("/list")
-  public List<Product> get() {
+  @GetMapping("/list/{store_id}")
+  public List<Product> allProductByStoreId(@PathVariable Long store_id) {
     try {
-      List<Product> list = productService.get();
-      return list;
+      List<Product> orderlistproduct = productService.orderlistproduct(store_id);
+      return orderlistproduct;
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
+      return null;
     }
   }
 
 //  본사 상품을 등록한다.
-  @ApiOperation(value = "본사 상품 추가", notes = "Long id,Long product_info_id,int qnt,int price,int cost,String exp")
+  @ApiOperation(value = "본사 상품 추가", notes = "등록정보 : Long id,Long product_info_id,int qnt,int price,int cost,String exp")
   @PostMapping("/add")
   public Product register(@RequestBody Product product) {
     try {

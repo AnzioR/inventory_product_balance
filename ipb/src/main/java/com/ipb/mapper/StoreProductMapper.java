@@ -22,6 +22,7 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   public List<StockInfo> searchstoreproduct(HashMap<String,Object> map);
 
   public List<StoreProduct> selectstoreproduct(Long txt) throws Exception;
+
 //  public void updateQuantity(Long id, Integer qnt) throws Exception;
 
   //발주할 때, 점포의 재고수량을 변경
@@ -38,14 +39,16 @@ public interface StoreProductMapper extends MyMapper<Long, StoreProduct> {
   Integer getStoreProductQntByStoreIdAndProductCode(Long store_id, Long product_code);
   List<StoreProduct> getProductsBetweenExpiring(Long max,Long min,Long store_id);
   List<StoreProduct> selectallStore();
+  List<StoreProduct> selectallexpStoreProduct(Long store_id);
 
   List<StoreProduct> getProductsExpiringInThreeDays(Long storeId);
 
   List<StoreProduct> getLowInventoryProducts(Long storeId);
 
+
   //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
   public List<StoreProduct> notAutoLessQnt() throws Exception;
+  List<StoreProduct> getExpiringStoreProductsms(Long store_id, int days);
+  }
 
-//  List<StoreProduct> findExpiringProducts(@Param("expiryDate") LocalDate expiryDate);
-//  List<StoreProduct> findExpiringStoreProductByStoreId(@Param("storeId") Long storeId, @Param("days") int days);
-}
+

@@ -37,8 +37,8 @@ public class StoreAutoOrdersService {
   @Autowired
   StoreService storeService;
 
-  //@Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준 //테스트 결과 보고 끌게요
-  @Scheduled(fixedDelay = 1000*60*60)
+  @Scheduled(cron = "0 0 0 * * *") //매일 자정을 기준
+  //@Scheduled(fixedDelay = 1000*60*60)
   public void checkStock() throws Exception {
     try {
       // 매일 자동발주 리스트를 가져와서
@@ -82,7 +82,7 @@ public class StoreAutoOrdersService {
           if (storeIdForMsg != autoOrder.getStore_id()) {
             storeIdForMsg = autoOrder.getStore_id();
             String msg = "자동발주가 진행됩니다. 사이트에서 확인하세요";
-//            sendMsg(storeIdForMsg, msg);
+            //sendMsg(storeIdForMsg, msg);
           }
 
           for (Product product : productList) {

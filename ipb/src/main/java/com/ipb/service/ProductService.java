@@ -3,6 +3,7 @@ package com.ipb.service;
 
 
 import com.ipb.domain.Product;
+import com.ipb.domain.StoreProduct;
 import com.ipb.frame.MyService;
 import com.ipb.mapper.ProductMapper;
 import lombok.RequiredArgsConstructor;
@@ -33,7 +34,9 @@ public class ProductService implements MyService <Long, Product> {
   public void remove(Long id) throws Exception {
     productMapper.delete(id);
   }
-
+  public List<Product> orderlistproduct(Long store_id) throws Exception {
+    return productMapper.orderlistproduct(store_id);
+  }
   @Override
   public Product get(Long id) throws Exception {
     return productMapper.select(id);
@@ -43,6 +46,7 @@ public class ProductService implements MyService <Long, Product> {
   public List<Product> get() throws Exception {
     return productMapper.selectall();
   }
+
   public List<Product> selectcategoryname(String categoryname) throws Exception {
     return productMapper.selectcategoryname(categoryname);
   }

@@ -4,6 +4,7 @@ import com.ipb.domain.Product;
 import com.ipb.domain.ProductInfo;
 import com.ipb.service.ProductInfoService;
 import com.ipb.service.ProductService;
+import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +13,7 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/productInfo")
+@Api(tags = {"본사 상품 정보"})
 public class ProductInfoController {
 
   @Autowired
@@ -67,7 +69,7 @@ public class ProductInfoController {
 
 //  본사 상품 정보를 수정한다
   @PutMapping("/update")
-  @ApiOperation(value = "본사 상품 정보 수정", notes = "product_code로 수정 가능한 값 String name,String brand,String detail")
+  @ApiOperation(value = "본사 상품 정보 수정", notes = "product_code로 String name,String brand,String detail,int box_qnt,int safe_qnt,String imgname 수정 가능하다")
   public ProductInfo update(@RequestBody ProductInfo productInfo) {
     try {
       productInfoService.modify(productInfo);
@@ -81,7 +83,7 @@ public class ProductInfoController {
 
 //  본사 상품 정보를 카테고리로 조회 한다
   @GetMapping("/categoryname")
-  @ApiOperation(value = "본사 상품 정보 카테고리로 조회")
+  @ApiOperation(value = "본사 상품 정보 카테고리별 조회")
   public List<ProductInfo> get(String categoryname) {
     try {
       List<ProductInfo> selectcategoryname = productInfoService.selectcategoryname(categoryname);

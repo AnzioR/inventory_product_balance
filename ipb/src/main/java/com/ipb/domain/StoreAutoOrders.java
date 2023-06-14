@@ -8,7 +8,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @AllArgsConstructor
 public class StoreAutoOrders {
-  private Long store_auto_orders_id;
+  private Long id;
   private int qnt;
   private int min_qnt;
   private Long store_product_id;
@@ -16,6 +16,9 @@ public class StoreAutoOrders {
   private Long product_code;
 
   private String product_name;
+
+  private int product_price;
+  private int product_cost;
 
   private Long store_id;
 }

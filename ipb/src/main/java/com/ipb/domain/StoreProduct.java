@@ -27,12 +27,14 @@ public class StoreProduct {
     private Double event_rate;
     private LocalDate expirationDate;
     private Integer safe_qnt;
-
+    private int cost;
     private String storage;
     private boolean is_auto;
     private Long product_code;
 
     private String store_number;
+    private String imgname;
+
 
     public StoreProduct(Long product_id, Long store_id) {
         this.product_id = product_id;

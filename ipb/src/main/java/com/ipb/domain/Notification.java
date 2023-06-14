@@ -2,6 +2,7 @@ package com.ipb.domain;
 
 import lombok.*;
 
+import java.time.LocalDate;
 import java.util.Date;
 
 @Data
@@ -13,13 +14,13 @@ import java.util.Date;
 public class Notification {
 
   private Long id;
-  private String title;
-  private String content;
-  private Date create_date;
-  private boolean is_read;
-  private Long store_product_id;
+  private Integer qnt;
+  private Long product_id;
   private Long store_id;
-  private String message;
-
+  private boolean is_using;
+  private String product_name;
+  private Integer safe_qnt;
+  private boolean is_auto;
+  private Long product_code;
 
 }

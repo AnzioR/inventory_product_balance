@@ -23,7 +23,7 @@ import java.util.Map;
 @RequiredArgsConstructor
 @RequestMapping("/orders")
 @ResponseBody
-@Api(tags = {"발주 관련 컨트롤러"})
+@Api(tags = {"발주"})
 public class OrdersController {
   @Autowired
   OrdersService ordersService;
@@ -36,7 +36,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우) o
   @PostMapping("/addorder")
-  @ApiOperation(value = "발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우)")
+  @ApiOperation(value = "점포에서 주문넣기" , notes ="재고 수량이 부족한 것은 더 주문하지 않기로 선택한 경우다")
   public ResponseEntity<?> addOrder(@RequestBody Map<String, Long> requestBody) {
     // 특정 점포에 있는 카트 상품들을 주문
     try {
@@ -58,7 +58,7 @@ public class OrdersController {
 
   //발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우) o
   @PostMapping("/maxorder")
-  @ApiOperation(value = "발주 : 점포에서 주문넣기 (재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우)")
+  @ApiOperation(value = "점포에서 주문넣기" , notes ="재고 수량이 부족한 것은 있는 재고만큼 주문하기로 선택한 경우다")
   public ResponseEntity<?> maxOrder(@RequestBody List<OrdersCart> unOrderableList) {
     try {
       ordersService.maxOrder(unOrderableList);
@@ -95,7 +95,7 @@ public class OrdersController {
 
   //발주내역 삭제 : 점포에서 주문한 발주내역을 삭제
   @DeleteMapping("/orderdetail/delete/{id}")
-  @ApiOperation(value = "발주내역 삭제 : 점포에서 주문한 발주내역을 삭제")
+  @ApiOperation(value = "발주내역 삭제" , notes ="orders_id로 점포에서 주문한 발주내역을 삭제한다")
   public void deleteEvent(@PathVariable Long id) {
     try {
       ordersService.remove(id);
@@ -108,7 +108,7 @@ public class OrdersController {
 
   //발주 조회 : 점포에서 주문한 발주내역 중 발주번호에 해당하는 내역 조회 o
   @GetMapping("/search/{id}")
-  @ApiOperation(value = "발주 조회 : 점포에서 주문한 발주내역 중 발주번호에 해당하는 내역 조회")
+  @ApiOperation(value = "발주 조회" , notes = "orders_id로 점포에서 주문한 발주내역 중 발주번호에 해당하는 내역 조회한다")
   public Orders ordersDetail(@PathVariable Long id) {
     try {
       return ordersService.get(id);
@@ -117,20 +117,22 @@ public class OrdersController {
     }
   }
 
-  //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회 o
+  //발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 점포별로 묶어서 날짜가 최신순으로 조회 o
   @GetMapping("/all")
-  @ApiOperation(value = "발주 전체 조회 : 본사가 점포들이 발주한 내역 전체를 조회")
+  @ApiOperation(value = "발주 전체 조회", notes ="본사가 점포들이 발주한 내역 전체를 점포별로 묶어서 날짜가 최신순으로 조회한다")
   public List<Orders> cartAll() {
     try {
       return ordersService.get();
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      System.out.println("발주내역 전체 조회를 실패했습니다.");
+      e.printStackTrace();
+      return null;
     }
   }
 
   //본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회 o
   @GetMapping("/searchdate/{date}")
-  @ApiOperation(value = "본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회")
+  @ApiOperation(value = "발주내역 조회", notes ="본사에서 날짜를 선택해서 지정된 날짜에 해당하는 발주내역을 조회한다")
   public List<Orders> searchDate(@PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date date) {
     try {
       return ordersService.searchDate(date);
@@ -141,7 +143,7 @@ public class OrdersController {
 
   //발주한 상품의 배송 상태를 조회 o
   @GetMapping("/delivery/{id}")
-  @ApiOperation(value = "발주한 상품의 배송 상태를 조회")
+  @ApiOperation(value = "배송 조회" , notes ="발주한 상품을 orders_id로 배송 상태를 조회한다")
   public Orders searchDeliveryStatus(@PathVariable Long id) {
     try {
       return ordersService.searchDeliveryStatus(id);
@@ -154,7 +156,7 @@ public class OrdersController {
 
   //store_id로 해당 매장의 전체 발주내역 조회 o
   @GetMapping("/select-store-orders/{id}")
-  @ApiOperation(value = "store_id로 해당 매장의 전체 발주내역 조회")
+  @ApiOperation(value ="점포 발주 내역", notes="store_id로 해당 매장의 전체 발주내역 조회한다")
   public List<Orders> selectStore(@PathVariable Long id) {
     try {
       return ordersService.selectStore(id);
@@ -168,7 +170,7 @@ public class OrdersController {
 
   //매장의 상세 발주내역을 발주번호로 조회 : 해당 정보 한개만 상세하게 보여줌 o
   @GetMapping("/store-orders-details/{id}")
-  @ApiOperation(value = "매장의 상세 발주내역을 발주번호로 조회 : 해당 정보 한개만 상세하게 보여줌")
+  @ApiOperation(value = "점포 발주내역 상세보기" , notes="orders_id로 매장의 상세 발주내역을 해당 정보 한개만 상세하게 보여준다")
   public Orders selectDetailStoreOrders(@PathVariable Long id) {
     try {
       return ordersService.selectDetailStoreOrders(id);
@@ -181,7 +183,7 @@ public class OrdersController {
 
   //검색한 store_id와 날짜를 조회하여 발주와 관련 상세정보를 리스트로 보여줌 o
   @GetMapping("/store-orders-detail-list")
-  @ApiOperation(value = "검색한 store_id의 발주와 관련 상세정보를 리스트로 보여줌")
+  @ApiOperation(value = "점포의 날짜별 상세 발주 목록", notes= "store_id와 발주 날짜로 발주 상세정보를 리스트로 보여준다")
   public List<Orders> selectStoreOrdersByStoreId(String orderDate, Long storeId) {
     try {
       java.sql.Date od = java.sql.Date.valueOf(orderDate);
@@ -226,7 +228,7 @@ public class OrdersController {
 
   //발주리스트를 날짜로 묶어서 보여줌 o
   @GetMapping("/store-orders-date/{store_id}")
-  @ApiOperation(value = "발주리스트를 날짜로 묶어서 보여줌")
+  @ApiOperation(value = "점포별 발주 날짜 리스트" , notes="store_id로 발주리스트를 날짜로 묶어서 보여준다")
   public List<Orders> selectListByDate(@PathVariable Long store_id) {
     try {
       return ordersService.selectListByDate(store_id);
@@ -239,7 +241,7 @@ public class OrdersController {
 
   //본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌
   @GetMapping("/store-orders-date-desc")
-  @ApiOperation(value = "본사에서 발주리스트를 볼 때 날짜로 묶어서 보여줌")
+  @ApiOperation(value = "발주 날짜별 내림차순", notes = "본사에서 발주리스트를 볼 때 날짜로 묶어서 보여준다")
   public List<Orders> selectListByDateDesc() {
     try {
       return ordersService.selectListByDateDesc();
@@ -248,6 +250,7 @@ public class OrdersController {
       e.printStackTrace();
       return null;
     }
+
   }
 
 

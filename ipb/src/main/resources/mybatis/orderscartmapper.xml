@@ -36,7 +36,8 @@
 
     <!-- 발주카트를 리스트로 만들어서 발주 버튼을 클릭하면 리스트를 넘겨줌 -->
     <select id="cartList" parameterType="Long" resultType="OrdersCart">
-        SELECT oc.*, pi.*, c.*, c.name as category_name
+        SELECT oc.*, pi.*, c.*, c.name as category_name, p.*,
+               p.qnt as product_qnt
         FROM  orders_cart oc
                   INNER JOIN product p on p.id = oc.product_id
                   INNER JOIN product_info pi on pi.product_code = p.product_info_id
@@ -82,5 +83,14 @@
     <update id="updateQnt" parameterType="map">
         UPDATE orders_cart SET qnt = #{qnt} WHERE id = #{id}
     </update>
+
+    <!-- 동일한 카트가 존재하는지 확인함 -->
+    <select id="exists" parameterType="OrdersCart" resultType="int">
+        SELECT COUNT(*)
+        FROM orders_cart oc
+            JOIN product p ON p.id = oc.product_id
+            JOIN product_info pi ON pi.product_code = p.product_info_id
+        WHERE product_id = #{product_id} AND store_id = #{store_id}
+    </select>
 
 </mapper>

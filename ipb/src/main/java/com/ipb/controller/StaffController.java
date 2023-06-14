@@ -3,11 +3,12 @@ package com.ipb.controller;
 import com.ipb.domain.Staff;
 import com.ipb.domain.Weather;
 import com.ipb.domain.WeatherStatus;
-import com.ipb.provider.JwtProvider;
+//import com.ipb.provider.JwtProvider;
 import com.ipb.service.StaffService;
 import com.ipb.service.WeatherService;
 import com.ipb.utill.OpenWeatherUtill;
-import io.jsonwebtoken.Jwt;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import lombok.RequiredArgsConstructor;
 import org.json.simple.parser.ParseException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,17 +18,20 @@ import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
 
+
 @RestController
 @RequiredArgsConstructor
+@Api(tags = {"직원"})
 @RequestMapping("/staff")
 public class StaffController {
     @Autowired
     StaffService staffService;
     @Autowired
     WeatherService weatherService;
-    @Autowired
-    JwtProvider jwtProvider;
+//    @Autowired
+//    JwtProvider jwtProvider;
 
+    @ApiOperation(value = "직원 추가" , notes ="직원을 등록 같은 아이디가 존재할경우 회원가입이 불가능 하다.")
     @PostMapping("/add")
     public Staff register(@RequestBody Staff staff) throws Exception {
         try {
@@ -42,8 +46,12 @@ public class StaffController {
         }
         return staff;
     }
+
+
+    @ApiOperation(value = "직원 로그인", notes = "로그인한 staff의 area 칼럼으로 날씨 데이터 파싱해서 가져온다.")
+
     @PostMapping("/login")
-    public String login(@RequestBody Staff staff) throws Exception {
+    public Staff login(@RequestBody Staff staff) throws Exception {
         Staff loginStaff = staffService.login(staff.getLogin_id(),staff.getPwd());
         if (loginStaff ==null){
             return null;
@@ -56,12 +64,13 @@ public class StaffController {
         new_weather.setStore_id(loginStaff.getStore_id());
         //DB에 날씨 데이터 최종 저장하기
         weatherService.register(new_weather);
-        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
-        return token;
+        return loginStaff;
         //원래 대로라면 날씨랑 같이 넣어줘야해
     }
+    //        String token = jwtProvider.createToken(loginStaff.getLogin_id(), Collections.singletonList("ROLE_USER"));
 
     @PostMapping("/weather")
+    @ApiOperation(value = "날씨", notes = "일정시간마다 날씨데이터를 새로 받아와서 화면에 뿌려줘야 하기위함이다.")
     public WeatherStatus getWeatherInfo(@RequestBody Staff staff) throws Exception {
 
         // 이건 3시간 단위로 조회할꺼야
@@ -90,6 +99,7 @@ public class StaffController {
 
 
     @GetMapping("/list")
+    @ApiOperation(value = "직원 목록")
     public List<Staff> staffList(){
         try {
             return staffService.get();
@@ -99,6 +109,7 @@ public class StaffController {
         }
     }
     @GetMapping("/listname")
+    @ApiOperation(value = "직원 목록+스토어의 정보")
     public List<Staff> staffListName(){
         try {
             return staffService.selectallname();
@@ -108,6 +119,7 @@ public class StaffController {
         }
     }
     @GetMapping("/detail")
+    @ApiOperation(value = "직원 상세보기", notes = "staff_id로 상세보기 할 수 있다")
     public Staff staffDetail(Long id){
         try {
             return staffService.get(id);
@@ -117,6 +129,7 @@ public class StaffController {
         }
     }
     @PutMapping("/update")
+    @ApiOperation(value = "직원 수정 ", notes = "직원의 비밀번호를 수정 할 수 있다")
     public Staff staffUpdate(@RequestBody Staff staff){
         try {
             staffService.modify(staff);
@@ -127,6 +140,7 @@ public class StaffController {
         }
     }
     @DeleteMapping("/delete")
+    @ApiOperation(value = "직원 삭제", notes = "staff_id로 삭제한다")
     public void delete(Long id){
         try {
             staffService.remove(id);
