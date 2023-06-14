@@ -8,7 +8,7 @@
         SELECT * FROM staff WHERE id=#{id}
     </select>
     <select id="selectid" parameterType="String" resultType="Staff">
-        SELECT s.name, s.login_id, s.pwd, st.name as store_name, st.area ,st.id as store_id FROM staff s
+        SELECT s.id, s.name, s.login_id, s.pwd, st.name as store_name, st.area ,st.id as store_id FROM staff s
 
                  INNER JOIN store st on s.store_id = st.id
 
