@@ -19,7 +19,7 @@ public class ProductController {
   @Autowired
   ProductService productService;
 
-//  본사 상품 전체를 list로 뿌려준다.
+  //  본사 상품 전체를 list로 뿌려준다.
   @ApiOperation(value = "본사 상품 리스트")
   @GetMapping("/list/{store_id}")
   public List<Product> allProductByStoreId(@PathVariable Long store_id) {
@@ -32,7 +32,7 @@ public class ProductController {
     }
   }
 
-//  본사 상품을 등록한다.
+  //  본사 상품을 등록한다.
   @ApiOperation(value = "본사 상품 추가", notes = "등록정보 : Long id,Long product_info_id,int qnt,int price,int cost,String exp")
   @PostMapping("/add")
   public Product register(@RequestBody Product product) {
@@ -45,7 +45,7 @@ public class ProductController {
     }
   }
 
-//  본사 상품을 상세 조회한다.
+  //  본사 상품을 상세 조회한다.
   @ApiOperation(value = "본사 상품 상세조회")
   @GetMapping("/detail")
   public Product detail(Long id) {
@@ -57,7 +57,7 @@ public class ProductController {
     }
   }
 
-//  본사 상품을 삭제한다
+  //  본사 상품을 삭제한다
   @ApiOperation(value = "본사 상품 삭제")
   @DeleteMapping("/delete")
   public void delete(Long id) {
@@ -68,7 +68,7 @@ public class ProductController {
     }
   }
 
-//  본사 상품을 업데이트 한다
+  //  본사 상품을 업데이트 한다
   @ApiOperation(value = "본사 상품 수정")
   @PutMapping("/update")
   public Product update(@RequestBody Product product) {
@@ -81,7 +81,8 @@ public class ProductController {
     }
 
   }
-//  본사 상품을 카테고리 별로 조회를 한다.
+
+  //  본사 상품을 카테고리 별로 조회를 한다.
   @ApiOperation(value = "본사 상품 카테고리별 조회")
   @GetMapping("/categoryname")
   public List<Product> get(String categoryname) {
@@ -94,13 +95,6 @@ public class ProductController {
     }
   }
 }
-//  @GetMapping("/categoryname")
-//  public List<Product> selectcategoryname(String categoryname) {
-//    try {
-//      return productService.selectcategoryname(categoryname);
-//    } catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
 
 
 

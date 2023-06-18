@@ -28,8 +28,7 @@ public class StoreAutoOrdersController {
   public void updateStoreOrders(Long id, @RequestBody StoreAutoOrders storeAutoOrders) {
     try {
       storeAutoOrdersService.changeQnt(storeAutoOrders);
-    } catch(Exception e) {
-      System.out.println("수량 변경에 실패했습니다.");
+    } catch (Exception e) {
       e.printStackTrace();
     }
   }
@@ -37,11 +36,10 @@ public class StoreAutoOrdersController {
   //자동발주를 삭제한다.
   @DeleteMapping("/delete/{id}")
   @ApiOperation(value = "자동발주 삭제", notes = "store_auto_orders_id로 등록된 자동발주를 삭제한다")
-  public void delete(@PathVariable Long id){
+  public void delete(@PathVariable Long id) {
     try {
       storeAutoOrdersService.deleteAuto(id);
     } catch (Exception e) {
-      System.out.println("자동발주 삭제를 실패했습니다.");
       e.printStackTrace();
     }
   }
@@ -53,10 +51,8 @@ public class StoreAutoOrdersController {
     try {
       return storeAutoOrdersService.selectAutoList(id);
     } catch (Exception e) {
-      System.out.println("자동발주 리스트 불러오기를 실패했습니다.");
       e.printStackTrace();
       return null;
     }
   }
-
 }

@@ -28,7 +28,7 @@ import static java.time.LocalDate.now;
 
 @Service
 @RequiredArgsConstructor
-public class StoreProductService implements MyService <Long, StoreProduct> {
+public class StoreProductService implements MyService<Long, StoreProduct> {
 
   @Autowired
   StoreProductMapper storeProductMapper;
@@ -85,7 +85,6 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
       throw new Exception("재고 수량보다 많은 주문은 불가능합니다");
     } else {
       product.setQnt(real_stock - order_stock);
-      System.out.println(">>>>>>>>>>>>>>>>>바뀐 재고량 ==" + product.getQnt());
       storeProductMapper.updateqnt(product);
       salesService.register(sales);
     }
@@ -99,12 +98,9 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
   //  점포 재고를 카테고리별로 가져옴
   public List<StockInfo> selectcategoryname(String categoryname, Long store_id) throws Exception {
-//    return storeProductMapper.selectcategoryname(categoryname,store_id);
-//  }
     HashMap<String, Object> map = new HashMap<String, Object>();
     map.put("category_name", categoryname);
     map.put("store_id", store_id);
-    System.out.println(map);
     List<StockInfo> storeProducts = storeProductMapper.selectcategoryname(map);
 
     return storeProducts;
@@ -116,7 +112,6 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     map.put("category_name", categoryname);
     map.put("store_id", store_id);
     map.put("days", days);
-    System.out.println(map);
     List<StockInfo> storeProducts = storeProductMapper.selectexpAndExpiringSoon(map);
 
     return storeProducts;
@@ -125,18 +120,12 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   //재고 전체보기
   public List<StoreProduct> selectall() throws Exception {
     return storeProductMapper.selectall();
-
   }
 
   public void update(StoreProduct storeProduct) throws Exception {
     storeProductMapper.update(storeProduct);
   }
 
-  ////  public void modifyQuantity(Long id, Integer newQuantity) throws Exception {
-////    StoreProduct storeProduct = storeProductMapper.select(id);
-////    storeProduct.changeQuantity(newQuantity);
-////    storeProductMapper.update(storeProduct);
-//  }
   //점포재고에서 검색을 해서 상품을 가져올수있음
   public List<StockInfo> searchstoreproduct(String txt, Long store_id) throws Exception {
     HashMap<String, Object> map = new HashMap<String, Object>();
@@ -178,27 +167,25 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
   public void qntZero(StoreProduct storeProduct) {
     try {
       storeProductMapper.qntZero(storeProduct);
-      System.out.println("상품폐기로 상품수량이 0개로 변경되었습니다.");
     } catch (Exception e) {
-      System.out.println("폐기로 인한 수량 변경을 실패했습니다.");
       e.printStackTrace();
     }
   }
 
 
   //재고 수량이 부족한 상품들을 가진 점포에게 문자를 보내준다.
-  @Scheduled(fixedDelay = 1000*60*60)
+  @Scheduled(fixedDelay = 1000 * 60 * 60)
   public void sendMsgToStore() throws Exception {
     List<StoreProduct> getList = storeProductMapper.notAutoLessQnt(); //자동발주를 신청 안한 상품들 중에서 현재 재고량이 안전재고량보다 적은 상품들을 리스트로 가져온다.
 
-    for(StoreProduct sp : getList) {
+    for (StoreProduct sp : getList) {
       int safeQnt = sp.getSafe_qnt();
       int storeQnt = sp.getQnt();
 
       Long num = null;
-      if(safeQnt > storeQnt) {
+      if (safeQnt > storeQnt) {
         //매장에 문자를 발송하지만, 이미 문자를 받는 점포는 제외함
-        if(num != sp.getStore_id()) {
+        if (num != sp.getStore_id()) {
           num = sp.getStore_id();
           String msg = "점포가 가진 상품 중 안전재고량 미달 상품이 존재합니다.";
           //메세지 발송
@@ -275,40 +262,14 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
     return storeProductMapper.selectallStore();
   }
 
-
-  //발주가 성공했을 때, 점포보유상품의 재고를 증가시키는 기능
-  // //----> 배송상태가 변경되었을 때 재고 증가 + store_price, event_rate 등록으로 변경
-//  public void updateOrInsert(List<OrdersCart> orderableList) throws Exception {
-//    for(OrdersCart orderableCart : orderableList) {
-//      StoreProduct sp = new StoreProduct(orderableCart.getProduct_id(), orderableCart.getStore_id());
-//
-//      // 만약 is_using 관련해 이슈가 있다면... 이 부분에 수정이 필요!
-//      StoreProduct exist_sp = storeProductMapper.getStoreProductFromStoreIdAndProductId(sp);
-//      // storeProduct 테이블에 존재하지 않으면
-//      if (exist_sp == null) {
-//        // 추가
-//        sp.setQnt(orderableCart.getQnt());
-//        sp.set_using(true);
-//        storeProductMapper.insert(sp);
-//        // 존재한다면
-//      } else {
-//        // 수량 변경
-//        exist_sp.setQnt(exist_sp.getQnt() + orderableCart.getQnt());
-//        storeProductMapper.updateqnt(exist_sp);
-//      }
-//    }
-//  }
-
-
-
-//유통기한 문자 발송(수정 할 수 있으면 유통기한 임박 상품이 여러개 있으면 문자 1번만 발송 될 수 있도록)
-@Scheduled(cron = "0 0 0 * * *")
+  //유통기한 문자 발송(수정 할 수 있으면 유통기한 임박 상품이 여러개 있으면 문자 1번만 발송 될 수 있도록)
+  @Scheduled(cron = "0 0 0 * * *")
   public void sendExpirationsms() throws Exception {
     try {
       List<StoreProduct> all = storeProductMapper.selectallStore();
-      Long storeIdForMsg= null;
+      Long storeIdForMsg = null;
 
-      for(StoreProduct sp : all) {
+      for (StoreProduct sp : all) {
         Long spId = sp.getStore_id();
 
         // 유통기한이 3일 남은 상품을 가져온다.
@@ -321,7 +282,6 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
             String msg = "유통기한이 3일 이하로 남은 상품이 있습니다.";
             //sendMsg(storeIdForMsg, msg);
-            System.out.println("유통기한 3일 이하! " + msg);
           }
         }
       }
@@ -330,6 +290,5 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
       // 예외 처리
     }
   }
-
 }
 

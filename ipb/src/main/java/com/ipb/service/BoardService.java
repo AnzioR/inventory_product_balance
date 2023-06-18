@@ -13,6 +13,7 @@ import java.util.List;
 public class BoardService implements MyService<Long, Board> {
   @Autowired
   BoardMapper boardMapper;
+
   @Override
   public void register(Board board) throws Exception {
     boardMapper.insert(board);
@@ -43,5 +44,4 @@ public class BoardService implements MyService<Long, Board> {
     return boardMapper.searchBoard(txt);
 
   }
-
 }

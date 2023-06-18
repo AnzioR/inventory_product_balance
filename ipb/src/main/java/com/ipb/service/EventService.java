@@ -39,16 +39,6 @@ public class EventService implements MyService<Long, Event> {
   public List<Event> get() throws Exception {
     return eventMapper.selectall();
   }
-//  public List<Event> available() throws Exception {
-//    return eventMapper.availablevent();
-//  }
-//  public List<Event> soon() throws Exception {
-//    return eventMapper.soonevent();
-//  }
-//  public List<Event> expire() throws Exception {
-//    return eventMapper.expirevent();
-//  }
-
 
   public Event searchEventName(String name) throws Exception {
     return eventMapper.searchEventName(name);

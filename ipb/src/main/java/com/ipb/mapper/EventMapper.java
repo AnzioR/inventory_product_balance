@@ -15,7 +15,5 @@ public interface EventMapper extends MyMapper<Long, Event> {
   public Event selectByType(Long id) throws Exception;
 
   public Event findPreviousEvent(String dateString) throws Exception;
-//  public List<Event> availablevent() throws Exception;
-//  public List<Event> soonevent() throws Exception;
-//  public List<Event> expirevent() throws Exception;
+
 }

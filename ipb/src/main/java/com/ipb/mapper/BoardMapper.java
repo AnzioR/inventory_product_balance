@@ -12,5 +12,5 @@ import java.util.List;
 @Repository
 public interface BoardMapper extends MyMapper<Long, Board> {
   public List<Board> searchBoard(String txt);
-//  public Board isadmin(Long staff_id);
+
 }

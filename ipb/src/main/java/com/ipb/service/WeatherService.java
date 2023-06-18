@@ -15,7 +15,7 @@ import java.util.List;
 public class WeatherService implements MyService<Long, Weather> {
 
   @Autowired
- WeatherMapper weatherMapper;
+  WeatherMapper weatherMapper;
 
 
   @Override
@@ -43,6 +43,4 @@ public class WeatherService implements MyService<Long, Weather> {
   public List<Weather> get() throws Exception {
     return null;
   }
-
-
 }

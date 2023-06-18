@@ -19,7 +19,7 @@ public class StoreController {
   @Autowired
   StoreService storeService;
 
- //점포 전체조회
+  //점포 전체조회
   @GetMapping("/storelist")
   @ApiOperation(value = "점포 목록 전체조회")
   public List<Store> storeList() {
@@ -33,7 +33,7 @@ public class StoreController {
   //점포등록
   @PostMapping("/store/add")
   @ApiOperation(value = "점포 등록")
-  public Store register(@RequestBody Store store){
+  public Store register(@RequestBody Store store) {
     try {
       storeService.register(store);
       return store;
@@ -46,7 +46,7 @@ public class StoreController {
   //점포상세조회
   @GetMapping("/storedetail/{id}")
   @ApiOperation(value = "점포 상세보기")
-  public Store storeDetail(@PathVariable Long id){
+  public Store storeDetail(@PathVariable Long id) {
     try {
       return storeService.get(id);
     } catch (Exception e) {
