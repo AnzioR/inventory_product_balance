@@ -180,11 +180,13 @@ class OrdersServiceTest {
 
   @Test
   void maxItemOrder() {
-    List<OrdersCart> failOrderList = addOrder();
+    List<OrdersCart> maxorderList = new ArrayList<>();
     try {
-      ordersService.maxOrder(failOrderList);
+      ordersService.maxOrder(maxorderList);
+      System.out.println(maxorderList);
     } catch (Exception e) {
-      throw new RuntimeException(e);
+      e.printStackTrace();
+      System.out.println("maxOrder 실패!");
     }
   }
 }

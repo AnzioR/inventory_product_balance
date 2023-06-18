@@ -19,7 +19,7 @@ class OrdersIssueServiceTest {
   @Test
   void register() {
     try {
-      OrdersIssue ordersIssue = new OrdersIssue(null, 44L, 20, 2L, new Date());
+      OrdersIssue ordersIssue = new OrdersIssue(null, 141L, 8, 2L, new Date());
       ordersIssueService.register(ordersIssue);
       System.out.println(ordersIssue);
     } catch (Exception e) {
