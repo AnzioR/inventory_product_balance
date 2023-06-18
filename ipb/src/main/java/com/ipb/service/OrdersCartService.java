@@ -5,6 +5,7 @@ import com.ipb.frame.MyService;
 import com.ipb.mapper.OrdersCartMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -26,7 +27,6 @@ public class OrdersCartService implements MyService<Long, OrdersCart> {
     params.put("store_id", ordersCart.getStore_id());
 
     OrdersCart findOrderCart = ordersCartMapper.selectByProductIdAndStoreId(params);
-    System.out.println("findOrderCart = " + findOrderCart);
 
     if (findOrderCart == null) {
       ordersCartMapper.insert(ordersCart);

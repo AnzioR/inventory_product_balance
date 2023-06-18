@@ -76,7 +76,6 @@ public class StoreAutoOrdersService {
           List<Product> productList = productService.getProductListByProductCode(autoOrder.getProduct_code());
 
           // 그리고 반복문을 통해 각각 주문을 진행한다.
-          System.out.println("상품 주문합니다.");
 
           // 매장에게 문자를 보내야 한다. 다만, 이미 문자 메시지를 전달한 점포는 제외
           if (storeIdForMsg != autoOrder.getStore_id()) {
@@ -90,13 +89,11 @@ public class StoreAutoOrdersService {
             if (autoOrderQnt < product.getQnt()) {
               realOrderQnt = autoOrderQnt;
             }
-            System.out.println("[주문] " + realOrderQnt + "개");
             //코드관련주석!
             Orders order = new Orders(realOrderQnt, product.getId(), autoOrder.getStore_id(), 1L, 2L); //상수로 분류해서 관리!!!!!!!!!!!!
             ordersMapper.insert(order);
             autoOrderQnt -= realOrderQnt;
             if (autoOrderQnt == 0) {
-              System.out.println("더 이상 주문하지 않겠어");
               break;
             }
           }

@@ -1,7 +1,6 @@
 package com.ipb.service;
 
 
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.JsonNodeFactory;
@@ -59,14 +58,6 @@ public class NotificationService {
     this.productInfoMapper = productInfoMapper;
   }
 
-//  @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행, 유통기한이니까 정각에 확인
-//  public void sendProductExpirationNotifications() {
-//    Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이 부분은 테스트용이므로 나중에 전체 주석 처리 가능
-//    SseEmitter emitter = getProductExpirationNotifications(storeId);
-//    // SseEmitter를 사용하여 알림을 웹으로 전송
-//    emitter.complete();
-//
-
   @Scheduled(cron = "0 0 0 * * *") // 매 자정에 실행, 유통기한이니까 정각에 확인
   public void sendProductExpirationNotifications() {
     Long storeId = 2L; // 예시로 2번 매장을 기준으로 알림을 보냄, 이 부분은 테스트용이므로 나중에 전체 주석 처리 가능
@@ -76,18 +67,9 @@ public class NotificationService {
 
 
     String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.: ";
-    System.out.println(expirationMessage); // 유통기한 알림 메시지 출력
   }
 
-//    return Flux.just(ServerSentEvent.<String>builder()
-//            .event("expirationNotification")
-//            .data(expirationMessage)
-//            .build())
-//        .repeat()
-//        .delayElements(Duration.ofSeconds(1))
-//        .distinctUntilChanged(); // 중복 알림 제거
-
-//유통기한 알림
+  //유통기한 알림
   public SseEmitter getProductExpirationNotifications(Long storeId) {
     SseEmitter emitter = new SseEmitter();
 
@@ -100,7 +82,7 @@ public class NotificationService {
 //        SSE(Server-Sent Events)를 사용하여 클라이언트로 메시지를 전송
 //        expiringProducts 리스트가 비어있지 않은 경우에만 실행
         if (!expiringProducts.isEmpty()) {
-          String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다." ;
+          String expirationMessage = "유통기한이 3일 이하로 남은 상품이 있습니다.";
           // 문자와 같이 내용이 가야하는데 체크해보기 (프론트에서 내용까지 다 나오는데...+ expiringProducts)
           emitter.send(SseEmitter.event()
               //send 메서드 이용하여 sse이벤트 생성 후 믈라이언트로 데이터(내가 보내는 메세지) 전송
@@ -112,7 +94,7 @@ public class NotificationService {
         // 에러 처리 로직
         emitter.completeWithError(e);
       }
-      },  0, 2, TimeUnit.MINUTES);
+    }, 0, 2, TimeUnit.MINUTES);
 
     return emitter;
   }
@@ -136,13 +118,12 @@ public class NotificationService {
           if (storeProduct.getQnt() < productInfo.getSafe_qnt()) {
             if (!lowInventoryProducts.contains(storeProduct)) { // 중복 체크
               lowInventoryProducts.add(storeProduct);
-              //System.out.println(lowInventoryProducts);
             }
           }
         }
 
         //정보가 담긴 lowInventoryProducts 에서 product_id, store_id, safe_qnt 를 구한다.
-        for(StoreProduct sp : lowInventoryProducts) {
+        for (StoreProduct sp : lowInventoryProducts) {
           Long orderProductId = sp.getProduct_id();
           Long orderStoreId = sp.getStore_id();
 
@@ -151,7 +132,6 @@ public class NotificationService {
 
           if (!ordersCartService.exists(ordersCart)) { // 중복 체크
             ordersCartService.register(ordersCart);
-            //System.out.println(ordersCart);
           }
         }
 

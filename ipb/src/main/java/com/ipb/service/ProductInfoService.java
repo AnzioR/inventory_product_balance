@@ -13,7 +13,7 @@ import java.util.List;
 
 @Service
 @RequiredArgsConstructor
-public class ProductInfoService implements MyService <Long, ProductInfo> {
+public class ProductInfoService implements MyService<Long, ProductInfo> {
 
   @Autowired
   ProductInfoMapper productInfoMapper;
@@ -43,6 +43,7 @@ public class ProductInfoService implements MyService <Long, ProductInfo> {
   public List<ProductInfo> get() throws Exception {
     return productInfoMapper.selectall();
   }
+
   public List<ProductInfo> selectcategoryname(String categoryname) throws Exception {
     return productInfoMapper.selectcategoryname(categoryname);
   }
