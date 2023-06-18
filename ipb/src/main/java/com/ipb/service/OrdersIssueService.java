@@ -41,16 +41,17 @@ public class OrdersIssueService implements MyService<Long, OrdersIssue> {
     return ordersIssueMapper.selectall();
   }
 
-    public List<OrdersIssue> ordersissuealllist() throws Exception {
+  public List<OrdersIssue> ordersissuealllist() throws Exception {
     return ordersIssueMapper.ordersissuealllist();
   }
 
   public List<OrdersIssue> ordersissuestore(Long store_id) throws Exception {
     return ordersIssueMapper.ordersissuestore(store_id);
   }
+
   public List<OrdersIssue> ordersissuedesc(Long orders_desc_id) throws Exception {
     return ordersIssueMapper.ordersissuedesc(orders_desc_id);
   }
-  }
+}
 
 

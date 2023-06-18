@@ -13,6 +13,7 @@ import java.util.List;
 public interface OrdersIssueMapper extends MyMapper<Long, OrdersIssue> {
 
   public List<OrdersIssue> ordersissuealllist() throws Exception;
+
   public List<OrdersIssue> ordersissuestore(Long store_id) throws Exception;
 
   public List<OrdersIssue> ordersissuedesc(Long orders_desc_id) throws Exception;

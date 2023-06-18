@@ -19,7 +19,7 @@ public class ProductInfoController {
   @Autowired
   ProductInfoService productInfoService;
 
-//  본사 상품 정보를 리스트로 불러옴
+  //  본사 상품 정보를 리스트로 불러옴
   @GetMapping("/list")
   @ApiOperation(value = "본사 상품 정보 리스트")
   public List<ProductInfo> get() {
@@ -31,7 +31,7 @@ public class ProductInfoController {
     }
   }
 
-//  본사 상품 정보를 등록함
+  //  본사 상품 정보를 등록함
   @PostMapping("/add")
   @ApiOperation(value = "본사 상품 정보 등록")
   public ProductInfo register(@RequestBody ProductInfo productInfo) {
@@ -56,7 +56,7 @@ public class ProductInfoController {
     }
   }
 
-//  본사 상품 정보를 삭제한다.
+  //  본사 상품 정보를 삭제한다.
   @DeleteMapping("/delete")
   @ApiOperation(value = "본사 상품 정보 삭제")
   public void delete(Long product_code) {
@@ -67,7 +67,7 @@ public class ProductInfoController {
     }
   }
 
-//  본사 상품 정보를 수정한다
+  //  본사 상품 정보를 수정한다
   @PutMapping("/update")
   @ApiOperation(value = "본사 상품 정보 수정", notes = "product_code로 String name,String brand,String detail,int box_qnt,int safe_qnt,String imgname 수정 가능하다")
   public ProductInfo update(@RequestBody ProductInfo productInfo) {
@@ -81,7 +81,7 @@ public class ProductInfoController {
 
   }
 
-//  본사 상품 정보를 카테고리로 조회 한다
+  //  본사 상품 정보를 카테고리로 조회 한다
   @GetMapping("/categoryname")
   @ApiOperation(value = "본사 상품 정보 카테고리별 조회")
   public List<ProductInfo> get(String categoryname) {
@@ -94,15 +94,6 @@ public class ProductInfoController {
     }
   }
 }
-//  @GetMapping("/categoryname")
-//  public List<Product> selectcategoryname(String categoryname) {
-//    try {
-//      return productService.selectcategoryname(categoryname);
-//    } catch (Exception e) {
-//      throw new RuntimeException(e);
-//    }
-
-
 
 
 

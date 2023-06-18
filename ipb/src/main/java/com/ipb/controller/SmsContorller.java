@@ -16,17 +16,19 @@ import java.io.UnsupportedEncodingException;
 import java.net.URISyntaxException;
 import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
+
 @RestController
 @RequestMapping("/api/v1/sms")
 @Api(tags = {"문자"})
 public class SmsContorller {
 
-    @Autowired
-    SmsService smsService;
-    @ApiOperation(value = "문자 발송")
-    @PostMapping("/send")
-    public SmsResponse sendSms(@RequestBody Message message) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
-      SmsResponse response = smsService.sendSms(message);
-      return response;
-    }
+  @Autowired
+  SmsService smsService;
+
+  @ApiOperation(value = "문자 발송")
+  @PostMapping("/send")
+  public SmsResponse sendSms(@RequestBody Message message) throws UnsupportedEncodingException, URISyntaxException, NoSuchAlgorithmException, InvalidKeyException, JsonProcessingException {
+    SmsResponse response = smsService.sendSms(message);
+    return response;
   }
+}

@@ -20,7 +20,7 @@ public class BoardController {
   //
 
   @PostMapping("/add")
-  @ApiOperation(value = "게시글 추가" , notes = "title,body_text,staff_id,imgname 로 등록이 가능하다")
+  @ApiOperation(value = "게시글 추가", notes = "title,body_text,staff_id,imgname 로 등록이 가능하다")
   public Board add(@RequestBody Board board) {
     try {
       boardService.register(board);
@@ -41,7 +41,7 @@ public class BoardController {
   }
 
   @PutMapping("/update")
-  @ApiOperation(value = "게시글 수정" , notes = "board_id로 title,body_text 수정 가능하다")
+  @ApiOperation(value = "게시글 수정", notes = "board_id로 title,body_text 수정 가능하다")
   public Board boardUpdate(@RequestBody Board board) {
     try {
       boardService.modify(board);
@@ -53,7 +53,7 @@ public class BoardController {
 
   @GetMapping("/detail")
   @ApiOperation(value = "게시글 상세보기")
-  public Board boardDetail(Long id){
+  public Board boardDetail(Long id) {
     try {
       return boardService.get(id);
     } catch (Exception e) {
@@ -63,7 +63,7 @@ public class BoardController {
 
   @DeleteMapping("/delete")
   @ApiOperation(value = "게시글 삭제")
-  public void delete(Long id){
+  public void delete(Long id) {
     try {
       boardService.remove(id);
     } catch (Exception e) {
@@ -73,7 +73,7 @@ public class BoardController {
 
   @GetMapping("/search")
   @ApiOperation(value = "게시글 검색")
-  public List<Board> boardSearch(String txt){
+  public List<Board> boardSearch(String txt) {
     try {
       return boardService.searchBoard(txt);
     } catch (Exception e) {

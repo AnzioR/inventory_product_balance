@@ -22,7 +22,9 @@ public interface OrdersCartMapper extends MyMapper<Long, OrdersCart> {
   public List<OrdersCart> findOrderableOrders(Long store_id) throws Exception;
 
   public List<OrdersCart> findUnorderableOrders(Long store_id) throws Exception;
+
   public void removeCartList(List<OrdersCart> orderableList) throws Exception;
+
   OrdersCart selectByProductIdAndStoreId(Map<String, Object> params);
 
   void updateQnt(Map<String, Object> params);

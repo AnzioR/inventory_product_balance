@@ -15,6 +15,8 @@ import java.util.List;
 public interface SalesMapper extends MyMapper<Long, Sales> {
   //발주 취소
   public List<Sales> selectsalesbystore(Long store_id) throws Exception;
+
   public void salesdelete(Sales sales) throws Exception;
-  public List<EventAutoOrders> getTotalQntByEventIdAndProdCode(Long previousEventId, Long productCode)throws Exception;
+
+  public List<EventAutoOrders> getTotalQntByEventIdAndProdCode(Long previousEventId, Long productCode) throws Exception;
 }
