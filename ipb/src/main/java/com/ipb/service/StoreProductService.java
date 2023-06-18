@@ -302,7 +302,7 @@ public class StoreProductService implements MyService <Long, StoreProduct> {
 
 
 //유통기한 문자 발송(수정 할 수 있으면 유통기한 임박 상품이 여러개 있으면 문자 1번만 발송 될 수 있도록)
-  @Scheduled(fixedDelay = 1000*60*60)
+@Scheduled(cron = "0 0 0 * * *")
   public void sendExpirationsms() throws Exception {
     try {
       List<StoreProduct> all = storeProductMapper.selectallStore();

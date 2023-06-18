@@ -6,7 +6,7 @@
 
     <!-- 이슈 등록 -->
     <insert id="insert" parameterType="OrdersIssue">
-        INSERT INTO orders_issue VALUES (NULL, #{orders_id}, #{qnt}, #{order_desc_id}, #{disposal_date})
+        INSERT INTO orders_issue VALUES (NULL, #{orders_id}, #{qnt}, #{orders_desc_id}, #{disposal_date})
     </insert>
 
     <!-- 이슈 수정 : 요구사항에는 없는데 본사에서 필요할까봐 -->
