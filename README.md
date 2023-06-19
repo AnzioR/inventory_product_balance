@@ -4,7 +4,7 @@
 ## ● 프로젝트 소개
 유통업에서 재고와 유통기한은 매출과 직결되기 때문에 관리의 필요성이 높고 중요하다. 본 프로젝트는 유통업 점주가 상품의 재고, 유통기한 등 전반적인 상품을 관리할 수 있는 시스템 개발을 목적으로 한다.
 ## ● 개발기간 : 2023.04.20 - 2023.06.21
-## ● 배포 주소
+## ● 배포 주소 : www.ipbalance.net:3000
 
 ### KDT 과정을 배운 후 진행한 프로젝트입니다. 
 ### 이 프로젝트는 웹으로 구현하였습니다.
@@ -53,7 +53,8 @@
     - 최소수량과 최대수량을 변경 가능
     - 신청했던 자동발주 내역을 삭제 가능
    #### 5-2. 이벤트 자동발주
-    - 본사에서 진행되는 이벤트 자동발주로 이벤트 진행 5일 전, 점포별 작년 매출을 기준으로 판매촉진비율인 10%를 가산한 수량을 자동발주로 담아줌. 만일 작년 매출이 존재하지 않는 점포라면 임의적으로 50개의 수량을 자동발주
+    - 본사에서 진행되는 이벤트 자동발주로 이벤트 진행 5일 전, 점포별 작년 매출을 기준으로 판매촉진비율인 10%를 가산한 수량을 자동발주로 담아줌. 
+      만일 작년 매출이 존재하지 않는 점포라면 임의적으로 50개의 수량을 자동발주
     - 점포 관리자는 2일의 기간동안 발주된 수량을 수정 가능
     - 이벤트 자동발주가 진행되면 점포 관리자에게 SMS 알림 제공
 
@@ -68,16 +69,10 @@
 ##  
 
 ## ● 개발환경
-   ### - Java 11
-   ### - Maven
-   ### - SpringBoot 2.7.11
-   ### - Jar
+ <img src="https://img.shields.io/badge/Java-4479A1?style=for-the-badge&logo=java&logoColor=white"> <img src="https://img.shields.io/badge/Jar-16A5F3?style=for-the-badge&logo=iconjar&logoColor=white"> <img src="https://img.shields.io/badge/Maven-C71A36?style=for-the-badge&logo=apachemaven&logoColor=white"> <img src="https://img.shields.io/badge/SpringBoot-6DB33F?style=for-the-badge&logo=springboot&logoColor=white"> 
+##
+## ● 사용한 dependencies 및 기술스택
+ <img src="https://img.shields.io/badge/AmazonAws-232F3E?style=for-the-badge&logo=amazonaws&logoColor=white"> <img src="https://img.shields.io/badge/AmazonRds-527FFF?style=for-the-badge&logo=amazonrds&logoColor=white"> <img src="https://img.shields.io/badge/docker-2496ED?style=for-the-badge&logo=docker&logoColor=white"> <img src="https://img.shields.io/badge/Github-181717?style=for-the-badge&logo=github&logoColor=white"> <img src="https://img.shields.io/badge/GoogleAPI-4285F4?style=for-the-badge&logo=google&logoColor=white"> <img src="https://img.shields.io/badge/Thymeleaf-005F0F?style=for-the-badge&logo=thymeleaf&logoColor=white"> <img src="https://img.shields.io/badge/Intellijidea-000000?style=for-the-badge&logo=intellijidea&logoColor=white"> <img src="https://img.shields.io/badge/Lombok-800000?style=for-the-badge&logo=lombok&logoColor=white"> <img src="https://img.shields.io/badge/MyBatis-B22222?style=for-the-badge&logo=mybatis&logoColor=white"> <img src="https://img.shields.io/badge/NaverCloudAPI-03C75A?style=for-the-badge&logo=naver&logoColor=white">  <img src="https://img.shields.io/badge/SpringFreamwork-6DB33F?style=for-the-badge&logo=spring&logoColor=white"> <img src="https://img.shields.io/badge/Swagger-85EA2D?style=for-the-badge&logo=swagger&logoColor=white">
+ 
+##
 
-사용한 dependencies
-Springframework
-MySQL
-Lombok
-Swagger
-
-기술스택
-mybatis, swagger, SSE, NavercloudAPI, GoogleAPI
